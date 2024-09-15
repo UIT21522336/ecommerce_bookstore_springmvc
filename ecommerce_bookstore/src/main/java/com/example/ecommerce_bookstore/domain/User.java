@@ -39,6 +39,8 @@ public class User {
 
     private String address;
 
+    private String gender;
+
     public long getId() {
         return id;
     }
@@ -111,9 +113,18 @@ public class User {
         this.address = address;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     @Override
     public String toString() {
         return "User [id=" + id + ", orders=" + orders + ", role=" + role + ", cart=" + cart + ", fullName=" + fullName
-                + ", email=" + email + ", phone=" + phone + ", avatar=" + avatar + ", address=" + address + "]";
+                + ", email=" + email + ", phone=" + phone + ", avatar=" + avatar + ", address=" + address + ", gender="
+                + gender + "]";
     }
 }
