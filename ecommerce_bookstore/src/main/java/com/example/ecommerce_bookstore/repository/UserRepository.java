@@ -7,5 +7,5 @@ import com.example.ecommerce_bookstore.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
+    User save(User user);
 }

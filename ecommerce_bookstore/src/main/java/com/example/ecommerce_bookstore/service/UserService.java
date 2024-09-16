@@ -25,4 +25,8 @@ public class UserService {
         user.setGender(userDTO.getGender());
         return user;
     }
+
+    public User createUser(User user) {
+        return this.userRepository.save(user);
+    }
 }

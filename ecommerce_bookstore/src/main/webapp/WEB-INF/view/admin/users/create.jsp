@@ -114,8 +114,8 @@
                                                     <div class="form-group row">
                                                         <label class="col-sm-3 col-form-label">Province</label>
                                                         <div class="col-sm-9">
-                                                            <form:select class="form-control" name="ls_province"
-                                                                path="province">
+                                                            <form:select class="form-control" id="ls_province"
+                                                                name="ls_province" path="province">
 
                                                             </form:select>
                                                         </div>
@@ -127,8 +127,8 @@
                                                     <div class="form-group row">
                                                         <label class="col-sm-3 col-form-label">District</label>
                                                         <div class="col-sm-9">
-                                                            <form:select class="form-control" name="ls_district"
-                                                                path="district">
+                                                            <form:select class="form-control" id="ls_district"
+                                                                name="ls_district" path="district">
 
                                                             </form:select>
                                                         </div>
@@ -138,8 +138,8 @@
                                                     <div class="form-group row">
                                                         <label class="col-sm-3 col-form-label">Ward</label>
                                                         <div class="col-sm-9">
-                                                            <form:select class="form-control" name="ls_ward"
-                                                                path="ward">
+                                                            <form:select class="form-control" id="ls_ward"
+                                                                name="ls_ward" path="ward">
 
                                                             </form:select>
                                                         </div>
@@ -160,7 +160,7 @@
                                                     <div class="form-group row">
                                                         <label class="col-sm-3 col-form-label">Avatar</label>
                                                         <div class="col-sm-9">
-                                                            <form:input class="form-control" accept=".jpg,.png, .jpeg"
+                                                            <form:input class="form-control" accept=".jpg, .png, .jpeg"
                                                                 type="file" id="formFile" path="avatar" />
                                                         </div>
                                                     </div>
@@ -193,7 +193,9 @@
             </div>
             <!-- page-body-wrapper ends -->
         </div>
-        <script src="/resources/admin/js/vietnamlocalselector.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/resources/admin/js/vietnamlocalselector.js"></script>
         <script>
             var localpicker = new LocalPicker({
                 province: "ls_province",
@@ -246,8 +248,6 @@
                 levelAttributeName: "data-level",
             };
         </script>
-        <script src="https://code.jquery.com/jquery-3.7.1.js"
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <script src="/resources/admin/js/handlefileselect.js"> </script>
         <!-- container-scroller -->
         <!-- plugins:js -->

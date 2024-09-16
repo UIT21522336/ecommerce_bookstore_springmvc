@@ -32,7 +32,7 @@
                     s = 'n';
                     break;
                 default:
-                    s = 'i';
+                    s = 'n';
             }
             try {
                 let es = param => param.replace(/^#|\.+/i, ''),
