@@ -64,7 +64,8 @@
                                                     <label class="col-sm-3 col-form-label">First Name</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;" disabled />
+                                                            style="background-color: #2A3038;" value="${user.fullName}"
+                                                            disabled />
                                                     </div>
                                                 </div>
                                             </div>

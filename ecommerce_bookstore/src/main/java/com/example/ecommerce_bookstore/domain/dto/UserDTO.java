@@ -21,6 +21,8 @@ public class UserDTO {
 
     private String avatar;
 
+    private String role;
+
     public String getFirstName() {
         return firstName;
     }
@@ -100,4 +102,13 @@ public class UserDTO {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 }

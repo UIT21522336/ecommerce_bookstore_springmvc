@@ -52,8 +52,8 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="card-title">Create user</h4>
-                                        <form:form class="form-sample" action="/admin/users/create" method="post"
-                                            modelAttribute="userDTO">
+                                        <form:form class="form-sample" action="/admin/users/create"
+                                            enctype="multipart/form-data" method="post" modelAttribute="userDTO">
                                             <div class="row mb-5" style="text-align:center;">
                                                 <div id="previewImage" style="margin:auto;">
                                                     <img src="https://media.istockphoto.com/id/1142192548/vector/man-avatar-profile-male-face-silhouette-or-icon-isolated-on-white-background-vector.jpg?s=612x612&w=0&k=20&c=DUKuRxK9OINHXt3_4m-GxraeoDDlhNuCbA9hp6FotFE="
@@ -160,10 +160,26 @@
                                                     <div class="form-group row">
                                                         <label class="col-sm-3 col-form-label">Avatar</label>
                                                         <div class="col-sm-9">
-                                                            <form:input class="form-control" accept=".jpg, .png, .jpeg"
-                                                                type="file" id="formFile" path="avatar" />
+                                                            <input class="form-control" accept=".jpg, .png, .jpeg"
+                                                                type="file" id="formFile" name="fileImage">
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Role</label>
+                                                        <div class="col-sm-9">
+                                                            <form:select class="form-control" path="role">
+                                                                <option>CLIENT</option>
+                                                                <option>ADMIN</option>
+                                                            </form:select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+
                                                 </div>
                                             </div>
                                             <div class="row">
