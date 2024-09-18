@@ -62,8 +62,8 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center"> Full Name </th>
                                                         <th class="text-center"> User Id </th>
+                                                        <th class="text-center"> Full Name </th>
                                                         <th class="text-center"> Role </th>
                                                         <th class="text-center"> Email </th>
                                                         <th class="text-center"> Phone number </th>
@@ -73,22 +73,22 @@
                                                 <tbody>
                                                     <c:forEach var="user" items="${users}">
                                                         <tr class="text-center">
+                                                            <td> ${user.getId()} </td>
                                                             <td>
                                                                 <div style="float:left;padding-left:30%;">
-                                                                    <img src="/resources/admin/images/avatar/${user.avatar}"
+                                                                    <img src="/resources/admin/images/avatar/${user.getAvatar()}"
                                                                         alt="image" />
-                                                                    <span class="pl-2">${user.fullName}</span>
+                                                                    <span class="pl-2">${user.getFullName()}</span>
                                                                 </div>
                                                             </td>
-                                                            <td> ${user.id} </td>
                                                             <td> ${user.getRole().getName()} </td>
-                                                            <td> ${user.email} </td>
-                                                            <td> ${user.phone} </td>
+                                                            <td> ${user.getEmail()} </td>
+                                                            <td> ${user.getPhone()} </td>
                                                             <td>
                                                                 <a class="badge badge-outline-success"
-                                                                    href="/admin/users/detail/${user.id}">Detail</a>
+                                                                    href="/admin/users/detail/${user.getId()}">Detail</a>
                                                                 <a class="badge badge-warning"
-                                                                    href="/admin/users/update/${user.id}"
+                                                                    href="/admin/users/update/${user.getId()}"
                                                                     style="margin-left: 20px;margin-right: 20px;">Update</a>
                                                                 <a class="badge badge-danger">Delete</a>
                                                             </td>

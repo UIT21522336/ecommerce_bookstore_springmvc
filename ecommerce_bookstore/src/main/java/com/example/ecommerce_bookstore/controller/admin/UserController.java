@@ -56,7 +56,15 @@ public class UserController {
 
     // View update user page
     @GetMapping("/admin/users/update/{id}")
-    public String getUpdateUserPage(@PathVariable("id") long id) {
+    public String getUpdateUserPage(@PathVariable("id") long id, Model model) {
+        User user = this.userService.getUserById(id).get();
+        model.addAttribute("modelUser", user);
         return "admin/users/update";
     }
+
+    // @PostMapping("/admin/users/update")
+    // public String postUpdateUser() {
+    // return "redirect:/admin/users";
+    // }
+
 }

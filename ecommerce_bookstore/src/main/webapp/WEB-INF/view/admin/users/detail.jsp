@@ -54,27 +54,28 @@
                                     <form class="form-sample">
                                         <div class="row mb-5" style="text-align:center;">
                                             <div id="previewImage" style="margin:auto;">
-                                                <img src="https://media.istockphoto.com/id/1142192548/vector/man-avatar-profile-male-face-silhouette-or-icon-isolated-on-white-background-vector.jpg?s=612x612&w=0&k=20&c=DUKuRxK9OINHXt3_4m-GxraeoDDlhNuCbA9hp6FotFE="
+                                                <img src="/resources/admin/images/avatar/${user.getAvatar()}"
                                                     style="height: 200px;width: 200px;">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">First Name</label>
+                                                    <label class="col-sm-3 col-form-label">Full Name</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;" value="${user.fullName}"
-                                                            disabled />
+                                                            style="background-color: #2A3038;"
+                                                            value="${user.getFullName()}" disabled />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">Last Name</label>
+                                                    <label class="col-sm-3 col-form-label">Role</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;" disabled />
+                                                            style="background-color: #2A3038;"
+                                                            value="${user.getRole().getName()}" disabled />
                                                     </div>
                                                 </div>
                                             </div>
@@ -85,7 +86,8 @@
                                                     <label class="col-sm-3 col-form-label">Gender</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;" disabled />
+                                                            style="background-color: #2A3038;"
+                                                            value="${user.getGender()}" disabled />
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,7 +96,8 @@
                                                     <label class="col-sm-3 col-form-label">Email</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;" disabled />
+                                                            style="background-color: #2A3038;"
+                                                            value="${user.getEmail()}" disabled />
                                                     </div>
                                                 </div>
                                             </div>
@@ -105,47 +108,19 @@
                                                     <label class="col-sm-3 col-form-label">Phone number</label>
                                                     <div class="col-sm-9">
                                                         <input type="tel" class="form-control"
-                                                            style="background-color: #2A3038;" disabled />
+                                                            style="background-color: #2A3038;"
+                                                            value="${user.getPhone()}" disabled />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">Province</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">District</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">Ward</label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;" disabled />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 col-form-label">Address</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;" disabled />
+                                                            style="background-color: #2A3038;"
+                                                            value="${user.getAddress()} St,  Ward ${user.getWard()}, ${user.getDistrict()} District, ${user.getProvince()}"
+                                                            disabled />
                                                     </div>
                                                 </div>
                                             </div>

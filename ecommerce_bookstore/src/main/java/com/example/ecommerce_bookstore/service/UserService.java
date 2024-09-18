@@ -26,9 +26,11 @@ public class UserService {
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone());
         user.setAvatar(userDTO.getAvatar());
-        user.setAddress(userDTO.getAddress() + ", ward " + userDTO.getWard() + ", district " + userDTO.getDistrict()
-                + ", " + userDTO.getProvince());
+        user.setAddress(userDTO.getAddress());
         user.setGender(userDTO.getGender());
+        user.setProvince(userDTO.getProvince());
+        user.setDistrict(userDTO.getDistrict());
+        user.setWard(userDTO.getWard());
         Role role = new Role();
         role = this.roleRepository.findByName(userDTO.getRole());
         user.setRole(role);

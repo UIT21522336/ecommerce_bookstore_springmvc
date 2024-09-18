@@ -39,6 +39,12 @@ public class User {
 
     private String address;
 
+    private String province;
+
+    private String district;
+
+    private String ward;
+
     private String gender;
 
     public long getId() {
@@ -121,10 +127,35 @@ public class User {
         this.gender = gender;
     }
 
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getWard() {
+        return ward;
+    }
+
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
+
     @Override
     public String toString() {
         return "User [id=" + id + ", orders=" + orders + ", role=" + role + ", cart=" + cart + ", fullName=" + fullName
-                + ", email=" + email + ", phone=" + phone + ", avatar=" + avatar + ", address=" + address + ", gender="
-                + gender + "]";
+                + ", email=" + email + ", phone=" + phone + ", avatar=" + avatar + ", address=" + address
+                + ", province=" + province + ", district=" + district + ", ward=" + ward + ", gender=" + gender + "]";
     }
+
 }
