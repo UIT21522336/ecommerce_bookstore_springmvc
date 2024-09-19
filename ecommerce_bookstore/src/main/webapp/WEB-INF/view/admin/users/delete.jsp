@@ -7,7 +7,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Manage users</title>
+        <title>Delete user</title>
         <!-- plugins:css -->
         <link rel="stylesheet" href="/resources/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
         <link rel="stylesheet" href="/resources/admin/assets/vendors/css/vendor.bundle.base.css">
@@ -54,49 +54,16 @@
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
                                             <h4 class="card-title">Users list</h4>
-                                            <button type="button" class="btn btn-primary btn-fw"><a
-                                                    style="color: white; text-decoration: none;"
-                                                    href="/admin/users/create">Create user</a></button>
                                         </div>
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-center"> User Id </th>
-                                                        <th class="text-center"> Full Name </th>
-                                                        <th class="text-center"> Role </th>
-                                                        <th class="text-center"> Email </th>
-                                                        <th class="text-center"> Phone number </th>
-                                                        <th class="text-center"> Action </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach var="user" items="${users}">
-                                                        <tr class="text-center">
-                                                            <td> ${user.getId()} </td>
-                                                            <td>
-                                                                <div style="float:left;padding-left:30%;">
-                                                                    <img src="/resources/admin/images/avatar/${user.getAvatar()}"
-                                                                        alt="image" />
-                                                                    <span class="pl-2">${user.getFullName()}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td> ${user.getRole().getName()} </td>
-                                                            <td> ${user.getEmail()} </td>
-                                                            <td> ${user.getPhone()} </td>
-                                                            <td>
-                                                                <a class="badge badge-outline-success"
-                                                                    href="/admin/users/detail/${user.getId()}">Detail</a>
-                                                                <a class="badge badge-warning"
-                                                                    href="/admin/users/update/${user.getId()}"
-                                                                    style="margin-left: 20px;margin-right: 20px;">Update</a>
-                                                                <a class="badge badge-danger"
-                                                                    href="/admin/users/delete/${user.getId()}">Delete</a>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                        <div class="alert alert-danger" role="alert">
+                                            Are you sure you want to delete this account?
+                                        </div>
+                                        <div>
+                                            <a href="/admin/users" class="btn btn-outline-secondary btn-fw">Cancel</a>
+                                            <form method="post" action="/admin/users/delete" modelAttribute="modelUser">
+                                                <button type="submit" style="margin-left: 20px;"
+                                                    class="btn btn-danger btn-fw">Delete</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

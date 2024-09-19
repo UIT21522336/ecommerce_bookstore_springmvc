@@ -1,7 +1,6 @@
 package com.example.ecommerce_bookstore.service;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.*;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -22,5 +21,13 @@ public class ImageService {
         Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         return uniqueFileName;
+    }
+
+    public void deleteImage(String imageDirectory, String imageName) throws IOException {
+        Path imagePath = Path.of(imageDirectory, imageName);
+
+        if (Files.exists(imagePath)) {
+            Files.delete(imagePath);
+        }
     }
 }

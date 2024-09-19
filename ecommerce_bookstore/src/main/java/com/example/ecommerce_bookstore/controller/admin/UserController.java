@@ -45,12 +45,7 @@ public class UserController {
     @PostMapping("/admin/users/create")
     public String postCreateUser(@ModelAttribute("userDTO") UserDTO userDTO,
             @RequestParam("fileImage") MultipartFile fileImage) throws IOException {
-        String uploadDirectory = "src/main/webapp/resources/admin/images/avatar";
-        String imageString = imageService.saveImageToStorage(uploadDirectory, fileImage);
-        userDTO.setAvatar(imageString);
-        User user = new User();
-        user = this.userService.userDtoToUser(userDTO);
-        user = this.userService.createUser(user);
+        this.userService.createUser(userDTO, fileImage);
         return "redirect:/admin/users";
     }
 
@@ -62,9 +57,26 @@ public class UserController {
         return "admin/users/update";
     }
 
-    // @PostMapping("/admin/users/update")
-    // public String postUpdateUser() {
-    // return "redirect:/admin/users";
-    // }
+    // Update user
+    @PostMapping("/admin/users/update")
+    public String postUpdateUser(@ModelAttribute("modelUser") User modelUser,
+            @RequestParam("fileImage") MultipartFile fileImage) throws IOException {
+        this.userService.updateUser(modelUser, fileImage);
+        return "redirect:/admin/users";
+    }
+
+    // View delete user page
+    @GetMapping("/admin/users/delete/{id}")
+    public String getDeleteUserPage(@PathVariable("id") long id, Model model) {
+        User user = this.userService.getUserById(id).get();
+        model.addAttribute("modelUser", user);
+        return "admin/users/delete";
+    }
+
+    @PostMapping("/admin/users/delete/")
+    public String postDeleteUser(@ModelAttribute("modelUser") User modelUser) {
+        this.userService.deleteUser(modelUser);
+        return "redirect:/admin/users";
+    }
 
 }
