@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
@@ -20,6 +22,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<OrderDetail> orderDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryDetail_id")
+    private CategoryDetail categoryDetail;
 
     private String name;
 
@@ -61,6 +67,14 @@ public class Product {
 
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+
+    public CategoryDetail getCategoryDetail() {
+        return categoryDetail;
+    }
+
+    public void setCategoryDetail(CategoryDetail categoryDetail) {
+        this.categoryDetail = categoryDetail;
     }
 
     public String getName() {
@@ -133,13 +147,5 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Product [id=" + id + ", cartDetails=" + cartDetails + ", orderDetails=" + orderDetails + ", name="
-                + name + ", image=" + image + ", author=" + author + ", publisher=" + publisher + ", price=" + price
-                + ", format=" + format + ", quantity=" + quantity + ", sold=" + sold + ", description=" + description
-                + "]";
     }
 }

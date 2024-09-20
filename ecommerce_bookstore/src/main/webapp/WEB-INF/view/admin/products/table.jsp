@@ -56,42 +56,45 @@
                                             <h4 class="card-title">Users list</h4>
                                             <button type="button" class="btn btn-primary btn-fw"><a
                                                     style="color: white; text-decoration: none;"
-                                                    href="/admin/users/create">Create user</a></button>
+                                                    href="/admin/products/create">Create product</a></button>
                                         </div>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center"> User Id </th>
-                                                        <th class="text-center"> Full Name </th>
-                                                        <th class="text-center"> Role </th>
-                                                        <th class="text-center"> Email </th>
-                                                        <th class="text-center"> Phone number </th>
-                                                        <th class="text-center"> Action </th>
+                                                        <th class="text-center"> Id </th>
+                                                        <th class="text-center"> Name </th>
+                                                        <th class="text-center"> Category </th>
+                                                        <th class="text-center"> Format </th>
+                                                        <th class="text-center"> Price </th>
+                                                        <th class="text-center"> Publisher </th>
+                                                        <th class="text-center"> Quantity </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach var="user" items="${users}">
+                                                    <c:forEach var="product" items="${products}">
                                                         <tr class="text-center">
-                                                            <td> ${user.getId()} </td>
+                                                            <td> ${product.id} </td>
                                                             <td>
                                                                 <div style="float:left;padding-left:30%;">
-                                                                    <img src="/resources/admin/images/avatar/${user.getAvatar()}"
+                                                                    <img src="/resources/admin/images/product/${product.image}"
                                                                         alt="image" />
-                                                                    <span class="pl-2">${user.getFullName()}</span>
+                                                                    <span class="pl-2">${product.name}</span>
                                                                 </div>
                                                             </td>
-                                                            <td> ${user.getRole().getName()} </td>
-                                                            <td> ${user.getEmail()} </td>
-                                                            <td> ${user.getPhone()} </td>
+                                                            <td> ${user.category} </td>
+                                                            <td> ${user.format} </td>
+                                                            <td> ${user.price} </td>
+                                                            <td> ${user.publisher} </td>
+                                                            <td> ${user.quantity} </td>
                                                             <td>
                                                                 <a class="badge badge-outline-success"
-                                                                    href="/admin/users/detail/${user.getId()}">Detail</a>
+                                                                    href="/admin/products/detail/${product.id}">Detail</a>
                                                                 <a class="badge badge-warning"
-                                                                    href="/admin/users/update/${user.getId()}"
+                                                                    href="/admin/products/update/${product.id}"
                                                                     style="margin-left: 20px;margin-right: 20px;">Update</a>
                                                                 <a class="badge badge-danger"
-                                                                    href="/admin/users/delete/${user.getId()}">Delete</a>
+                                                                    href="/admin/products/delete/${product.id}">Delete</a>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>

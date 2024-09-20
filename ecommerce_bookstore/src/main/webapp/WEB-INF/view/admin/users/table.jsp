@@ -76,22 +76,22 @@
                                                             <td> ${user.getId()} </td>
                                                             <td>
                                                                 <div style="float:left;padding-left:30%;">
-                                                                    <img src="/resources/admin/images/avatar/${user.getAvatar()}"
+                                                                    <img src="/resources/admin/images/avatar/${user.avatar}"
                                                                         alt="image" />
-                                                                    <span class="pl-2">${user.getFullName()}</span>
+                                                                    <span class="pl-2">${user.fullName}</span>
                                                                 </div>
                                                             </td>
-                                                            <td> ${user.getRole().getName()} </td>
-                                                            <td> ${user.getEmail()} </td>
-                                                            <td> ${user.getPhone()} </td>
+                                                            <td> ${user.role.name} </td>
+                                                            <td> ${user.email} </td>
+                                                            <td> ${user.phone} </td>
                                                             <td>
                                                                 <a class="badge badge-outline-success"
-                                                                    href="/admin/users/detail/${user.getId()}">Detail</a>
+                                                                    href="/admin/users/detail/${user.id}">Detail</a>
                                                                 <a class="badge badge-warning"
-                                                                    href="/admin/users/update/${user.getId()}"
+                                                                    href="/admin/users/update/${user.id}"
                                                                     style="margin-left: 20px;margin-right: 20px;">Update</a>
                                                                 <a class="badge badge-danger"
-                                                                    href="/admin/users/delete/${user.getId()}">Delete</a>
+                                                                    href="/admin/users/delete/${user.id}">Delete</a>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>

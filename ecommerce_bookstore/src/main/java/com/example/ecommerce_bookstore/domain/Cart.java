@@ -67,10 +67,4 @@ public class Cart {
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
-
-    @Override
-    public String toString() {
-        return "Cart [id=" + id + ", user=" + user + ", cartDetails=" + cartDetails + ", sum=" + sum + ", totalPrice="
-                + totalPrice + "]";
-    }
 }

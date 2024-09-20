@@ -150,12 +150,4 @@ public class User {
     public void setWard(String ward) {
         this.ward = ward;
     }
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", orders=" + orders + ", role=" + role + ", cart=" + cart + ", fullName=" + fullName
-                + ", email=" + email + ", phone=" + phone + ", avatar=" + avatar + ", address=" + address
-                + ", province=" + province + ", district=" + district + ", ward=" + ward + ", gender=" + gender + "]";
-    }
-
 }

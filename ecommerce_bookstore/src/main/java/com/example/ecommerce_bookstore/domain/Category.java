@@ -9,16 +9,16 @@ import jakarta.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "Roles")
-public class Role {
+@Table(name = "Categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
 
-    @OneToMany(mappedBy = "role")
-    private List<User> users;
+    @OneToMany(mappedBy = "category")
+    private List<CategoryDetail> categories;
 
     public long getId() {
         return id;
@@ -36,11 +36,11 @@ public class Role {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<CategoryDetail> getCategories() {
+        return categories;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setCategories(List<CategoryDetail> categories) {
+        this.categories = categories;
     }
 }

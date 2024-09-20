@@ -66,10 +66,4 @@ public class CartDetail {
     public void setPrice(double price) {
         this.price = price;
     }
-
-    @Override
-    public String toString() {
-        return "CartDetail [id=" + id + ", cart=" + cart + ", product=" + product + ", quantity=" + quantity
-                + ", price=" + price + "]";
-    }
 }

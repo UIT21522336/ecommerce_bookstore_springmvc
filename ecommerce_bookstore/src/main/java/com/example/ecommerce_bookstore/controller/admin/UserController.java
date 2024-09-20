@@ -13,17 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.domain.dto.UserDTO;
-import com.example.ecommerce_bookstore.service.ImageService;
 import com.example.ecommerce_bookstore.service.UserService;
 
 @Controller
 public class UserController {
     private final UserService userService;
-    private final ImageService imageService;
 
-    public UserController(UserService userService, ImageService imageService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.imageService = imageService;
     }
 
     // View user detail
