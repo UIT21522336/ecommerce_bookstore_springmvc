@@ -28,4 +28,9 @@ public class DashboardController {
         return "admin/users/table";
     }
 
+    @GetMapping("/admin/products")
+    public String getProductsPage(Model model) {
+        return "admin/products/table";
+    }
+
 }

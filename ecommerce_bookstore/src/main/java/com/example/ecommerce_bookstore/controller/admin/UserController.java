@@ -73,8 +73,8 @@ public class UserController {
         return "admin/users/delete";
     }
 
-    @PostMapping("/admin/users/delete/")
-    public String postDeleteUser(@ModelAttribute("modelUser") User modelUser) {
+    @PostMapping("/admin/users/delete")
+    public String postDeleteUser(@ModelAttribute("modelUser") User modelUser) throws IOException {
         this.userService.deleteUser(modelUser);
         return "redirect:/admin/users";
     }

@@ -93,9 +93,16 @@ public class UserService {
         user = this.userRepository.save(user);
     }
 
-    public void deleteUser(User modelUser) {
+    public void deleteUser(User modelUser) throws IOException {
         // find user in dtb by id
         User user = getUserById(modelUser.getId()).get();
+
+        // // delete avatar
+        this.imageService.deleteImage("src/main/webapp/resources/admin/images/avatar",
+        user.getAvatar());
+
+        // delete user from dtb
+        this.userRepository.delete(user);
 
     }
 
