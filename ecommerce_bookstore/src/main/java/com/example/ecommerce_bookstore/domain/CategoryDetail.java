@@ -19,6 +19,8 @@ public class CategoryDetail {
 
     private String name;
 
+    private String displayName;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -40,6 +42,14 @@ public class CategoryDetail {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public Category getCategory() {

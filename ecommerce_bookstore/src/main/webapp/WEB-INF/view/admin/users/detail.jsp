@@ -54,7 +54,7 @@
                                     <form class="form-sample">
                                         <div class="row mb-5" style="text-align:center;">
                                             <div id="previewImage" style="margin:auto;">
-                                                <img src="/resources/admin/images/avatar/${user.getAvatar()}"
+                                                <img src="/resources/admin/images/avatar/${user.avatar}"
                                                     style="height: 200px;width: 200px;">
                                             </div>
                                         </div>
@@ -64,8 +64,8 @@
                                                     <label class="col-sm-3 col-form-label">Full Name</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;"
-                                                            value="${user.getFullName()}" disabled />
+                                                            style="background-color: #2A3038;" value="${user.fullName}"
+                                                            disabled />
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,8 +74,8 @@
                                                     <label class="col-sm-3 col-form-label">Role</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;"
-                                                            value="${user.getRole().getName()}" disabled />
+                                                            style="background-color: #2A3038;" value="${user.role.name}"
+                                                            disabled />
                                                     </div>
                                                 </div>
                                             </div>
@@ -86,8 +86,8 @@
                                                     <label class="col-sm-3 col-form-label">Gender</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;"
-                                                            value="${user.getGender()}" disabled />
+                                                            style="background-color: #2A3038;" value="${user.gender}"
+                                                            disabled />
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,8 +96,8 @@
                                                     <label class="col-sm-3 col-form-label">Email</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
-                                                            style="background-color: #2A3038;"
-                                                            value="${user.getEmail()}" disabled />
+                                                            style="background-color: #2A3038;" value="${user.email}"
+                                                            disabled />
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,8 +108,8 @@
                                                     <label class="col-sm-3 col-form-label">Phone number</label>
                                                     <div class="col-sm-9">
                                                         <input type="tel" class="form-control"
-                                                            style="background-color: #2A3038;"
-                                                            value="${user.getPhone()}" disabled />
+                                                            style="background-color: #2A3038;" value="${user.phone}"
+                                                            disabled />
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,7 +119,7 @@
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control"
                                                             style="background-color: #2A3038;"
-                                                            value="${user.getAddress()} St,  Ward ${user.getWard()}, ${user.getDistrict()} District, ${user.getProvince()}"
+                                                            value="${user.address} St,  Ward ${user.ward}, ${user.district} District, ${user.province}"
                                                             disabled />
                                                     </div>
                                                 </div>

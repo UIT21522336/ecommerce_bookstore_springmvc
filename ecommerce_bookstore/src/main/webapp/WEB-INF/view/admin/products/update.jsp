@@ -7,7 +7,7 @@
             <!-- Required meta tags -->
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            <title>Create product</title>
+            <title>Update product</title>
             <!-- plugins:css -->
             <link rel="stylesheet" href="/resources/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
             <link rel="stylesheet" href="/resources/admin/assets/vendors/css/vendor.bundle.base.css">
@@ -52,13 +52,13 @@
                                 <div class="col-12 grid-margin">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h4 class="card-title">Create product</h4>
-                                            <form:form class="form-sample" action="/admin/products/create"
+                                            <h4 class="card-title">Update product</h4>
+                                            <form:form class="form-sample" action="/admin/products/update"
                                                 enctype="multipart/form-data" method="post"
                                                 modelAttribute="modelProduct">
                                                 <div class="row mb-5" style="text-align:center;">
                                                     <div id="previewImage" style="margin:auto;">
-                                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVZYs7v0iOwkwBwbKRWeWpfzY6Sm7hQL26pg&s"
+                                                        <img src="/resources/admin/images/product/${modelProduct.image}"
                                                             style="height: 200px;width: 200px;">
                                                     </div>
                                                 </div>
@@ -180,7 +180,7 @@
                                                                 <a href="/admin/products"
                                                                     class="btn btn-outline-secondary btn-fw">Back</a>
                                                                 <button type="submit" style="margin-left: 20px;"
-                                                                    class="btn btn-outline-success btn-fw">Create</button>
+                                                                    class="btn btn-warning btn-fw">Update</button>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -56,15 +56,6 @@ public class UserService {
         // find user in dtb by id
         User user = getUserById(modelUser.getId()).get();
 
-        if (modelUser.getFullName() != null) {
-            user.setFullName(modelUser.getFullName());
-        }
-        if (modelUser.getGender() != null) {
-            user.setGender(modelUser.getGender());
-        }
-        if (modelUser.getPhone() != null) {
-            user.setPhone(modelUser.getPhone());
-        }
         if (modelUser.getProvince() != null) {
             user.setProvince(modelUser.getProvince());
         }
@@ -73,9 +64,6 @@ public class UserService {
         }
         if (modelUser.getWard() != null) {
             user.setWard(modelUser.getWard());
-        }
-        if (modelUser.getAddress() != null) {
-            user.setAddress(modelUser.getAddress());
         }
 
         if (!fileImage.isEmpty()) {
@@ -99,7 +87,7 @@ public class UserService {
 
         // // delete avatar
         this.imageService.deleteImage("src/main/webapp/resources/admin/images/avatar",
-        user.getAvatar());
+                user.getAvatar());
 
         // delete user from dtb
         this.userRepository.delete(user);

@@ -64,11 +64,9 @@
                                                     <tr>
                                                         <th class="text-center"> Id </th>
                                                         <th class="text-center"> Name </th>
-                                                        <th class="text-center"> Category </th>
                                                         <th class="text-center"> Format </th>
                                                         <th class="text-center"> Price </th>
-                                                        <th class="text-center"> Publisher </th>
-                                                        <th class="text-center"> Quantity </th>
+                                                        <th class="text-center"> Stock </th>
                                                         <th class="text-center"> Action </th>
                                                     </tr>
                                                 </thead>
@@ -77,16 +75,15 @@
                                                         <tr class="text-center">
                                                             <td> ${product.id} </td>
                                                             <td>
-                                                                <div style="float:left;padding-left:30%;">
+                                                                <div
+                                                                    style="float:left;padding-left:5%;max-width:100%;overflow:hidden;text-overflow:ellipsis;">
                                                                     <img src="/resources/admin/images/product/${product.image}"
                                                                         alt="image" />
                                                                     <span class="pl-2">${product.name}</span>
                                                                 </div>
                                                             </td>
-                                                            <td> ${product.getCategoryDetail().getName()} </td>
                                                             <td> ${product.format} </td>
                                                             <td> ${product.price} </td>
-                                                            <td> ${product.publisher} </td>
                                                             <td> ${product.quantity} </td>
                                                             <td>
                                                                 <a class="badge badge-outline-success"

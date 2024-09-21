@@ -2,7 +2,7 @@ package com.example.ecommerce_bookstore.service;
 
 import java.io.IOException;
 import java.util.List;
-
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,5 +37,13 @@ public class ProductService {
 
     public List<Product> getAllProducts() {
         return this.productRepository.findAll();
+    }
+
+    public Optional<Product> getProductById(long id) {
+        return this.productRepository.findById(id);
+    }
+
+    public void updateProduct(Product modelProduct, MultipartFile fileImage) {
+        Product product = this.productRepository.findById(modelProduct.getId()).get();
     }
 }
