@@ -53,7 +53,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
-                                            <h4 class="card-title">Users list</h4>
+                                            <h4 class="card-title">Products list</h4>
                                             <button type="button" class="btn btn-primary btn-fw"><a
                                                     style="color: white; text-decoration: none;"
                                                     href="/admin/products/create">Create product</a></button>
@@ -69,6 +69,7 @@
                                                         <th class="text-center"> Price </th>
                                                         <th class="text-center"> Publisher </th>
                                                         <th class="text-center"> Quantity </th>
+                                                        <th class="text-center"> Action </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -82,11 +83,11 @@
                                                                     <span class="pl-2">${product.name}</span>
                                                                 </div>
                                                             </td>
-                                                            <td> ${user.category} </td>
-                                                            <td> ${user.format} </td>
-                                                            <td> ${user.price} </td>
-                                                            <td> ${user.publisher} </td>
-                                                            <td> ${user.quantity} </td>
+                                                            <td> ${product.getCategoryDetail().getName()} </td>
+                                                            <td> ${product.format} </td>
+                                                            <td> ${product.price} </td>
+                                                            <td> ${product.publisher} </td>
+                                                            <td> ${product.quantity} </td>
                                                             <td>
                                                                 <a class="badge badge-outline-success"
                                                                     href="/admin/products/detail/${product.id}">Detail</a>

@@ -73,7 +73,7 @@
                                                 <tbody>
                                                     <c:forEach var="user" items="${users}">
                                                         <tr class="text-center">
-                                                            <td> ${user.getId()} </td>
+                                                            <td> ${user.id} </td>
                                                             <td>
                                                                 <div style="float:left;padding-left:30%;">
                                                                     <img src="/resources/admin/images/avatar/${user.avatar}"
