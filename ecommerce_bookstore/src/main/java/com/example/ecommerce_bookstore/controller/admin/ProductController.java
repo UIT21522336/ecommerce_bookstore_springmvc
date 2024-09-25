@@ -17,7 +17,6 @@ import com.example.ecommerce_bookstore.service.CategoryService;
 import com.example.ecommerce_bookstore.service.ProductService;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,8 +70,21 @@ public class ProductController {
 
     @PostMapping("/admin/products/update")
     public String postUpdateProduct(@ModelAttribute("modelProduct") Product modelProduct,
-            @RequestParam("fileImage") MultipartFile fileImage) {
+            @RequestParam("fileImage") MultipartFile fileImage) throws IOException {
         this.productService.updateProduct(modelProduct, fileImage);
+        return "redirect:/admin/products";
+    }
+
+    @GetMapping("/admin/products/delete/{id}")
+    public String getDeleteProductPage(@PathVariable("id") long id, Model model) {
+        Product product = this.productService.getProductById(id).get();
+        model.addAttribute("modelProduct", product);
+        return "admin/products/delete";
+    }
+
+    @PostMapping("/admin/products/delete")
+    public String postDeleteProduct(@ModelAttribute("modelProduct") Product modelProduct) throws IOException {
+        this.productService.deleteProduct(modelProduct);
         return "redirect:/admin/products";
     }
 

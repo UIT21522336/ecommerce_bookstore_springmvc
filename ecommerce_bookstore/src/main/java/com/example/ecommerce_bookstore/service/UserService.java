@@ -55,7 +55,10 @@ public class UserService {
     public void updateUser(User modelUser, MultipartFile fileImage) throws IOException {
         // find user in dtb by id
         User user = getUserById(modelUser.getId()).get();
-
+        user.setAddress(modelUser.getAddress());
+        user.setGender(modelUser.getGender());
+        user.setFullName(modelUser.getFullName());
+        user.setPhone(modelUser.getPhone());
         if (modelUser.getProvince() != null) {
             user.setProvince(modelUser.getProvince());
         }

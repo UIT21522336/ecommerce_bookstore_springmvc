@@ -43,7 +43,37 @@ public class ProductService {
         return this.productRepository.findById(id);
     }
 
-    public void updateProduct(Product modelProduct, MultipartFile fileImage) {
+    public void updateProduct(Product modelProduct, MultipartFile fileImage) throws IOException {
         Product product = this.productRepository.findById(modelProduct.getId()).get();
+        if (!fileImage.isEmpty()) {
+            // delete old image in local
+            this.imageService.deleteImage("src/main/webapp/resources/admin/images/product",
+                    product.getImage());
+
+            // add new image to local
+            String uploadDirectory = "src/main/webapp/resources/admin/images/product";
+            String imageString = imageService.saveImageToStorage(uploadDirectory,
+                    fileImage);
+
+            product.setImage(imageString);
+        }
+
+        product.setName(modelProduct.getName());
+        product.setAuthor(modelProduct.getAuthor());
+        product.setPublisher(modelProduct.getPublisher());
+        product.setFormat(modelProduct.getFormat());
+        product.setCategoryDetail(
+                this.categoryDetailService.getCategoryDetailByName(modelProduct.getCategoryDetail().getName()));
+        product.setQuantity(modelProduct.getQuantity());
+        product.setPrice(modelProduct.getPrice());
+        product.setDescription(modelProduct.getDescription());
+        product = this.productRepository.save(product);
+    }
+
+    public void deleteProduct(Product modelProduct) throws IOException {
+        Product product = this.productRepository.findById(modelProduct.getId()).get();
+        // delete image from local
+        this.imageService.deleteImage("src/main/webapp/resources/admin/images/product", product.getImage());
+        this.productRepository.delete(product);
     }
 }

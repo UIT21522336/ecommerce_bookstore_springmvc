@@ -176,6 +176,10 @@
                                                 <div class="row">
                                                     <div class="col-md-6" style="text-align:center;">
                                                         <div class="form-group row">
+                                                            <div style="display: none;">
+                                                                <form:input type="text" class="form-control"
+                                                                    path="id" />
+                                                            </div>
                                                             <div style="margin-left: 13px;">
                                                                 <a href="/admin/products"
                                                                     class="btn btn-outline-secondary btn-fw">Back</a>
