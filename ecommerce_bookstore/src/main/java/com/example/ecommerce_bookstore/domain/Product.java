@@ -44,6 +44,20 @@ public class Product {
 
     private int sold;
 
+    private String ISBN;
+
+    private String publishedYear;
+
+    private int numberOfPages;
+
+    private int weight;
+
+    private int length;
+
+    private int width;
+
+    private int height;
+
     @Column(columnDefinition = "TEXT")
     private String description;
 
@@ -150,4 +164,61 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String iSBN) {
+        ISBN = iSBN;
+    }
+
+    public String getPublishedYear() {
+        return publishedYear;
+    }
+
+    public void setPublishedYear(String publishedYear) {
+        this.publishedYear = publishedYear;
+    }
+
+    public int getNumberOfPages() {
+        return numberOfPages;
+    }
+
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
 }

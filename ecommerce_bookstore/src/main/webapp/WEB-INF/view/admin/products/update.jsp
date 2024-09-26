@@ -109,6 +109,27 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">ISBN</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="text" class="form-control"
+                                                                    path="ISBN" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Published
+                                                                year</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="text" class="form-control"
+                                                                    path="publishedYear" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Category</label>
                                                             <div class="col-sm-9">
                                                                 <form:select class="form-control"
@@ -145,6 +166,28 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Number of
+                                                                pages</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="text" class="form-control"
+                                                                    path="numberOfPages" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Weight
+                                                                (g)</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="text" class="form-control"
+                                                                    path="weight" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Price</label>
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
@@ -158,6 +201,38 @@
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" accept=".jpg, .png, .jpeg"
                                                                     type="file" id="formFile" name="fileImage">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Length
+                                                                (mm)</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="text" class="form-control"
+                                                                    path="length" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Width
+                                                                (mm)</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="text" class="form-control"
+                                                                    path="width" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Height
+                                                                (mm)</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="text" class="form-control"
+                                                                    path="height" />
                                                             </div>
                                                         </div>
                                                     </div>

@@ -64,6 +64,8 @@
                                                     <tr>
                                                         <th class="text-center"> Id </th>
                                                         <th class="text-center"> Name </th>
+                                                        <th class="text-center"> Author </th>
+                                                        <th class="text-center"> Publisher </th>
                                                         <th class="text-center"> Format </th>
                                                         <th class="text-center"> Price </th>
                                                         <th class="text-center"> Stock </th>
@@ -82,6 +84,8 @@
                                                                     <span class="pl-2">${product.name}</span>
                                                                 </div>
                                                             </td>
+                                                            <td> ${product.author} </td>
+                                                            <td> ${product.publisher} </td>
                                                             <td> ${product.format} </td>
                                                             <td> ${product.price} </td>
                                                             <td> ${product.quantity} </td>

@@ -62,10 +62,17 @@ public class ProductService {
         product.setAuthor(modelProduct.getAuthor());
         product.setPublisher(modelProduct.getPublisher());
         product.setFormat(modelProduct.getFormat());
+        product.setISBN(modelProduct.getISBN());
+        product.setPublishedYear(modelProduct.getPublishedYear());
         product.setCategoryDetail(
                 this.categoryDetailService.getCategoryDetailByName(modelProduct.getCategoryDetail().getName()));
         product.setQuantity(modelProduct.getQuantity());
+        product.setNumberOfPages(modelProduct.getNumberOfPages());
+        product.setWeight(modelProduct.getWeight());
         product.setPrice(modelProduct.getPrice());
+        product.setLength(modelProduct.getLength());
+        product.setWidth(modelProduct.getWidth());
+        product.setHeight(modelProduct.getHeight());
         product.setDescription(modelProduct.getDescription());
         product = this.productRepository.save(product);
     }

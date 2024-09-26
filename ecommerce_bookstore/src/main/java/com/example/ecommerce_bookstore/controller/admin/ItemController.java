@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class ProductController {
+public class ItemController {
     private final CategoryDetailService categoryDetailService;
     private final CategoryService categoryService;
     private final ProductService productService;
 
-    public ProductController(CategoryDetailService categoryDetailService, CategoryService categoryService,
+    public ItemController(CategoryDetailService categoryDetailService, CategoryService categoryService,
             ProductService productService) {
         this.categoryDetailService = categoryDetailService;
         this.categoryService = categoryService;
