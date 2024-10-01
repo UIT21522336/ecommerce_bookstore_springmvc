@@ -58,7 +58,7 @@
                                                 modelAttribute="modelProduct">
                                                 <div class="row mb-5" style="text-align:center;">
                                                     <div id="previewImage" style="margin:auto;">
-                                                        <img src="/resources/admin/images/product/${modelProduct.image}"
+                                                        <img src="/resources/admin/images/product/${productImage}"
                                                             style="height: 200px;width: 200px;">
                                                     </div>
                                                 </div>
@@ -69,6 +69,7 @@
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
                                                                     path="name" />
+                                                                <form:errors path="name" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -78,6 +79,7 @@
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
                                                                     path="author" />
+                                                                <form:errors path="author" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -89,6 +91,7 @@
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
                                                                     path="publisher" />
+                                                                <form:errors path="publisher" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -113,6 +116,7 @@
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
                                                                     path="ISBN" />
+                                                                <form:errors path="ISBN" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -121,8 +125,10 @@
                                                             <label class="col-sm-3 col-form-label">Published
                                                                 year</label>
                                                             <div class="col-sm-9">
-                                                                <form:input type="text" class="form-control"
+                                                                <form:input type="number" class="form-control"
                                                                     path="publishedYear" />
+                                                                <form:errors path="publishedYear"
+                                                                    cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -157,8 +163,9 @@
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Quantity</label>
                                                             <div class="col-sm-9">
-                                                                <form:input type="text" class="form-control"
+                                                                <form:input type="number" class="form-control"
                                                                     path="quantity" />
+                                                                <form:errors path="quantity" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -169,8 +176,10 @@
                                                             <label class="col-sm-3 col-form-label">Number of
                                                                 pages</label>
                                                             <div class="col-sm-9">
-                                                                <form:input type="text" class="form-control"
+                                                                <form:input type="number" class="form-control"
                                                                     path="numberOfPages" />
+                                                                <form:errors path="numberOfPages"
+                                                                    cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -179,8 +188,9 @@
                                                             <label class="col-sm-3 col-form-label">Weight
                                                                 (g)</label>
                                                             <div class="col-sm-9">
-                                                                <form:input type="text" class="form-control"
+                                                                <form:input type="number" class="form-control"
                                                                     path="weight" />
+                                                                <form:errors path="weight" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -190,8 +200,9 @@
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Price</label>
                                                             <div class="col-sm-9">
-                                                                <form:input type="text" class="form-control"
-                                                                    path="price" />
+                                                                <form:input type="number" class="form-control"
+                                                                    step="0.1" path="price" />
+                                                                <form:errors path="price" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -211,8 +222,9 @@
                                                             <label class="col-sm-3 col-form-label">Length
                                                                 (mm)</label>
                                                             <div class="col-sm-9">
-                                                                <form:input type="text" class="form-control"
+                                                                <form:input type="number" class="form-control"
                                                                     path="length" />
+                                                                <form:errors path="length" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -221,8 +233,9 @@
                                                             <label class="col-sm-3 col-form-label">Width
                                                                 (mm)</label>
                                                             <div class="col-sm-9">
-                                                                <form:input type="text" class="form-control"
+                                                                <form:input type="number" class="form-control"
                                                                     path="width" />
+                                                                <form:errors path="width" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -231,8 +244,9 @@
                                                             <label class="col-sm-3 col-form-label">Height
                                                                 (mm)</label>
                                                             <div class="col-sm-9">
-                                                                <form:input type="text" class="form-control"
+                                                                <form:input type="number" class="form-control"
                                                                     path="height" />
+                                                                <form:errors path="height" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -242,8 +256,10 @@
                                                         <div class="form-group row">
                                                             <label class="col-sm-6 col-form-label">Description</label>
                                                             <div class="col-sm-12">
-                                                                <form:textarea class="form-control" rows="3"
+                                                                <form:textarea class="form-control" rows="10"
                                                                     path="description"></form:textarea>
+                                                                <form:errors path="description"
+                                                                    cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>

@@ -3,13 +3,14 @@
         <div class="row">
             <div class="col-xl-3 col-lg-2">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="/resources/client/images/logo.png" alt=""></a>
+                    <a href="/"><img src="/resources/client/images/BOOKS PARADISE.png" alt=""
+                            style="width: 100px;height: 50px;"></a>
                 </div>
             </div>
             <div class="col-xl-6 col-lg-7">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a href="./index.html">Home</a></li>
+                        <li class="active"><a href="/">Home</a></li>
                         <li><a href="#">Fiction</a>
                             <ul class="dropdown">
                                 <li><a href="./product-details.html">Adventure</a></li>

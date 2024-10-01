@@ -67,6 +67,7 @@
                                                         <div class="col-sm-9">
                                                             <form:input type="text" class="form-control"
                                                                 path="firstName" />
+                                                            <form:errors path="firstName" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -76,6 +77,7 @@
                                                         <div class="col-sm-9">
                                                             <form:input type="text" class="form-control"
                                                                 path="lastName" />
+                                                            <form:errors path="lastName" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -97,6 +99,7 @@
                                                         <label class="col-sm-3 col-form-label">Email</label>
                                                         <div class="col-sm-9">
                                                             <form:input type="text" class="form-control" path="email" />
+                                                            <form:errors path="email" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -107,6 +110,7 @@
                                                         <label class="col-sm-3 col-form-label">Phone number</label>
                                                         <div class="col-sm-9">
                                                             <form:input type="tel" class="form-control" path="phone" />
+                                                            <form:errors path="phone" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -116,8 +120,8 @@
                                                         <div class="col-sm-9">
                                                             <form:select class="form-control" id="ls_province"
                                                                 name="ls_province" path="province">
-
                                                             </form:select>
+                                                            <form:errors path="province" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -129,8 +133,8 @@
                                                         <div class="col-sm-9">
                                                             <form:select class="form-control" id="ls_district"
                                                                 name="ls_district" path="district">
-
                                                             </form:select>
+                                                            <form:errors path="province" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -140,8 +144,8 @@
                                                         <div class="col-sm-9">
                                                             <form:select class="form-control" id="ls_ward"
                                                                 name="ls_ward" path="ward">
-
                                                             </form:select>
+                                                            <form:errors path="province" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -153,6 +157,7 @@
                                                         <div class="col-sm-9">
                                                             <form:input type="text" class="form-control"
                                                                 path="address" />
+                                                            <form:errors path="address" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>

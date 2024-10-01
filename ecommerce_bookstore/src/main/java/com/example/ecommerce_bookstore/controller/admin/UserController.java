@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.domain.dto.UserDTO;
 import com.example.ecommerce_bookstore.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
@@ -40,8 +43,11 @@ public class UserController {
 
     // Create user
     @PostMapping("/admin/users/create")
-    public String postCreateUser(@ModelAttribute("userDTO") UserDTO userDTO,
+    public String postCreateUser(@ModelAttribute("userDTO") @Valid UserDTO userDTO, BindingResult result,
             @RequestParam("fileImage") MultipartFile fileImage) throws IOException {
+        if (result.hasErrors()) {
+            return "admin/users/create";
+        }
         this.userService.createUser(userDTO, fileImage);
         return "redirect:/admin/users";
     }
@@ -51,13 +57,19 @@ public class UserController {
     public String getUpdateUserPage(@PathVariable("id") long id, Model model) {
         User user = this.userService.getUserById(id).get();
         model.addAttribute("modelUser", user);
+        model.addAttribute("userAvatar", user.getAvatar());
         return "admin/users/update";
     }
 
     // Update user
     @PostMapping("/admin/users/update")
-    public String postUpdateUser(@ModelAttribute("modelUser") User modelUser,
-            @RequestParam("fileImage") MultipartFile fileImage) throws IOException {
+    public String postUpdateUser(@ModelAttribute("modelUser") @Valid User modelUser, BindingResult result,
+            @RequestParam("fileImage") MultipartFile fileImage, Model model) throws IOException {
+        if (result.hasErrors()) {
+            User user = this.userService.getUserById(modelUser.getId()).get();
+            model.addAttribute("userAvatar", user.getAvatar());
+            return "admin/users/update";
+        }
         this.userService.updateUser(modelUser, fileImage);
         return "redirect:/admin/users";
     }

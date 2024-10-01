@@ -66,8 +66,6 @@
                                                         <th class="text-center"> Name </th>
                                                         <th class="text-center"> Author </th>
                                                         <th class="text-center"> Publisher </th>
-                                                        <th class="text-center"> Format </th>
-                                                        <th class="text-center"> Price </th>
                                                         <th class="text-center"> Stock </th>
                                                         <th class="text-center"> Action </th>
                                                     </tr>
@@ -76,7 +74,7 @@
                                                     <c:forEach var="product" items="${products}">
                                                         <tr class="text-center">
                                                             <td> ${product.id} </td>
-                                                            <td>
+                                                            <td style="width: 50px;">
                                                                 <div
                                                                     style="float:left;padding-left:5%;max-width:100%;overflow:hidden;text-overflow:ellipsis;">
                                                                     <img src="/resources/admin/images/product/${product.image}"
@@ -86,8 +84,6 @@
                                                             </td>
                                                             <td> ${product.author} </td>
                                                             <td> ${product.publisher} </td>
-                                                            <td> ${product.format} </td>
-                                                            <td> ${product.price} </td>
                                                             <td> ${product.quantity} </td>
                                                             <td>
                                                                 <a class="badge badge-outline-success"

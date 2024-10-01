@@ -9,14 +9,24 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
+
+import com.example.ecommerce_bookstore.service.validator.IsbnChecker;
+import com.example.ecommerce_bookstore.service.validator.PublishedYearChecker;
 
 @Entity
 @Table(name = "Products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @OneToMany(mappedBy = "product")
     private List<CartDetail> cartDetails;
@@ -28,44 +38,66 @@ public class Product {
     @JoinColumn(name = "categoryDetail_id")
     private CategoryDetail categoryDetail;
 
+    @NotEmpty(message = "Name is required")
     private String name;
 
     private String image;
 
+    @NotEmpty(message = "Author is required")
     private String author;
 
+    @NotEmpty(message = "Publisher is required")
     private String publisher;
 
-    private double price;
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
+    private Double price;
 
     private String format;
 
-    private int quantity;
+    @NotNull(message = "Quantity is required")
+    @Min(value = 0, message = "Quantity must be greater than or equal to 0")
+    private Integer quantity;
 
-    private int sold;
+    private Integer sold;
 
+    @NotEmpty(message = "ISBN is required")
+    @IsbnChecker
     private String ISBN;
 
-    private String publishedYear;
+    @NotNull(message = "Published year is required")
+    @PublishedYearChecker
+    private Integer publishedYear;
 
-    private int numberOfPages;
+    @NotNull(message = "Number of pages is required")
+    @DecimalMin(value = "0", inclusive = false, message = "Number of pages must be greater than 0")
+    private Integer numberOfPages;
 
-    private int weight;
+    @NotNull(message = "Weight is required")
+    @DecimalMin(value = "0", inclusive = false, message = "Weight must be greater than 0")
+    private Integer weight;
 
-    private int length;
+    @NotNull(message = "Length is required")
+    @DecimalMin(value = "0", inclusive = false, message = "Length must be greater than 0")
+    private Integer length;
 
-    private int width;
+    @NotNull(message = "Width is required")
+    @DecimalMin(value = "0", inclusive = false, message = "Width must be greater than 0")
+    private Integer width;
 
-    private int height;
+    @NotNull(message = "Height is required")
+    @DecimalMin(value = "0", inclusive = false, message = "Height must be greater than 0")
+    private Integer height;
 
     @Column(columnDefinition = "TEXT")
+    @NotEmpty(message = "Description is required")
     private String description;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -125,11 +157,11 @@ public class Product {
         this.publisher = publisher;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -141,28 +173,20 @@ public class Product {
         this.format = format;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public int getSold() {
+    public Integer getSold() {
         return sold;
     }
 
-    public void setSold(int sold) {
+    public void setSold(Integer sold) {
         this.sold = sold;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getISBN() {
@@ -173,52 +197,60 @@ public class Product {
         ISBN = iSBN;
     }
 
-    public String getPublishedYear() {
+    public Integer getPublishedYear() {
         return publishedYear;
     }
 
-    public void setPublishedYear(String publishedYear) {
+    public void setPublishedYear(Integer publishedYear) {
         this.publishedYear = publishedYear;
     }
 
-    public int getNumberOfPages() {
+    public Integer getNumberOfPages() {
         return numberOfPages;
     }
 
-    public void setNumberOfPages(int numberOfPages) {
+    public void setNumberOfPages(Integer numberOfPages) {
         this.numberOfPages = numberOfPages;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 
-    public int getLength() {
+    public Integer getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(Integer length) {
         this.length = length;
     }
 
-    public int getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(Integer width) {
         this.width = width;
     }
 
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

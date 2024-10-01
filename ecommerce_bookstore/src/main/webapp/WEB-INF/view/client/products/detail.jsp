@@ -7,7 +7,7 @@
     <meta name="keywords" content="Ashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ashion | Template</title>
+    <title>${product.name}</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
@@ -63,9 +63,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="#">Women’s </a>
-                        <span>Essential structured blazer</span>
+                        <a href="/"><i class="fa fa-home"></i> Home</a>
+                        <a href="#" style="text-transform: capitalize;">${product.categoryDetail.category.displayName}
+                        </a>
+                        <a href="#" style="text-transform: capitalize;">${product.categoryDetail.displayName} </a>
+                        <span>${product.name}</span>
                     </div>
                 </div>
             </div>
@@ -77,20 +79,31 @@
     <section class="product-details spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="product__details__pic">
                         <div class="product__details__slider__content">
                             <img data-hash="product-1" class="product__big__img"
-                                src="/resources/client/images/product/details/product-1.jpg" alt="">
+                                src="/resources/admin/images/product/${product.image}" alt="">
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-8">
                     <div class="product__details__text">
-                        <h3>Essential structured blazer <span>Brand: SKMEIMore Men Watches from SKMEI</span></h3>
-                        <div class="product__details__price">$ 75.0</div>
-                        <p>Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur
-                            magni lores eos qui ratione voluptatem sequi nesciunt.</p>
+                        <h3>${product.name}
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col" style="padding-left: 0px;">
+                                        <span>Author: <b>${product.author}</b></span>
+                                        <span>Pulisher: <b>${product.publisher}</b></span>
+                                    </div>
+                                    <div class="col" style="padding-left: 0px;">
+                                        <span>Published year: <b>${product.publishedYear}</b></span>
+                                        <span>Format: <b>${product.format}</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </h3>
+                        <div class="product__details__price">$ ${product.price}</div>
                         <div class="product__details__button">
                             <div class="quantity">
                                 <span>Quantity:</span>
@@ -100,116 +113,61 @@
                             </div>
                             <a href="#" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</a>
                         </div>
-                        <div class="product__details__widget">
-                            <ul>
-                                <li>
-                                    <span>Availability:</span>
-                                    <div class="stock__checkbox">
-                                        <label for="stockin">
-                                            In Stock
-                                            <input type="checkbox" id="stockin">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Available color:</span>
-                                    <div class="color__checkbox">
-                                        <label for="red">
-                                            <input type="radio" name="color__radio" id="red" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="black">
-                                            <input type="radio" name="color__radio" id="black">
-                                            <span class="checkmark black-bg"></span>
-                                        </label>
-                                        <label for="grey">
-                                            <input type="radio" name="color__radio" id="grey">
-                                            <span class="checkmark grey-bg"></span>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Available size:</span>
-                                    <div class="size__btn">
-                                        <label for="xs-btn" class="active">
-                                            <input type="radio" id="xs-btn">
-                                            xs
-                                        </label>
-                                        <label for="s-btn">
-                                            <input type="radio" id="s-btn">
-                                            s
-                                        </label>
-                                        <label for="m-btn">
-                                            <input type="radio" id="m-btn">
-                                            m
-                                        </label>
-                                        <label for="l-btn">
-                                            <input type="radio" id="l-btn">
-                                            l
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Promotions:</span>
-                                    <p>Free shipping</p>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="product__details__tab">
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 15px;">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews ( 2 )</a>
-                            </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <h6>Description</h6>
-                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
-                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
-                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
-                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
-                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
-                                    consequat massa quis enim.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-                                    quis, sem.</p>
+                                <p>${product.description}</p>
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <h6>Specification</h6>
-                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
-                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
-                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
-                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
-                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
-                                    consequat massa quis enim.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-                                    quis, sem.</p>
-                            </div>
-                            <div class="tab-pane" id="tabs-3" role="tabpanel">
-                                <h6>Reviews ( 2 )</h6>
-                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
-                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
-                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
-                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
-                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
-                                    consequat massa quis enim.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
-                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
-                                    quis, sem.</p>
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <th>ISBN</th>
+                                            <td>${product.ISBN}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Author</th>
+                                            <td>${product.author}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Publisher</th>
+                                            <td>${product.publisher}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Published year</th>
+                                            <td>${product.publishedYear}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Weight</th>
+                                            <td>${product.weight}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Product dimensions</th>
+                                            <td>${product.length} x ${product.width} x ${product.height}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Number of pages</th>
+                                            <td>${product.numberOfPages}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Format</th>
+                                            <td>${product.format}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

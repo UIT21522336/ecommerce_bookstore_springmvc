@@ -15,7 +15,7 @@ import java.util.List;
 public class CategoryDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
 
@@ -28,11 +28,11 @@ public class CategoryDetail {
     @OneToMany(mappedBy = "categoryDetail")
     private List<Product> products;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,4 +67,6 @@ public class CategoryDetail {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+    
 }

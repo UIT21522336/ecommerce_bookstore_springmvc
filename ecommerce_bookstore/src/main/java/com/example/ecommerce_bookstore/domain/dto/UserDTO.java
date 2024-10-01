@@ -1,22 +1,40 @@
 package com.example.ecommerce_bookstore.domain.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class UserDTO {
+
+    @NotEmpty(message = "First name is required")
+    @Size(max = 50, message = "First name must have at least 1 character")
     private String firstName;
 
+    @NotEmpty(message = "Last name is required")
+    @Size(max = 50, message = "Last name must have at least 1 character")
     private String lastName;
 
     private String gender;
 
+    @NotEmpty(message = "Email is required")
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
+    @NotEmpty(message = "Phone number is required")
+    @Pattern(regexp = "(?:\\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\\d]+|$)", message = "Phone number is not valid")
     private String phone;
 
+    @NotEmpty(message = "Province is required")
     private String province;
 
+    @NotEmpty(message = "District is required")
     private String district;
 
+    @NotEmpty(message = "Ward is required is required")
     private String ward;
 
+    @NotEmpty(message = "Address is required")
     private String address;
 
     private String avatar;

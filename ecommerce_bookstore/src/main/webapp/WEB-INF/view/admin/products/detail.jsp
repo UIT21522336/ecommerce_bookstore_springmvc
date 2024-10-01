@@ -195,7 +195,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-6 col-form-label">Description</label>
                                                     <div class="col-sm-12">
-                                                        <textarea class="form-control" rows="8"
+                                                        <textarea class="form-control" rows="10"
                                                             style="background-color: #2A3038;" disabled>${product.description}
                                                         </textarea>
                                                     </div>

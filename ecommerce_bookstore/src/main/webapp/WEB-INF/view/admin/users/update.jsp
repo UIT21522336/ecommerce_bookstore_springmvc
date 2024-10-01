@@ -57,7 +57,7 @@
                                                 enctype="multipart/form-data" modelAttribute="modelUser">
                                                 <div class="row mb-5" style="text-align:center;">
                                                     <div id="previewImage" style="margin:auto;">
-                                                        <img src="/resources/admin/images/avatar/${modelUser.avatar}"
+                                                        <img src="/resources/admin/images/avatar/${userAvatar}"
                                                             style="height: 200px;width: 200px;">
                                                     </div>
                                                 </div>
@@ -68,6 +68,7 @@
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
                                                                     path="fullName" />
+                                                                <form:errors path="fullName" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -77,7 +78,7 @@
                                                             <div class="col-sm-9">
                                                                 <form:select class="form-control" path="gender">
                                                                     <form:option value="Male"
-                                                                        selected="${gender.equals('Female') ? 'selected' : '' }">
+                                                                        selected="${gender.equals('Male') ? 'selected' : '' }">
                                                                         Male</form:option>
                                                                     <form:option value="Female"
                                                                         selected="${gender.equals('Female') ? 'selected' : '' }">
@@ -94,7 +95,7 @@
                                                             <label class="col-sm-3 col-form-label">Email</label>
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
-                                                                    disabled="true" style="background-color: #2A3038;"
+                                                                    readonly="true" style="background-color: #2A3038;"
                                                                     path="email" />
                                                             </div>
                                                         </div>
@@ -106,6 +107,7 @@
                                                             <div class="col-sm-9">
                                                                 <form:input type="tel" class="form-control"
                                                                     path="phone" />
+                                                                <form:errors path="phone" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -147,7 +149,6 @@
                                                             <div class="col-sm-9">
                                                                 <form:select class="form-control" name="ls_ward"
                                                                     id="ls_ward" path="ward">
-
                                                                 </form:select>
                                                             </div>
                                                         </div>
@@ -158,6 +159,7 @@
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
                                                                     path="address" />
+                                                                <form:errors path="address" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -178,7 +180,7 @@
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
                                                                     style="background-color: #2A3038;" path="role.name"
-                                                                    disabled="true" />
+                                                                    readonly="true" />
                                                             </div>
                                                         </div>
                                                     </div>

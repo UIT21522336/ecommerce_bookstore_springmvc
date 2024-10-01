@@ -9,6 +9,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -17,7 +21,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
@@ -29,14 +33,19 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Cart cart;
 
+    @NotEmpty(message = "Full name is required")
+    @Size(max = 50, message = "Full name must have at least 1 character")
     private String fullName;
 
     private String email;
 
+    @NotEmpty(message = "Phone number is required")
+    @Pattern(regexp = "(?:\\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\\d]+|$)", message = "Phone number is not valid")
     private String phone;
 
     private String avatar;
 
+    @NotEmpty(message = "Address is required")
     private String address;
 
     private String province;
@@ -47,11 +56,11 @@ public class User {
 
     private String gender;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -119,14 +128,6 @@ public class User {
         this.address = address;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public String getProvince() {
         return province;
     }
@@ -150,4 +151,13 @@ public class User {
     public void setWard(String ward) {
         this.ward = ward;
     }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
 }

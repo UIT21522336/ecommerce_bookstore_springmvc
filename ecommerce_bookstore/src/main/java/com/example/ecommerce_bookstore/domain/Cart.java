@@ -15,7 +15,7 @@ import java.util.List;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -24,15 +24,15 @@ public class Cart {
     @OneToMany(mappedBy = "cart")
     private List<CartDetail> cartDetails;
 
-    private int sum;
+    private Integer sum;
 
-    private double totalPrice;
+    private Double totalPrice;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,19 +52,20 @@ public class Cart {
         this.cartDetails = cartDetails;
     }
 
-    public int getSum() {
+    public Integer getSum() {
         return sum;
     }
 
-    public void setSum(int sum) {
+    public void setSum(Integer sum) {
         this.sum = sum;
     }
 
-    public double getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
+
 }
