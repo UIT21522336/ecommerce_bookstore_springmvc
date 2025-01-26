@@ -1,0 +1,19 @@
+
+
+INSERT INTO ecommerce_bookstore.roles(NAME) VALUES("CLIENT");
+INSERT INTO ecommerce_bookstore.roles(NAME) VALUES("ADMIN");
+
+
+insert into ecommerce_bookstore.categories(name,display_name) values("FICTION","Fiction");
+insert into ecommerce_bookstore.categories(name,display_name) values("NON-FICTION","Non-Fiction");
+insert into ecommerce_bookstore.categories(name,display_name) values("CHILDREN'S","Children's");
+
+
+INSERT INTO ecommerce_bookstore.category_details(category_id,name,display_name)  VALUES(1,"ADVENTURE","Adventure");
+INSERT INTO ecommerce_bookstore.category_details(category_id,name,display_name)  VALUES(1,"BIOGRAPHICAL","Biographical");
+INSERT INTO ecommerce_bookstore.category_details(category_id,name,display_name)  VALUES(1,"CLASSIC-FICTION","Classic Fiction");
+INSERT INTO ecommerce_bookstore.category_details(category_id,name,display_name)  VALUES(2,"ART-FASHION-PHOTOGRAPHY","Art, Fashion & Photography");
+INSERT INTO ecommerce_bookstore.category_details(category_id,name,display_name)  VALUES(2,"BUSINESS-FINANCE-LAW","Business, Finance & Law");
+INSERT INTO ecommerce_bookstore.category_details(category_id,name,display_name)  VALUES(2,"BIOGRAPHY-TRUESTORIES","Biography & True stories");
+INSERT INTO ecommerce_bookstore.category_details(category_id,name,display_name)  VALUES(3,"ACTIVITY","Activity Books");
+INSERT INTO ecommerce_bookstore.category_details(category_id,name,display_name)  VALUES(3,"BABY-TODDLER","Baby & Toddler");
