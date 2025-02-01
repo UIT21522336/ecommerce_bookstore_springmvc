@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.ecommerce_bookstore.domain.Role;
 import com.example.ecommerce_bookstore.domain.User;
+import com.example.ecommerce_bookstore.domain.dto.RegisterUserDTO;
+import com.example.ecommerce_bookstore.domain.dto.UpdateUserDTO;
 import com.example.ecommerce_bookstore.domain.dto.UserDTO;
 import com.example.ecommerce_bookstore.repository.RoleRepository;
 import com.example.ecommerce_bookstore.repository.UserRepository;
@@ -25,50 +27,92 @@ public class UserService {
         this.imageService = imageService;
     }
 
-    public User userDtoToUser(UserDTO userDTO) {
+    // mapper: UpdateUserDTO to User
+    public User updateUserDtoToUser(UpdateUserDTO updateUserDTO) {
         User user = new User();
-        user.setFullName(userDTO.getFirstName() + " " + userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        user.setPhone(userDTO.getPhone());
-        user.setAvatar(userDTO.getAvatar());
-        user.setAddress(userDTO.getAddress());
-        user.setGender(userDTO.getGender());
-        user.setProvince(userDTO.getProvince());
-        user.setDistrict(userDTO.getDistrict());
-        user.setWard(userDTO.getWard());
+        user.setId(updateUserDTO.getId());
+        user.setFullName(updateUserDTO.getFirstName() + " " + updateUserDTO.getLastName());
+        user.setEmail(updateUserDTO.getEmail());
+        user.setPhone(updateUserDTO.getPhone());
+        user.setAvatar(updateUserDTO.getAvatar());
+        user.setAddress(updateUserDTO.getAddress());
+        user.setGender(updateUserDTO.getGender());
+        user.setProvince(updateUserDTO.getProvince());
+        user.setDistrict(updateUserDTO.getDistrict());
+        user.setWard(updateUserDTO.getWard());
+        user.setPassword(updateUserDTO.getPassword());
         Role role = new Role();
-        role = this.roleRepository.findByName(userDTO.getRole());
+        role = this.roleRepository.findByName(updateUserDTO.getRole());
         user.setRole(role);
         return user;
     }
 
-    public void createUser(UserDTO userDTO, MultipartFile fileImage) throws IOException {
+    // mapper: RegisterUserDTO to User
+    public User registerUserDtoToUser(RegisterUserDTO registerUserDTO) {
+        User user = new User();
+        user.setFullName(registerUserDTO.getFirstName() + " " + registerUserDTO.getLastName());
+        user.setEmail(registerUserDTO.getEmail());
+        user.setPhone(registerUserDTO.getPhone());
+        user.setAvatar(registerUserDTO.getAvatar());
+        user.setAddress(registerUserDTO.getAddress());
+        user.setGender(registerUserDTO.getGender());
+        user.setProvince(registerUserDTO.getProvince());
+        user.setDistrict(registerUserDTO.getDistrict());
+        user.setWard(registerUserDTO.getWard());
+        user.setPassword(registerUserDTO.getPassword());
+        Role role = new Role();
+        role = this.roleRepository.findByName(registerUserDTO.getRole());
+        user.setRole(role);
+        return user;
+    }
+
+    // mapper: User to UpdateUserDTO
+    public UpdateUserDTO userToUpdateUserDto(User user) {
+        UpdateUserDTO updateUserDTO = new UpdateUserDTO();
+        updateUserDTO.setId(user.getId());
+        updateUserDTO.setAvatar(user.getAvatar());
+        updateUserDTO.setFirstName(user.getFullName().substring(0, user.getFullName().lastIndexOf(" ")));
+        updateUserDTO.setLastName(user.getFullName().substring(user.getFullName().lastIndexOf(" ") + 1));
+        updateUserDTO.setGender(user.getGender());
+        updateUserDTO.setEmail(user.getEmail());
+        updateUserDTO.setPhone(user.getPhone());
+        updateUserDTO.setProvince(user.getProvince());
+        updateUserDTO.setDistrict(user.getDistrict());
+        updateUserDTO.setWard(user.getWard());
+        updateUserDTO.setAddress(user.getAddress());
+        updateUserDTO.setRole(user.getRole().getName());
+        updateUserDTO.setPassword("");
+        updateUserDTO.setConfirmPassword("");
+        return updateUserDTO;
+    }
+
+    public void createUser(RegisterUserDTO registerUserDTO, MultipartFile fileImage) throws IOException {
         // save image to local directory
         String uploadDirectory = "src/main/webapp/resources/admin/images/avatar";
         String imageString = imageService.saveImageToStorage(uploadDirectory, fileImage);
 
-        userDTO.setAvatar(imageString);
-        User user = userDtoToUser(userDTO);
+        registerUserDTO.setAvatar(imageString);
+        User user = registerUserDtoToUser(registerUserDTO);
         user = this.userRepository.save(user);
     }
 
     public void updateUser(User modelUser, MultipartFile fileImage) throws IOException {
-        // find user in dtb by id
+        // find user in db by id
         User user = getUserById(modelUser.getId()).get();
         user.setAddress(modelUser.getAddress());
         user.setGender(modelUser.getGender());
         user.setFullName(modelUser.getFullName());
         user.setPhone(modelUser.getPhone());
-        if (modelUser.getProvince() != null) {
+
+        if (modelUser.getProvince() != null && modelUser.getDistrict() != null && modelUser.getWard() != null) {
             user.setProvince(modelUser.getProvince());
-        }
-        if (modelUser.getDistrict() != null) {
             user.setDistrict(modelUser.getDistrict());
-        }
-        if (modelUser.getWard() != null) {
             user.setWard(modelUser.getWard());
         }
 
+        if (modelUser.getPassword() != "") {
+            user.setPassword(modelUser.getPassword());
+        }
         if (!fileImage.isEmpty()) {
             // delete old image from local directory
             this.imageService.deleteImage("src/main/webapp/resources/admin/images/avatar",
@@ -103,6 +147,14 @@ public class UserService {
 
     public Optional<User> getUserById(long id) {
         return this.userRepository.findById(id);
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
+
+    public boolean checkExistUserByEmail(String email) {
+        return this.userRepository.existsByEmail(email);
     }
 
 }

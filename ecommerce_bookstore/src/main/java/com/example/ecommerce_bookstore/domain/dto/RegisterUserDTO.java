@@ -1,7 +1,7 @@
 package com.example.ecommerce_bookstore.domain.dto;
 
-import com.example.ecommerce_bookstore.service.validator.ValidRegisterUser;
 import com.example.ecommerce_bookstore.service.validator.StrongPassword;
+import com.example.ecommerce_bookstore.service.validator.ValidRegisterUser;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @ValidRegisterUser
-public class UserDTO {
+public class RegisterUserDTO {
 
     @NotEmpty(message = "First name is required")
     @Size(max = 50, message = "First name must have at least 1 character")
@@ -155,5 +155,4 @@ public class UserDTO {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-
 }

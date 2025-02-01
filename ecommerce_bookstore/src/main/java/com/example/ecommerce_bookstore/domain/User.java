@@ -16,6 +16,8 @@ import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
+import com.example.ecommerce_bookstore.service.validator.StrongPassword;
+
 @Entity
 @Table(name = "Users")
 public class User {
@@ -55,6 +57,9 @@ public class User {
     private String ward;
 
     private String gender;
+
+    @StrongPassword
+    private String password;
 
     public Long getId() {
         return id;
@@ -158,6 +163,14 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

@@ -53,7 +53,8 @@
                                     <div class="card-body">
                                         <h4 class="card-title">Create user</h4>
                                         <form:form class="form-sample" action="/admin/users/create"
-                                            enctype="multipart/form-data" method="post" modelAttribute="userDTO">
+                                            enctype="multipart/form-data" method="post"
+                                            modelAttribute="registerUserDTO">
                                             <div class="row mb-5" style="text-align:center;">
                                                 <div id="previewImage" style="margin:auto;">
                                                     <img src="https://media.istockphoto.com/id/1142192548/vector/man-avatar-profile-male-face-silhouette-or-icon-isolated-on-white-background-vector.jpg?s=612x612&w=0&k=20&c=DUKuRxK9OINHXt3_4m-GxraeoDDlhNuCbA9hp6FotFE="
@@ -134,7 +135,7 @@
                                                             <form:select class="form-control" id="ls_district"
                                                                 name="ls_district" path="district">
                                                             </form:select>
-                                                            <form:errors path="province" cssClass="text-danger" />
+                                                            <form:errors path="district" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -145,7 +146,7 @@
                                                             <form:select class="form-control" id="ls_ward"
                                                                 name="ls_ward" path="ward">
                                                             </form:select>
-                                                            <form:errors path="province" cssClass="text-danger" />
+                                                            <form:errors path="ward" cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -180,6 +181,30 @@
                                                                 <option>CLIENT</option>
                                                                 <option>ADMIN</option>
                                                             </form:select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Password</label>
+                                                        <div class="col-sm-9">
+                                                            <form:input type="password" class="form-control"
+                                                                path="password" />
+                                                            <form:errors path="password" cssClass="text-danger" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-3 col-form-label">Confirm
+                                                            password</label>
+                                                        <div class="col-sm-9">
+                                                            <form:input type="password" class="form-control"
+                                                                path="confirmPassword" />
+                                                            <form:errors path="confirmPassword"
+                                                                cssClass="text-danger" />
                                                         </div>
                                                     </div>
                                                 </div>

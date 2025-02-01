@@ -1,15 +1,18 @@
 package com.example.ecommerce_bookstore.domain.dto;
 
-import com.example.ecommerce_bookstore.service.validator.ValidRegisterUser;
 import com.example.ecommerce_bookstore.service.validator.StrongPassword;
+import com.example.ecommerce_bookstore.service.validator.ValidUpdateUser;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-@ValidRegisterUser
-public class UserDTO {
+@ValidUpdateUser
+public class UpdateUserDTO {
+
+    private long id;
 
     @NotEmpty(message = "First name is required")
     @Size(max = 50, message = "First name must have at least 1 character")
@@ -29,13 +32,10 @@ public class UserDTO {
     @Pattern(regexp = "(?:\\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\\d]+|$)", message = "Phone number is not valid")
     private String phone;
 
-    @NotEmpty(message = "Province is required")
     private String province;
 
-    @NotEmpty(message = "District is required")
     private String district;
 
-    @NotEmpty(message = "Ward is required")
     private String ward;
 
     @NotEmpty(message = "Address is required")
@@ -45,12 +45,18 @@ public class UserDTO {
 
     private String role;
 
-    @NotEmpty(message = "Password is required")
     @StrongPassword
     private String password;
 
-    @NotEmpty(message = "Confirm password is required")
     private String confirmPassword;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

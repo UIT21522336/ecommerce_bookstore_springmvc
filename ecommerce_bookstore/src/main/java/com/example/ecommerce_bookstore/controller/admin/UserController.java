@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.ecommerce_bookstore.domain.User;
-import com.example.ecommerce_bookstore.domain.dto.UserDTO;
+import com.example.ecommerce_bookstore.domain.dto.RegisterUserDTO;
+import com.example.ecommerce_bookstore.domain.dto.UpdateUserDTO;
 import com.example.ecommerce_bookstore.service.UserService;
 
 import jakarta.validation.Valid;
@@ -26,7 +27,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    // View user detail
+    // View user detail page
     @GetMapping("/admin/users/detail/{id}")
     public String getDetailUserPage(@PathVariable("id") long id, Model model) {
         User user = this.userService.getUserById(id).get();
@@ -37,18 +38,19 @@ public class UserController {
     // View create user page
     @GetMapping("/admin/users/create")
     public String getCreateUserPage(Model model) {
-        model.addAttribute("userDTO", new UserDTO());
+        model.addAttribute("registerUserDTO", new RegisterUserDTO());
         return "admin/users/create";
     }
 
     // Create user
     @PostMapping("/admin/users/create")
-    public String postCreateUser(@ModelAttribute("userDTO") @Valid UserDTO userDTO, BindingResult result,
+    public String postCreateUser(@ModelAttribute("registerUserDTO") @Valid RegisterUserDTO registerUserDTO,
+            BindingResult result,
             @RequestParam("fileImage") MultipartFile fileImage) throws IOException {
         if (result.hasErrors()) {
             return "admin/users/create";
         }
-        this.userService.createUser(userDTO, fileImage);
+        this.userService.createUser(registerUserDTO, fileImage);
         return "redirect:/admin/users";
     }
 
@@ -56,21 +58,30 @@ public class UserController {
     @GetMapping("/admin/users/update/{id}")
     public String getUpdateUserPage(@PathVariable("id") long id, Model model) {
         User user = this.userService.getUserById(id).get();
-        model.addAttribute("modelUser", user);
-        model.addAttribute("userAvatar", user.getAvatar());
+        UpdateUserDTO newUser = this.userService.userToUpdateUserDto(user);
+        model.addAttribute("updateUserDTO", newUser);
+        model.addAttribute("avatar", newUser.getAvatar());
+        model.addAttribute("district", user.getDistrict());
+        model.addAttribute("province", user.getProvince());
+        model.addAttribute("ward", user.getWard());
         return "admin/users/update";
     }
 
     // Update user
     @PostMapping("/admin/users/update")
-    public String postUpdateUser(@ModelAttribute("modelUser") @Valid User modelUser, BindingResult result,
+    public String postUpdateUser(@ModelAttribute("updateUserDTO") @Valid UpdateUserDTO updateUserDTO,
+            BindingResult result,
             @RequestParam("fileImage") MultipartFile fileImage, Model model) throws IOException {
         if (result.hasErrors()) {
-            User user = this.userService.getUserById(modelUser.getId()).get();
-            model.addAttribute("userAvatar", user.getAvatar());
+            User user = this.userService.getUserByEmail(updateUserDTO.getEmail()).get();
+            model.addAttribute("district", user.getDistrict());
+            model.addAttribute("province", user.getProvince());
+            model.addAttribute("ward", user.getWard());
+            model.addAttribute("avatar", user.getAvatar());
             return "admin/users/update";
         }
-        this.userService.updateUser(modelUser, fileImage);
+        User user = this.userService.updateUserDtoToUser(updateUserDTO);
+        this.userService.updateUser(user, fileImage);
         return "redirect:/admin/users";
     }
 
@@ -82,6 +93,7 @@ public class UserController {
         return "admin/users/delete";
     }
 
+    // Delete user
     @PostMapping("/admin/users/delete")
     public String postDeleteUser(@ModelAttribute("modelUser") User modelUser) throws IOException {
         this.userService.deleteUser(modelUser);

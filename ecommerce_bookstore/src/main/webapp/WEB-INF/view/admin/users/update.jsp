@@ -54,24 +54,36 @@
                                         <div class="card-body">
                                             <h4 class="card-title">Update user</h4>
                                             <form:form class="form-sample" method="post" action="/admin/users/update"
-                                                enctype="multipart/form-data" modelAttribute="modelUser">
+                                                enctype="multipart/form-data" modelAttribute="updateUserDTO">
                                                 <div class="row mb-5" style="text-align:center;">
                                                     <div id="previewImage" style="margin:auto;">
-                                                        <img src="/resources/admin/images/avatar/${userAvatar}"
+                                                        <img src="/resources/admin/images/avatar/${avatar}"
                                                             style="height: 200px;width: 200px;">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
-                                                            <label class="col-sm-3 col-form-label">Full Name</label>
+                                                            <label class="col-sm-3 col-form-label">First Name</label>
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
-                                                                    path="fullName" />
-                                                                <form:errors path="fullName" cssClass="text-danger" />
+                                                                    path="firstName" />
+                                                                <form:errors path="firstName" cssClass="text-danger" />
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Last Name</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="text" class="form-control"
+                                                                    path="lastName" />
+                                                                <form:errors path="lastName" cssClass="text-danger" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Gender</label>
@@ -88,8 +100,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Email</label>
@@ -100,6 +110,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Phone number
@@ -111,14 +123,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">
                                                                 Province
                                                                 (Current:
-                                                                ${modelUser.province})</label>
+                                                                ${province})</label>
                                                             <div class="col-sm-9">
                                                                 <form:select class="form-control" name="ls_province"
                                                                     id="ls_province" path="province">
@@ -126,12 +136,15 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">
                                                                 District
                                                                 (Current:
-                                                                ${modelUser.district})</label>
+                                                                ${district})
+                                                            </label>
                                                             <div class="col-sm-9">
                                                                 <form:select class="form-control" name="ls_district"
                                                                     id="ls_district" path="district">
@@ -139,13 +152,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Ward
                                                                 (Current:
-                                                                ${modelUser.ward})</label>
+                                                                ${ward})</label>
                                                             <div class="col-sm-9">
                                                                 <form:select class="form-control" name="ls_ward"
                                                                     id="ls_ward" path="ward">
@@ -153,6 +164,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Address</label>
@@ -163,8 +176,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Avatar</label>
@@ -174,18 +185,43 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group row">
                                                             <label class="col-sm-3 col-form-label">Role</label>
                                                             <div class="col-sm-9">
                                                                 <form:input type="text" class="form-control"
-                                                                    style="background-color: #2A3038;" path="role.name"
+                                                                    style="background-color: #2A3038;" path="role"
                                                                     readonly="true" />
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Password</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="password" class="form-control"
+                                                                    path="password" />
+                                                                <form:errors path="password" cssClass="text-danger" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-3 col-form-label">Confirm
+                                                                password</label>
+                                                            <div class="col-sm-9">
+                                                                <form:input type="password" class="form-control"
+                                                                    path="confirmPassword" />
+                                                                <form:errors path="confirmPassword"
+                                                                    cssClass="text-danger" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-6" style="text-align:center;">
                                                         <div class="form-group row">

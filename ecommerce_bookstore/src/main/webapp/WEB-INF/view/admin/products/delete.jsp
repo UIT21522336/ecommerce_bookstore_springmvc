@@ -53,9 +53,6 @@
                                 <div class="col-12 grid-margin">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="card-title">Users list</h4>
-                                            </div>
                                             <div class="alert alert-danger" role="alert">
                                                 Are you sure you want to delete this product?
                                             </div>
