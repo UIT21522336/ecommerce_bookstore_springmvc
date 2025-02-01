@@ -1,5 +1,6 @@
 package com.example.ecommerce_bookstore.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,11 +21,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ImageService imageService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, ImageService imageService) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, ImageService imageService,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.imageService = imageService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // mapper: UpdateUserDTO to User
@@ -59,7 +63,7 @@ public class UserService {
         user.setProvince(registerUserDTO.getProvince());
         user.setDistrict(registerUserDTO.getDistrict());
         user.setWard(registerUserDTO.getWard());
-        user.setPassword(registerUserDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
         Role role = new Role();
         role = this.roleRepository.findByName(registerUserDTO.getRole());
         user.setRole(role);
@@ -111,7 +115,7 @@ public class UserService {
         }
 
         if (modelUser.getPassword() != "") {
-            user.setPassword(modelUser.getPassword());
+            user.setPassword(passwordEncoder.encode(modelUser.getPassword()));
         }
         if (!fileImage.isEmpty()) {
             // delete old image from local directory
