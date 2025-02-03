@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.example.ecommerce_bookstore.domain.Product;
 import com.example.ecommerce_bookstore.service.ProductService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomepageController {
@@ -31,6 +32,11 @@ public class HomepageController {
     @GetMapping("/register")
     public String getRegisterPage() {
         return "client/auth/register";
+    }
+
+    @GetMapping("/access-denied")
+    public String getAccessDeniedPage() {
+        return "client/auth/accessDenied";
     }
 
 }
