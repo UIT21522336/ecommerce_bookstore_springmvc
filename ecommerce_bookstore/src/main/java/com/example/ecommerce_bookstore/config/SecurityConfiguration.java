@@ -1,5 +1,6 @@
 package com.example.ecommerce_bookstore.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.example.ecommerce_bookstore.service.CustomUserDetailsService;
 import com.example.ecommerce_bookstore.service.UserService;
@@ -18,6 +20,11 @@ import jakarta.servlet.DispatcherType;
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(UserService userService) {
+        return new CustomAuthenticationSuccessHandler(userService);
+    }
 
     @Bean
     public UserDetailsService userDetailService(UserService userService) {
@@ -38,7 +45,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, UserService userService) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
@@ -47,6 +54,7 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .successHandler(authenticationSuccessHandler(userService))
                         .permitAll())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login"))
