@@ -49,8 +49,12 @@ public class SecurityConfiguration {
                         .loginPage("/login")
                         .permitAll())
                 .logout(logout -> logout
-                        .permitAll())
-                .exceptionHandling(ex -> ex.accessDeniedPage("/access-denied"));
+                        .logoutSuccessUrl("/login"))
+                .exceptionHandling(ex -> ex.accessDeniedPage("/access-denied"))
+                .sessionManagement(sessionManagement -> sessionManagement
+                        .maximumSessions(1)
+                        .expiredUrl("/logout?expired"));
+
         return http.build();
     }
 }
