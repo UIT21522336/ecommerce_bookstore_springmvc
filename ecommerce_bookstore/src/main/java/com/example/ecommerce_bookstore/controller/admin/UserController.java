@@ -30,7 +30,7 @@ public class UserController {
     // View user detail page
     @GetMapping("/admin/users/detail/{id}")
     public String getDetailUserPage(@PathVariable("id") long id, Model model) {
-        User user = this.userService.getUserById(id).get();
+        User user = this.userService.getById(id).get();
         model.addAttribute("user", user);
         return "admin/users/detail";
     }
@@ -57,7 +57,7 @@ public class UserController {
     // View update user page
     @GetMapping("/admin/users/update/{id}")
     public String getUpdateUserPage(@PathVariable("id") long id, Model model) {
-        User user = this.userService.getUserById(id).get();
+        User user = this.userService.getById(id).get();
         UpdateUserDTO newUser = this.userService.userToUpdateUserDto(user);
         model.addAttribute("updateUserDTO", newUser);
         model.addAttribute("avatar", newUser.getAvatar());
@@ -73,7 +73,7 @@ public class UserController {
             BindingResult result,
             @RequestParam("fileImage") MultipartFile fileImage, Model model) throws IOException {
         if (result.hasErrors()) {
-            User user = this.userService.getUserByEmail(updateUserDTO.getEmail()).get();
+            User user = this.userService.getByEmail(updateUserDTO.getEmail()).get();
             model.addAttribute("district", user.getDistrict());
             model.addAttribute("province", user.getProvince());
             model.addAttribute("ward", user.getWard());
@@ -88,7 +88,7 @@ public class UserController {
     // View delete user page
     @GetMapping("/admin/users/delete/{id}")
     public String getDeleteUserPage(@PathVariable("id") long id, Model model) {
-        User user = this.userService.getUserById(id).get();
+        User user = this.userService.getById(id).get();
         model.addAttribute("modelUser", user);
         return "admin/users/delete";
     }

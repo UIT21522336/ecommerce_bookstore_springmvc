@@ -3,12 +3,10 @@ package com.example.ecommerce_bookstore.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.example.ecommerce_bookstore.domain.Role;
 import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.domain.dto.RegisterUserDTO;
 import com.example.ecommerce_bookstore.domain.dto.UpdateUserDTO;
-import com.example.ecommerce_bookstore.domain.dto.UserDTO;
 import com.example.ecommerce_bookstore.repository.RoleRepository;
 import com.example.ecommerce_bookstore.repository.UserRepository;
 
@@ -29,6 +27,7 @@ public class UserService {
         this.roleRepository = roleRepository;
         this.imageService = imageService;
         this.passwordEncoder = passwordEncoder;
+
     }
 
     // mapper: UpdateUserDTO to User
@@ -102,7 +101,7 @@ public class UserService {
 
     public void updateUser(User modelUser, MultipartFile fileImage) throws IOException {
         // find user in db by id
-        User user = getUserById(modelUser.getId()).get();
+        User user = getById(modelUser.getId()).get();
         user.setAddress(modelUser.getAddress());
         user.setGender(modelUser.getGender());
         user.setFullName(modelUser.getFullName());
@@ -134,7 +133,7 @@ public class UserService {
 
     public void deleteUser(User modelUser) throws IOException {
         // find user in dtb by id
-        User user = getUserById(modelUser.getId()).get();
+        User user = getById(modelUser.getId()).get();
 
         // // delete avatar
         this.imageService.deleteImage("src/main/webapp/resources/admin/images/avatar",
@@ -145,15 +144,15 @@ public class UserService {
 
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAll() {
         return this.userRepository.findAll();
     }
 
-    public Optional<User> getUserById(long id) {
+    public Optional<User> getById(long id) {
         return this.userRepository.findById(id);
     }
 
-    public Optional<User> getUserByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         return this.userRepository.findByEmail(email);
     }
 

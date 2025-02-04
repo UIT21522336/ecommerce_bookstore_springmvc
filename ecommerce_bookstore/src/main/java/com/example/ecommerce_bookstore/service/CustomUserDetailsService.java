@@ -1,12 +1,6 @@
 package com.example.ecommerce_bookstore.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        com.example.ecommerce_bookstore.domain.User user = this.userService.getUserByEmail(username).get();
+        com.example.ecommerce_bookstore.domain.User user = this.userService.getByEmail(username).get();
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

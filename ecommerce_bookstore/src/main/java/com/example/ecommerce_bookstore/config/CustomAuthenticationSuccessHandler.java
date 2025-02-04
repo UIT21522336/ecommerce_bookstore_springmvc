@@ -66,7 +66,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             return;
         } else {
             String username = authentication.getName();
-            User user = this.userService.getUserByEmail(username).get();
+            User user = this.userService.getByEmail(username).get();
+            session.setAttribute("user_id", user.getId());
             session.setAttribute("fullName", user.getFullName());
             session.setAttribute("avatar", user.getAvatar());
         }

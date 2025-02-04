@@ -27,7 +27,7 @@ public class DashboardController {
 
     @GetMapping("/admin/users")
     public String getUsersPage(Model model) {
-        List<User> users = this.userService.getAllUsers();
+        List<User> users = this.userService.getAll();
         model.addAttribute("users", users);
         return "admin/users/table";
     }

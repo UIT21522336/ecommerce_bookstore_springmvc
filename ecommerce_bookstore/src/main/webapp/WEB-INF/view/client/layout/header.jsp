@@ -12,7 +12,7 @@
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="/">Home</a></li>
+                            <li><a href="/">Home</a></li>
                             <li><a href="/products/FICTION">Fiction</a>
                                 <ul class="dropdown">
                                     <li><a href="/products/FICTION/ADVENTURE">Adventure</a></li>
@@ -60,13 +60,15 @@
                                 </div>
                             </c:otherwise>
                         </c:choose>
-                        <ul class="header__right__widget" style="margin-top: 15px;">
-                            <li><span class="icon_search search-switch"></span></li>
-                            <li><a href="#"><span class="icon_bag_alt"></span>
-                                    <div class="tip">2</div>
-                                </a></li>
-                            <li><i class="bi bi-receipt-cutoff"></i></li>
-                        </ul>
+                        <c:if test="${not empty pageContext.request.userPrincipal}">
+                            <ul class="header__right__widget" style="margin-top: 15px;">
+                                <li><span class="icon_search search-switch"></span></li>
+                                <li><a href="/cart"><span class="icon_bag_alt"></span>
+                                        <div class="tip">2</div>
+                                    </a></li>
+                                <li><i class="bi bi-receipt-cutoff"></i></li>
+                            </ul>
+                        </c:if>
                     </div>
                 </div>
             </div>

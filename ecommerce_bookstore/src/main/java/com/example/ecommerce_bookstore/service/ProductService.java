@@ -6,21 +6,34 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.ecommerce_bookstore.domain.Cart;
+import com.example.ecommerce_bookstore.domain.CartDetail;
 import com.example.ecommerce_bookstore.domain.CategoryDetail;
 import com.example.ecommerce_bookstore.domain.Product;
+import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.repository.ProductRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
     private final ImageService imageService;
     private final CategoryDetailService categoryDetailService;
+    private final UserService userService;
+    private final CartService cartService;
+    private final CartDetailService cartDetailService;
 
     public ProductService(ProductRepository productRepository, ImageService imageService,
-            CategoryDetailService categoryDetailService) {
+            CategoryDetailService categoryDetailService, UserService userService, CartService cartService,
+            CartDetailService cartDetailService) {
         this.productRepository = productRepository;
         this.imageService = imageService;
         this.categoryDetailService = categoryDetailService;
+        this.userService = userService;
+        this.cartService = cartService;
+        this.cartDetailService = cartDetailService;
     }
 
     public void createProduct(Product product, MultipartFile fileImage) throws IOException {
@@ -39,7 +52,7 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
-    public List<Product> getByCategoryDetail(CategoryDetail categoryDetail){
+    public List<Product> getByCategoryDetail(CategoryDetail categoryDetail) {
         return this.productRepository.findByCategoryDetail(categoryDetail);
     }
 
@@ -90,5 +103,21 @@ public class ProductService {
         // delete image from local
         this.imageService.deleteImage("src/main/webapp/resources/admin/images/product", product.getImage());
         this.productRepository.delete(product);
+    }
+
+    public void addToCart(HttpServletRequest request, long id) {
+        HttpSession session = request.getSession(false);
+        Product product = getById(id).get();
+        User user = this.userService.getById((long) session.getAttribute("id")).get();
+        Cart cart = this.cartService.getByUser(user);
+        if (cart == null) {
+            Cart newCart = new Cart();
+            newCart.setUser(user);
+            newCart.setSum(0);
+            newCart.setTotalPrice((double) 0);
+            this.cartService.createCart(newCart);
+            cart = newCart;
+        }
+        CartDetail cartDetail = this.cartDetailService.getByProduct(product);
     }
 }

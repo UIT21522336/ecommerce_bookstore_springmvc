@@ -9,25 +9,39 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.example.ecommerce_bookstore.domain.Cart;
 import com.example.ecommerce_bookstore.domain.Category;
 import com.example.ecommerce_bookstore.domain.CategoryDetail;
 import com.example.ecommerce_bookstore.domain.Product;
+import com.example.ecommerce_bookstore.domain.User;
+import com.example.ecommerce_bookstore.service.CartService;
 import com.example.ecommerce_bookstore.service.CategoryDetailService;
 import com.example.ecommerce_bookstore.service.CategoryService;
 import com.example.ecommerce_bookstore.service.ProductService;
+import com.example.ecommerce_bookstore.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class ProductController {
     private final ProductService productService;
     private final CategoryDetailService categoryDetailService;
     private final CategoryService categoryService;
+    private final UserService userService;
+    private final CartService cartService;
 
     public ProductController(ProductService productService, CategoryDetailService categoryDetailService,
-            CategoryService categoryService) {
+            CategoryService categoryService, UserService userService, CartService cartService) {
         this.productService = productService;
         this.categoryDetailService = categoryDetailService;
         this.categoryService = categoryService;
+        this.cartService = cartService;
+        this.userService = userService;
     }
 
     @GetMapping("/products/{category}/{category-detail}/details/{id}")
@@ -81,6 +95,18 @@ public class ProductController {
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("listCategoriesDetails", listCategoriesDetails);
         return "client/products/listing-category-details";
+    }
+
+    // Get cart page
+    @GetMapping("/cart")
+    public String getCartPage() {
+        return "client/cart/cart";
+    }
+
+    @PostMapping("/products/add-to-cart/{id}")
+    public String addProductToCart(@PathVariable("id") long id, HttpServletRequest request) {
+        
+        return "client/homepage/homepage";
     }
 
 }
