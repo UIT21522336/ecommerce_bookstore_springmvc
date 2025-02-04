@@ -20,7 +20,7 @@ public class Category {
     private String displayName;
 
     @OneToMany(mappedBy = "category")
-    private List<CategoryDetail> categories;
+    private List<CategoryDetail> categoriesDetails;
 
     public Long getId() {
         return id;
@@ -46,12 +46,12 @@ public class Category {
         this.displayName = displayName;
     }
 
-    public List<CategoryDetail> getCategories() {
-        return categories;
+    public List<CategoryDetail> getCategoriesDetails() {
+        return categoriesDetails;
     }
 
-    public void setCategories(List<CategoryDetail> categories) {
-        this.categories = categories;
+    public void setCategories(List<CategoryDetail> categoriesDetails) {
+        this.categoriesDetails = categoriesDetails;
     }
 
 }

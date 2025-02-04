@@ -39,8 +39,8 @@ public class ItemController {
     @GetMapping("/admin/products/create")
     public String getCreateProductPage(Model model) {
         model.addAttribute("modelProduct", new Product());
-        List<Category> categories = this.categoryService.getAllCategories();
-        List<CategoryDetail> categoryDetails = this.categoryDetailService.getAllCategoryDetails();
+        List<Category> categories = this.categoryService.getAll();
+        List<CategoryDetail> categoryDetails = this.categoryDetailService.getAll();
         model.addAttribute("categoryDetails", categoryDetails);
         model.addAttribute("categories", categories);
         return "admin/products/create";
@@ -50,8 +50,8 @@ public class ItemController {
     public String postCreateProduct(@ModelAttribute("modelProduct") @Valid Product product, BindingResult result,
             @RequestParam("fileImage") MultipartFile fileImage, Model model) throws IOException {
         if (result.hasErrors()) {
-            List<Category> categories = this.categoryService.getAllCategories();
-            List<CategoryDetail> categoryDetails = this.categoryDetailService.getAllCategoryDetails();
+            List<Category> categories = this.categoryService.getAll();
+            List<CategoryDetail> categoryDetails = this.categoryDetailService.getAll();
             model.addAttribute("categoryDetails", categoryDetails);
             model.addAttribute("categories", categories);
             return "admin/products/create";
@@ -62,18 +62,18 @@ public class ItemController {
 
     @GetMapping("/admin/products/detail/{id}")
     public String getDetailProductPage(@PathVariable("id") long id, Model model) {
-        Product product = this.productService.getProductById(id).get();
+        Product product = this.productService.getById(id).get();
         model.addAttribute("product", product);
         return "admin/products/detail";
     }
 
     @GetMapping("/admin/products/update/{id}")
     public String getUpdateProductPage(@PathVariable("id") long id, Model model) {
-        List<Category> categories = this.categoryService.getAllCategories();
-        List<CategoryDetail> categoryDetails = this.categoryDetailService.getAllCategoryDetails();
+        List<Category> categories = this.categoryService.getAll();
+        List<CategoryDetail> categoryDetails = this.categoryDetailService.getAll();
         model.addAttribute("categoryDetails", categoryDetails);
         model.addAttribute("categories", categories);
-        Product product = this.productService.getProductById(id).get();
+        Product product = this.productService.getById(id).get();
         model.addAttribute("modelProduct", product);
         model.addAttribute("productImage", product.getImage());
         return "admin/products/update";
@@ -83,28 +83,28 @@ public class ItemController {
     public String postUpdateProduct(@ModelAttribute("modelProduct") @Valid Product modelProduct, BindingResult result,
             @RequestParam("fileImage") MultipartFile fileImage, Model model) throws IOException {
         if (result.hasErrors()) {
-            List<Category> categories = this.categoryService.getAllCategories();
-            List<CategoryDetail> categoryDetails = this.categoryDetailService.getAllCategoryDetails();
+            List<Category> categories = this.categoryService.getAll();
+            List<CategoryDetail> categoryDetails = this.categoryDetailService.getAll();
             model.addAttribute("categoryDetails", categoryDetails);
             model.addAttribute("categories", categories);
-            Product product = this.productService.getProductById(modelProduct.getId()).get();
+            Product product = this.productService.getById(modelProduct.getId()).get();
             model.addAttribute("productImage", product.getImage());
             return "admin/products/update";
         }
-        this.productService.updateProduct(modelProduct, fileImage);
+        this.productService.update(modelProduct, fileImage);
         return "redirect:/admin/products";
     }
 
     @GetMapping("/admin/products/delete/{id}")
     public String getDeleteProductPage(@PathVariable("id") long id, Model model) {
-        Product product = this.productService.getProductById(id).get();
+        Product product = this.productService.getById(id).get();
         model.addAttribute("modelProduct", product);
         return "admin/products/delete";
     }
 
     @PostMapping("/admin/products/delete")
     public String postDeleteProduct(@ModelAttribute("modelProduct") Product modelProduct) throws IOException {
-        this.productService.deleteProduct(modelProduct);
+        this.productService.delete(modelProduct);
         return "redirect:/admin/products";
     }
 

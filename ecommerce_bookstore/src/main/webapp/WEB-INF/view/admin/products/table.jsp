@@ -66,6 +66,7 @@
                                                         <th class="text-center"> Name </th>
                                                         <th class="text-center"> Author </th>
                                                         <th class="text-center"> Publisher </th>
+                                                        <th class="text-center"> Category </th>
                                                         <th class="text-center"> Stock </th>
                                                         <th class="text-center"> Action </th>
                                                     </tr>
@@ -84,6 +85,8 @@
                                                             </td>
                                                             <td> ${product.author} </td>
                                                             <td> ${product.publisher} </td>
+                                                            <td>${product.categoryDetail.category.displayName} -
+                                                                ${product.categoryDetail.displayName}</td>
                                                             <td> ${product.quantity} </td>
                                                             <td>
                                                                 <a class="badge badge-outline-success"

@@ -31,10 +31,7 @@
             <body>
                 <div class="container-scroller">
                     <!-- partial:partials/_sidebar.html -->
-
                     <jsp:include page="../layout/sidebar.jsp" />
-
-
                     <!-- partial -->
                     <div class="container-fluid page-body-wrapper">
                         <!-- partial:partials/_navbar.html -->
@@ -206,7 +203,7 @@
                                                                 <label class="col-sm-3 col-form-label">Price</label>
                                                                 <div class="col-sm-9">
                                                                     <form:input type="number" class="form-control"
-                                                                        step="0.1" path="price" />
+                                                                        step="0.01" path="price" />
                                                                     <form:errors path="price" cssClass="text-danger" />
                                                                 </div>
                                                             </div>

@@ -54,6 +54,7 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .failureUrl("/login?error")
                         .successHandler(authenticationSuccessHandler(userService))
                         .permitAll())
                 .logout(logout -> logout

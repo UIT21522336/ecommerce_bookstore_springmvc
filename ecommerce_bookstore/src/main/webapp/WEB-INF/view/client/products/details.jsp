@@ -64,9 +64,11 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
                         <a href="/"><i class="fa fa-home"></i> Home</a>
-                        <a href="#" style="text-transform: capitalize;">${product.categoryDetail.category.displayName}
+                        <a href="/products/${product.categoryDetail.category.name}"
+                            style="text-transform: capitalize;">${product.categoryDetail.category.displayName}
                         </a>
-                        <a href="#" style="text-transform: capitalize;">${product.categoryDetail.displayName} </a>
+                        <a href="/products/${product.categoryDetail.category.name}/${product.categoryDetail.name}"
+                            style="text-transform: capitalize;">${product.categoryDetail.displayName} </a>
                         <span>${product.name}</span>
                     </div>
                 </div>

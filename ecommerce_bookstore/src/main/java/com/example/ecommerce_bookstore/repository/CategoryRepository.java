@@ -5,5 +5,7 @@ import java.util.List;
 import com.example.ecommerce_bookstore.domain.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    public List<Category> findAll();
+    List<Category> findAll();
+
+    Category findByName(String name);
 }

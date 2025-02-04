@@ -19,7 +19,7 @@ public class HomepageController {
 
     @GetMapping("")
     public String getHomepage(Model model) {
-        List<Product> products = productService.getAllProducts();
+        List<Product> products = this.productService.getTop4ByOrderByIdAsc();
         model.addAttribute("products", products);
         return "client/homepage/homepage";
     }

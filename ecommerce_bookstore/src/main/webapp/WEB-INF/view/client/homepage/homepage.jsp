@@ -32,105 +32,63 @@
             <div class="loader"></div>
         </div>
 
-        <!-- Offcanvas Menu Begin -->
-        <div class="offcanvas-menu-overlay"></div>
-        <div class="offcanvas-menu-wrapper">
-            <div class="offcanvas__close">+</div>
-            <ul class="offcanvas__widget">
-                <li><span class="icon_search search-switch"></span></li>
-                <li><a href="#"><span class="icon_heart_alt"></span>
-                        <div class="tip">2</div>
-                    </a></li>
-                <li><a href="#"><span class="icon_bag_alt"></span>
-                        <div class="tip">2</div>
-                    </a></li>
-            </ul>
-            <div class="offcanvas__logo">
-                <a href="./index.html"><img src="/resources/client/images/logo.png" alt=""></a>
-            </div>
-            <div id="mobile-menu-wrap"></div>
-            <div class="offcanvas__auth">
-                <a href="#">Login</a>
-                <a href="#">Register</a>
-            </div>
-        </div>
-        <!-- Offcanvas Menu End -->
-
         <jsp:include page="../layout/header.jsp" />
 
         <!-- Categories Section Begin -->
-        <section class="categories">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-6 p-0">
-                        <div class="categories__item categories__large__item set-bg"
-                            data-setbg="/resources/client/images/categories/category-15.jpg">
-                            <div class="categories__text">
-                                <h1>Women’s fashion</h1>
-                                <p>Sitamet, consectetur adipiscing elit, sed do eiusmod tempor incidid-unt labore
-                                    edolore magna aliquapendisse ultrices gravida.</p>
-                                <a href="#">Shop now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                                <div class="categories__item set-bg"
-                                    data-setbg="/resources/client/images/categories/category-2.jpg">
-                                    <div class="categories__text">
-                                        <h4>Men’s fashion</h4>
-                                        <p>358 items</p>
-                                        <a href="#">Shop now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                                <div class="categories__item set-bg"
-                                    data-setbg="/resources/client/images/categories/category-3.jpg">
-                                    <div class="categories__text">
-                                        <h4>Kid’s fashion</h4>
-                                        <p>273 items</p>
-                                        <a href="#">Shop now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                                <div class="categories__item set-bg"
-                                    data-setbg="/resources/client/images/categories/category-4.jpg">
-                                    <div class="categories__text">
-                                        <h4>Cosmetics</h4>
-                                        <p>159 items</p>
-                                        <a href="#">Shop now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 p-0">
-                                <div class="categories__item set-bg"
-                                    data-setbg="/resources/client/images/categories/category-5.jpg">
-                                    <div class="categories__text">
-                                        <h4>Accessories</h4>
-                                        <p>792 items</p>
-                                        <a href="#">Shop now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <img src="/resources/client/images/categories/31877_GlobalNav_50OffVSM_02_01_25.jpg" style="width: 100%;"
+            alt="Online Only! 50% Off Hundreds of Hardcover Books.  Shop Now ">
         <!-- Categories Section End -->
 
         <!-- Product Section Begin -->
         <section class="product spad">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-4">
+                <div class="row d-flex justify-content-between">
+                    <div>
                         <div class="section-title">
-                            <h4>New product</h4>
+                            <h4>Just Annouced</h4>
                         </div>
                     </div>
+                    <a href="#">See all</a>
+                </div>
+                <div class="row property__gallery">
+                    <c:forEach var="product" items="${products}">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mix">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg"
+                                    data-setbg="/resources/admin/images/product/${product.image}">
+                                    <ul class="product__hover">
+                                        <li><a href="/resources/admin/images/product/${product.image}"
+                                                class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6
+                                        style="max-width:100%;height:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                                        <a
+                                            href="/products/${product.categoryDetail.category.name}/${product.categoryDetail.name}/details/${product.id}">${product.name}</a>
+                                        <div class="product__price">$ ${product.price}</div>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </section>
+
+        <img src="/resources/client/images/categories/31638_SkinnyHero_OnyxStorm_01_29_25.jpg"
+            style="width: 100%;height: auto;" alt="Online Only! 50% Off Hundreds of Hardcover Books.  Shop Now ">
+
+        <section class="product spad">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div>
+                        <div class="section-title">
+                            <h4>Our best fiction books</h4>
+                        </div>
+                    </div>
+                    <a href="#">See all</a>
                 </div>
                 <div class="row property__gallery">
                     <c:forEach var="product" items="${products}">
@@ -148,8 +106,8 @@
                                     <h6
                                         style="max-width:100%;height:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                         <a href="/products/detail/${product.id}">${product.name}</a>
+                                        <div class="product__price">$ ${product.price}</div>
                                     </h6>
-                                    <div class="product__price">$ ${product.price}</div>
                                 </div>
                             </div>
                         </div>
@@ -157,6 +115,48 @@
                 </div>
             </div>
         </section>
+
+        <img src="/resources/client/images/categories/31753_SkinnyHero_BlackHistory_02_01_25.jpg"
+            style="width: 100%;height: auto;" alt="Online Only! 50% Off Hundreds of Hardcover Books.  Shop Now ">
+
+        <section class="product spad">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div>
+                        <div class="section-title">
+                            <h4>Our best non-fiction books</h4>
+                        </div>
+                    </div>
+                    <a href="#">See all</a>
+                </div>
+                <div class="row property__gallery">
+                    <c:forEach var="product" items="${products}">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mix">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg"
+                                    data-setbg="/resources/admin/images/product/${product.image}">
+                                    <ul class="product__hover">
+                                        <li><a href="/resources/admin/images/product/${product.image}"
+                                                class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6
+                                        style="max-width:100%;height:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                                        <a href="/products/detail/${product.id}">${product.name}</a>
+                                        <div class="product__price">$ ${product.price}</div>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+        </section>
+
+        <img src="/resources/client/images/categories/31877_GlobalNav_50OffVSM_02_01_25.jpg"
+            alt="Online Only! 50% Off Hundreds of Hardcover Books.  Shop Now ">
         <!-- Product Section End -->
 
         <!-- Trend Section Begin -->

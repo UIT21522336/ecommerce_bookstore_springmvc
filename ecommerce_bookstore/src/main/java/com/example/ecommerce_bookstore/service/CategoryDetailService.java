@@ -3,6 +3,7 @@ package com.example.ecommerce_bookstore.service;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+import com.example.ecommerce_bookstore.domain.Category;
 import com.example.ecommerce_bookstore.domain.CategoryDetail;
 import com.example.ecommerce_bookstore.repository.CategoryDetailRepository;
 
@@ -14,11 +15,15 @@ public class CategoryDetailService {
         this.categoryDetailRepository = categoryDetailRepository;
     }
 
-    public List<CategoryDetail> getAllCategoryDetails() {
+    public List<CategoryDetail> getAll() {
         return this.categoryDetailRepository.findAll();
     }
 
-    public CategoryDetail getCategoryDetailByName(String name) {
+    public CategoryDetail getByName(String name) {
         return this.categoryDetailRepository.findByName(name);
+    }
+
+    public List<CategoryDetail> getByCategory(Category category) {
+        return this.categoryDetailRepository.findByCategory(category);
     }
 }

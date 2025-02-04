@@ -30,20 +30,28 @@ public class ProductService {
         product.setImage(imageString);
         // find categoryDetail by name
         CategoryDetail categoryDetail = this.categoryDetailService
-                .getCategoryDetailByName(product.getCategoryDetail().getName());
+                .getByName(product.getCategoryDetail().getName());
         product.setCategoryDetail(categoryDetail);
         product = this.productRepository.save(product);
     }
 
-    public List<Product> getAllProducts() {
+    public List<Product> getAll() {
         return this.productRepository.findAll();
     }
 
-    public Optional<Product> getProductById(long id) {
+    public List<Product> getByCategoryDetail(CategoryDetail categoryDetail){
+        return this.productRepository.findByCategoryDetail(categoryDetail);
+    }
+
+    public List<Product> getTop4ByOrderByIdAsc() {
+        return this.productRepository.findTop4ByOrderByIdAsc();
+    }
+
+    public Optional<Product> getById(long id) {
         return this.productRepository.findById(id);
     }
 
-    public void updateProduct(Product modelProduct, MultipartFile fileImage) throws IOException {
+    public void update(Product modelProduct, MultipartFile fileImage) throws IOException {
         Product product = this.productRepository.findById(modelProduct.getId()).get();
         if (!fileImage.isEmpty()) {
             // delete old image in local
@@ -65,7 +73,7 @@ public class ProductService {
         product.setISBN(modelProduct.getISBN());
         product.setPublishedYear(modelProduct.getPublishedYear());
         product.setCategoryDetail(
-                this.categoryDetailService.getCategoryDetailByName(modelProduct.getCategoryDetail().getName()));
+                this.categoryDetailService.getByName(modelProduct.getCategoryDetail().getName()));
         product.setQuantity(modelProduct.getQuantity());
         product.setNumberOfPages(modelProduct.getNumberOfPages());
         product.setWeight(modelProduct.getWeight());
@@ -77,7 +85,7 @@ public class ProductService {
         product = this.productRepository.save(product);
     }
 
-    public void deleteProduct(Product modelProduct) throws IOException {
+    public void delete(Product modelProduct) throws IOException {
         Product product = this.productRepository.findById(modelProduct.getId()).get();
         // delete image from local
         this.imageService.deleteImage("src/main/webapp/resources/admin/images/product", product.getImage());

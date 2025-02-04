@@ -34,7 +34,7 @@ public class DashboardController {
 
     @GetMapping("/admin/products")
     public String getProductsPage(Model model) {
-        List<Product> products = this.productService.getAllProducts();
+        List<Product> products = this.productService.getAll();
         model.addAttribute("products", products);
         return "admin/products/table";
     }
