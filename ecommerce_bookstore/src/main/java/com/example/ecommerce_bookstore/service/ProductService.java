@@ -151,4 +151,26 @@ public class ProductService {
 
         session.setAttribute("cartSum", cart.getSum());
     }
+
+    public void deleteFromCart(HttpServletRequest request, Product product) {
+        HttpSession session = request.getSession(false);
+        User user = this.userService.getById((long) session.getAttribute("user_id")).get();
+        Cart cart = this.cartService.getByUser(user);
+        CartDetail cartDetail = this.cartDetailService.getByCartAndProduct(cart, product);
+        int sum = cart.getSum() - cartDetail.getQuantity();
+        if (sum == 0) {
+            // delete cart detail
+            this.cartDetailService.delete(cartDetail);
+            // delete cart
+            this.cartService.delete(cart);
+            session.setAttribute("cartSum", 0);
+        } else if (sum > 0) {
+            cart.setSum(sum);
+            cart.setTotalPrice(cart.getTotalPrice() - cartDetail.getPrice());
+            this.cartService.update(cart);
+            this.cartDetailService.delete(cartDetail);
+            session.setAttribute("cartSum", cart.getSum());
+        }
+
+    }
 }

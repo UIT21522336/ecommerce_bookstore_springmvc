@@ -56,45 +56,59 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="shop__cart__table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Total</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach var="cartDetails" items="${listCartDetails}">
+                            <c:choose>
+                                <c:when test="${sessionScope.cartSum != 0}">
+                                    <div class="shop__cart__table">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="cartDetails" items="${listCartDetails}">
 
-                                            <tr>
-                                                <td class="cart__product__item">
-                                                    <img src="resources/admin/images/product/${cartDetails.product.image}"
-                                                        alt="" width="90" height="90">
-                                                    <div class="cart__product__item__title">
-                                                        <a
-                                                            href="/products/${cartDetails.product.categoryDetail.category.name}/${cartDetails.product.categoryDetail.name}/details/${cartDetails.product.id}">
-                                                            <h6>${cartDetails.product.name}</h6>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                                <td class="cart__price">${cartDetails.product.price} $
-                                                </td>
-                                                <td class="cart__quantity">
-                                                    <div class="pro-qty">
-                                                        <input type="text" value="${cartDetails.quantity}">
-                                                    </div>
-                                                </td>
-                                                <td class="cart__total">${cartDetails.price} $</td>
-                                                <td class="cart__close"><span class="icon_close"></span></td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
+                                                    <tr>
+                                                        <td class="cart__product__item">
+                                                            <img src="resources/admin/images/product/${cartDetails.product.image}"
+                                                                alt="" width="90" height="90">
+                                                            <div class="cart__product__item__title">
+                                                                <a
+                                                                    href="/products/${cartDetails.product.categoryDetail.category.name}/${cartDetails.product.categoryDetail.name}/details/${cartDetails.product.id}">
+                                                                    <h6>${cartDetails.product.name}</h6>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td class="cart__price">${cartDetails.product.price} $
+                                                        </td>
+                                                        <td class="cart__quantity">
+                                                            <div class="pro-qty">
+                                                                <input type="text" value="${cartDetails.quantity}">
+                                                            </div>
+                                                        </td>
+                                                        <td class="cart__total">${cartDetails.price} $</td>
+                                                        <form:form action="/delete-from-cart/${cartDetails.product.id}"
+                                                            method="POST">
+                                                            <td class="cart__close"><button type="submit"
+                                                                    style="all: unset; cursor: pointer;"><span
+                                                                        class="icon_close"></span></button></td>
+                                                        </form:form>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="alert alert-warning" role="alert">
+                                        No products in your cart.
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                     <div class="row">
@@ -103,11 +117,13 @@
                                 <a href="/">Continue Shopping</a>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="cart__btn update__btn">
-                                <a href="#"></span> Update cart</a>
+                        <c:if test="${sessionScope.cartSum != 0}">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="cart__btn update__btn">
+                                    <a href="#"></span> Update cart</a>
+                                </div>
                             </div>
-                        </div>
+                        </c:if>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
@@ -115,77 +131,22 @@
 
                             </div>
                         </div>
-                        <div class="col-lg-4 offset-lg-2">
-                            <div class="cart__total__procced">
-                                <h6>Cart total</h6>
-                                <ul>
-                                    <li>Subtotal <span>$ 750.0</span></li>
-                                    <li>Total <span>$ 750.0</span></li>
-                                </ul>
-                                <a href="#" class="primary-btn">Proceed to checkout</a>
+                        <c:if test="${sessionScope.cartSum != 0}">
+                            <div class="col-lg-4 offset-lg-2">
+                                <div class="cart__total__procced">
+                                    <h6>Cart total</h6>
+                                    <ul>
+                                        <li>Subtotal <span>$ 750.0</span></li>
+                                        <li>Total <span>$ 750.0</span></li>
+                                    </ul>
+                                    <a href="#" class="primary-btn">Proceed to checkout</a>
+                                </div>
                             </div>
-                        </div>
+                        </c:if>
                     </div>
                 </div>
             </section>
             <!-- Shop Cart Section End -->
-
-            <!-- Instagram Begin -->
-            <div class="instagram">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                            <div class="instagram__item set-bg" data-setbg="img/instagram/insta-1.jpg">
-                                <div class="instagram__text">
-                                    <i class="fa fa-instagram"></i>
-                                    <a href="#">@ ashion_shop</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                            <div class="instagram__item set-bg" data-setbg="img/instagram/insta-2.jpg">
-                                <div class="instagram__text">
-                                    <i class="fa fa-instagram"></i>
-                                    <a href="#">@ ashion_shop</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                            <div class="instagram__item set-bg" data-setbg="img/instagram/insta-3.jpg">
-                                <div class="instagram__text">
-                                    <i class="fa fa-instagram"></i>
-                                    <a href="#">@ ashion_shop</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                            <div class="instagram__item set-bg" data-setbg="img/instagram/insta-4.jpg">
-                                <div class="instagram__text">
-                                    <i class="fa fa-instagram"></i>
-                                    <a href="#">@ ashion_shop</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                            <div class="instagram__item set-bg" data-setbg="img/instagram/insta-5.jpg">
-                                <div class="instagram__text">
-                                    <i class="fa fa-instagram"></i>
-                                    <a href="#">@ ashion_shop</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-4 p-0">
-                            <div class="instagram__item set-bg" data-setbg="img/instagram/insta-6.jpg">
-                                <div class="instagram__text">
-                                    <i class="fa fa-instagram"></i>
-                                    <a href="#">@ ashion_shop</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Instagram End -->
 
             <jsp:include page="../layout/footer.jsp" />
 

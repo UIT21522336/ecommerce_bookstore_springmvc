@@ -16,4 +16,5 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
 
     CartDetail save(CartDetail cartDetail);
 
+    void delete(CartDetail cartDetail);
 }

@@ -32,4 +32,8 @@ public class CartDetailService {
     public void update(CartDetail cartDetail) {
         this.cartDetailRepository.save(cartDetail);
     }
+
+    public void delete(CartDetail cartDetail) {
+        this.cartDetailRepository.delete(cartDetail);
+    }
 }

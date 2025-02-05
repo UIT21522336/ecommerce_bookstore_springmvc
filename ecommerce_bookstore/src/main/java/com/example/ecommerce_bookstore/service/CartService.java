@@ -25,4 +25,8 @@ public class CartService {
     public void update(Cart cart){
         this.cartRepository.save(cart);
     }
+
+    public void delete(Cart cart){
+        this.cartRepository.delete(cart);
+    }
 }

@@ -127,4 +127,11 @@ public class ProductController {
         return "client/homepage/homepage";
     }
 
+    @PostMapping("/delete-from-cart/{id}")
+    public String deleteProductFromCart(@PathVariable("id") long id, HttpServletRequest request) {
+        Product product = this.productService.getById(id).get();
+        this.productService.deleteFromCart(request, product);
+        return "redirect:/cart";
+    }
+
 }
