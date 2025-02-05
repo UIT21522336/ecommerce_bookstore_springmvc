@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="breadcrumb__links">
-                                <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                                <a href="/"><i class="fa fa-home"></i> Home</a>
                                 <span>Shopping cart</span>
                             </div>
                         </div>
@@ -68,98 +68,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="cart__product__item">
-                                                <img src="img/shop-cart/cp-1.jpg" alt="">
-                                                <div class="cart__product__item__title">
-                                                    <h6>Chain bucket bag</h6>
-                                                    <div class="rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                        <c:forEach var="cartDetails" items="${listCartDetails}">
+
+                                            <tr>
+                                                <td class="cart__product__item">
+                                                    <img src="resources/admin/images/product/${cartDetails.product.image}"
+                                                        alt="" width="90" height="90">
+                                                    <div class="cart__product__item__title">
+                                                        <a
+                                                            href="/products/${cartDetails.product.categoryDetail.category.name}/${cartDetails.product.categoryDetail.name}/details/${cartDetails.product.id}">
+                                                            <h6>${cartDetails.product.name}</h6>
+                                                        </a>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="cart__price">$ 150.0</td>
-                                            <td class="cart__quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </td>
-                                            <td class="cart__total">$ 300.0</td>
-                                            <td class="cart__close"><span class="icon_close"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="cart__product__item">
-                                                <img src="img/shop-cart/cp-2.jpg" alt="">
-                                                <div class="cart__product__item__title">
-                                                    <h6>Zip-pockets pebbled tote briefcase</h6>
-                                                    <div class="rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
+                                                </td>
+                                                <td class="cart__price">${cartDetails.product.price} $
+                                                </td>
+                                                <td class="cart__quantity">
+                                                    <div class="pro-qty">
+                                                        <input type="text" value="${cartDetails.quantity}">
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="cart__price">$ 170.0</td>
-                                            <td class="cart__quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </td>
-                                            <td class="cart__total">$ 170.0</td>
-                                            <td class="cart__close"><span class="icon_close"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="cart__product__item">
-                                                <img src="img/shop-cart/cp-3.jpg" alt="">
-                                                <div class="cart__product__item__title">
-                                                    <h6>Black jean</h6>
-                                                    <div class="rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="cart__price">$ 85.0</td>
-                                            <td class="cart__quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </td>
-                                            <td class="cart__total">$ 170.0</td>
-                                            <td class="cart__close"><span class="icon_close"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="cart__product__item">
-                                                <img src="img/shop-cart/cp-4.jpg" alt="">
-                                                <div class="cart__product__item__title">
-                                                    <h6>Cotton Shirt</h6>
-                                                    <div class="rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="cart__price">$ 55.0</td>
-                                            <td class="cart__quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </td>
-                                            <td class="cart__total">$ 110.0</td>
-                                            <td class="cart__close"><span class="icon_close"></span></td>
-                                        </tr>
+                                                </td>
+                                                <td class="cart__total">${cartDetails.price} $</td>
+                                                <td class="cart__close"><span class="icon_close"></span></td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

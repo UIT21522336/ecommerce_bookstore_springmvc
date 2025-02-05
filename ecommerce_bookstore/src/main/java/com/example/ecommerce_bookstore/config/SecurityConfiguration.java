@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.example.ecommerce_bookstore.service.CartService;
 import com.example.ecommerce_bookstore.service.CustomUserDetailsService;
 import com.example.ecommerce_bookstore.service.UserService;
 
@@ -22,8 +23,8 @@ import jakarta.servlet.DispatcherType;
 public class SecurityConfiguration {
 
     @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler(UserService userService) {
-        return new CustomAuthenticationSuccessHandler(userService);
+    public AuthenticationSuccessHandler authenticationSuccessHandler(UserService userService, CartService cartService) {
+        return new CustomAuthenticationSuccessHandler(userService, cartService);
     }
 
     @Bean
@@ -45,7 +46,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, UserService userService) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, UserService userService, CartService cartService)
+            throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
@@ -55,7 +57,7 @@ public class SecurityConfiguration {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .failureUrl("/login?error")
-                        .successHandler(authenticationSuccessHandler(userService))
+                        .successHandler(authenticationSuccessHandler(userService, cartService))
                         .permitAll())
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login"))

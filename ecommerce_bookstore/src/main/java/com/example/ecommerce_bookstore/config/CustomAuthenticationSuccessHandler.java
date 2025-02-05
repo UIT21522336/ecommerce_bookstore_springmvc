@@ -12,7 +12,9 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.example.ecommerce_bookstore.domain.Cart;
 import com.example.ecommerce_bookstore.domain.User;
+import com.example.ecommerce_bookstore.service.CartService;
 import com.example.ecommerce_bookstore.service.UserService;
 
 import jakarta.servlet.ServletException;
@@ -23,10 +25,12 @@ import jakarta.servlet.http.HttpSession;
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final UserService userService;
+    private final CartService cartService;
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-    public CustomAuthenticationSuccessHandler(UserService userService) {
+    public CustomAuthenticationSuccessHandler(UserService userService, CartService cartService) {
         this.userService = userService;
+        this.cartService = cartService;
     }
 
     protected String determineTargetUrl(final Authentication authentication) {
@@ -67,6 +71,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         } else {
             String username = authentication.getName();
             User user = this.userService.getByEmail(username).get();
+            Cart cart = this.cartService.getByUser(user);
+            if (cart != null) {
+                session.setAttribute("cartSum", cart.getSum());
+            } else {
+                session.setAttribute("cartSum", 0);
+            }
             session.setAttribute("user_id", user.getId());
             session.setAttribute("fullName", user.getFullName());
             session.setAttribute("avatar", user.getAvatar());

@@ -18,7 +18,11 @@ public class CartService {
         return this.cartRepository.findByUser(user);
     }
 
-    public void createCart(Cart cart) {
+    public void create(Cart cart) {
+        this.cartRepository.save(cart);
+    }
+
+    public void update(Cart cart){
         this.cartRepository.save(cart);
     }
 }

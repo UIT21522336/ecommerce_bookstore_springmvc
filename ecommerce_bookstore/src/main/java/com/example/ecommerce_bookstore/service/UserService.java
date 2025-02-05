@@ -113,7 +113,7 @@ public class UserService {
             user.setWard(modelUser.getWard());
         }
 
-        if (modelUser.getPassword() != "") {
+        if (!modelUser.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(modelUser.getPassword()));
         }
         if (!fileImage.isEmpty()) {

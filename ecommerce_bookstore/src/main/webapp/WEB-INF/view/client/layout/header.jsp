@@ -64,7 +64,7 @@
                             <ul class="header__right__widget" style="margin-top: 15px;">
                                 <li><span class="icon_search search-switch"></span></li>
                                 <li><a href="/cart"><span class="icon_bag_alt"></span>
-                                        <div class="tip">2</div>
+                                        <div class="tip">${sessionScope.cartSum}</div>
                                     </a></li>
                                 <li><i class="bi bi-receipt-cutoff"></i></li>
                             </ul>

@@ -105,19 +105,50 @@ public class ProductService {
         this.productRepository.delete(product);
     }
 
-    public void addToCart(HttpServletRequest request, long id) {
+    public void addToCartFromPLP(HttpServletRequest request, Product product) {
         HttpSession session = request.getSession(false);
-        Product product = getById(id).get();
-        User user = this.userService.getById((long) session.getAttribute("id")).get();
+        User user = this.userService.getById((long) session.getAttribute("user_id")).get();
         Cart cart = this.cartService.getByUser(user);
         if (cart == null) {
             Cart newCart = new Cart();
             newCart.setUser(user);
             newCart.setSum(0);
             newCart.setTotalPrice((double) 0);
-            this.cartService.createCart(newCart);
+            this.cartService.create(newCart);
             cart = newCart;
         }
-        CartDetail cartDetail = this.cartDetailService.getByProduct(product);
+        CartDetail cartDetail = this.cartDetailService.getByCartAndProduct(cart, product);
+        if (cartDetail == null) {
+            CartDetail newCartDetail = new CartDetail();
+            newCartDetail.setCart(cart);
+            newCartDetail.setProduct(product);
+            newCartDetail.setQuantity(1);
+            newCartDetail.setPrice(newCartDetail.getQuantity() * product.getPrice());
+            this.cartDetailService.create(newCartDetail);
+            cartDetail = newCartDetail;
+        } else {
+            if (cartDetail.getQuantity() >= product.getQuantity()) {
+                cartDetail.setQuantity(product.getQuantity());
+                cartDetail.setPrice(cartDetail.getQuantity() * product.getPrice());
+                // redirect cart display error
+            } else {
+                cartDetail.setQuantity(cartDetail.getQuantity() + 1);
+                cartDetail.setPrice(cartDetail.getQuantity() * product.getPrice());
+            }
+            this.cartDetailService.update(cartDetail);
+        }
+        // update cart
+        int sum = 0;
+        double totalPrice = 0;
+        List<CartDetail> listCartDetails = this.cartDetailService.getByCart(cart);
+        for (CartDetail cartDetails : listCartDetails) {
+            sum = sum + cartDetails.getQuantity();
+            totalPrice = totalPrice + cartDetails.getPrice();
+        }
+        cart.setSum(sum);
+        cart.setTotalPrice(totalPrice);
+        this.cartService.update(cart);
+
+        session.setAttribute("cartSum", cart.getSum());
     }
 }

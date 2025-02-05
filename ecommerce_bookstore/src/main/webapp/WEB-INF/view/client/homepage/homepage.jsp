@@ -57,12 +57,15 @@
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg"
                                         data-setbg="/resources/admin/images/product/${product.image}">
-                                        <form:form action="/products/add-to-cart/${product.id}" method="POST">
+                                        <form:form action="/add-to-cart/${product.id}" method="POST">
                                             <ul class="product__hover">
                                                 <li><a href="/resources/admin/images/product/${product.image}"
                                                         class="image-popup"><span class="arrow_expand"></span></a></li>
-                                                <li><button type="submit" style="all: unset; cursor: pointer;"><a><span
-                                                                class="icon_bag_alt"></a></span></button></li>
+                                                <c:if test="${product.quantity != 0}">
+                                                    <li><button type="submit"
+                                                            style="all: unset; cursor: pointer;"><a><span
+                                                                    class="icon_bag_alt"></a></span></button></li>
+                                                </c:if>
                                             </ul>
                                         </form:form>
                                     </div>
@@ -71,7 +74,14 @@
                                             style="max-width:100%;height:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                             <a
                                                 href="/products/${product.categoryDetail.category.name}/${product.categoryDetail.name}/details/${product.id}">${product.name}</a>
-                                            <div class="product__price">$ ${product.price}</div>
+                                            <c:choose>
+                                                <c:when test="${product.quantity == 0}">
+                                                    <div style="color: red;">Out of stock</div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div class="product__price">$ ${product.price}</div>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </h6>
                                     </div>
                                 </div>
