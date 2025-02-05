@@ -105,7 +105,8 @@ public class ProductService {
         this.productRepository.delete(product);
     }
 
-    public void addToCartFromPLP(HttpServletRequest request, Product product) {
+    public int addToCartFromPLP(HttpServletRequest request, Product product) {
+        int var = 0;
         HttpSession session = request.getSession(false);
         User user = this.userService.getById((long) session.getAttribute("user_id")).get();
         Cart cart = this.cartService.getByUser(user);
@@ -130,7 +131,7 @@ public class ProductService {
             if (cartDetail.getQuantity() >= product.getQuantity()) {
                 cartDetail.setQuantity(product.getQuantity());
                 cartDetail.setPrice(cartDetail.getQuantity() * product.getPrice());
-                // redirect cart display error
+                var = 1;
             } else {
                 cartDetail.setQuantity(cartDetail.getQuantity() + 1);
                 cartDetail.setPrice(cartDetail.getQuantity() * product.getPrice());
@@ -150,6 +151,7 @@ public class ProductService {
         this.cartService.update(cart);
 
         session.setAttribute("cartSum", cart.getSum());
+        return var;
     }
 
     public void deleteFromCart(HttpServletRequest request, Product product) {

@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.example.ecommerce_bookstore.domain.Product;
 import com.example.ecommerce_bookstore.service.ProductService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomepageController {
