@@ -67,6 +67,12 @@
                                                 <b>${product.quantity}</b>
                                             </div>
                                         </c:if>
+                                        <c:if
+                                            test="${sessionScope.alertUpdateCart !=null && sessionScope.alertUpdateCart !=0}">
+                                            <div class="alert alert-danger" role="alert">
+                                                Please update your cart before proceeding to checkout!
+                                            </div>
+                                        </c:if>
                                         <div class="shop__cart__table">
                                             <table>
                                                 <thead>
@@ -79,7 +85,8 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach var="cartDetails" items="${listCartDetails}">
+                                                    <c:forEach var="cartDetails" items="${listCartDetails}"
+                                                        varStatus="status">
                                                         <tr>
                                                             <td class="cart__product__item">
                                                                 <img src="/resources/admin/images/product/${cartDetails.product.image}"
@@ -98,10 +105,16 @@
                                                             </td>
                                                             <td class="cart__quantity">
                                                                 <div class="pro-qty">
-                                                                    <input type="text" value="${cartDetails.quantity}">
+                                                                    <input type="text" value="${cartDetails.quantity}"
+                                                                        min="1" max="${cartDetails.product.quantity}"
+                                                                        cart-details-data-index="${status.index}">
                                                                 </div>
                                                             </td>
-                                                            <td class="cart__total">${cartDetails.price} $</td>
+                                                            <td class="cart__total">
+                                                                <fmt:formatNumber value="${cartDetails.price}"
+                                                                    type="number" minFractionDigits="2"
+                                                                    maxFractionDigits="2" />$
+                                                            </td>
                                                             <form:form
                                                                 action="/delete-from-cart/${cartDetails.product.id}"
                                                                 method="POST">
@@ -132,9 +145,22 @@
                             </div>
                             <c:if test="${sessionScope.cartSum != 0}">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="cart__btn update__btn">
-                                        <a href="#"></span> Update cart</a>
-                                    </div>
+                                    <form:form action="/update-cart" method="POST" modelAttribute="cartModel">
+                                        <c:forEach var="cartDetails" items="${listCartDetails}" varStatus="status">
+                                            <div style="display: none;">
+                                                <form:input path="cartDetails[${status.index}].id"
+                                                    value="${cartDetails.id}" />
+                                                <form:input path="cartDetails[${status.index}].quantity"
+                                                    class="cartDetails${status.index}Quantity"
+                                                    value="${cartDetails.quantity}" />
+                                            </div>
+                                        </c:forEach>
+                                        <div class="cart__btn update__btn">
+                                            <button type="submit" style="all:unset;cursor:pointer"><a></span> Update
+                                                    cart</a></button>
+                                        </div>
+                                    </form:form>
+
                                 </div>
                             </c:if>
                         </div>
@@ -158,7 +184,26 @@
                                                         minFractionDigits="2" maxFractionDigits="2" />$
                                                 </span></li>
                                         </ul>
-                                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                                        <form:form action="/confirm-checkout" method="POST" modelAttribute="cartModel">
+                                            <c:forEach var="cartDetails" items="${listCartDetails}" varStatus="status">
+                                                <div style="display: none;">
+                                                    <form:input path="cartDetails[${status.index}].id"
+                                                        value="${cartDetails.id}" />
+                                                    <form:input path="cartDetails[${status.index}].product.price"
+                                                        value="${cartDetails.product.price}" />
+                                                    <form:input path="cartDetails[${status.index}].quantity"
+                                                        class="cartDetails${status.index}Quantity"
+                                                        value="${cartDetails.quantity}" />
+                                                    <form:input path="cartDetails[${status.index}].price"
+                                                        value="${cartDetails.price}" />
+                                                </div>
+                                            </c:forEach>
+                                            <div class="cart__btn update__btn">
+                                                <button type="submit" style="all:unset;cursor:pointer"><a
+                                                        class="primary-btn">Proceed to checkout</a></button>
+                                            </div>
+                                        </form:form>
+
                                     </div>
                                 </div>
                             </c:if>

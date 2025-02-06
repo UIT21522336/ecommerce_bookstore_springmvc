@@ -21,6 +21,10 @@ public class CartDetailService {
         return this.cartDetailRepository.findByCartAndProduct(cart, product);
     }
 
+    public CartDetail getById(long id){
+        return this.cartDetailRepository.findById(id);
+    }
+
     public List<CartDetail> getByCart(Cart cart) {
         return this.cartDetailRepository.findByCart(cart);
     }
