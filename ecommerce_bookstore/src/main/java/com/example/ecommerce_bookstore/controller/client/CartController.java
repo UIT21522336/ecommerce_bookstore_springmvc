@@ -56,13 +56,14 @@ public class CartController {
     public String addProductToCartFromPLP(@PathVariable("id") long id, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);
         Product product = this.productService.getById(id).get();
-        int var = this.cartService.addToCartFromPLP(request, product);
+        int var = this.cartService.addToCart(request, product, 1);
         if (var == 1) {
             User user = this.userService.getById((long) session.getAttribute("user_id")).get();
             Cart cart = this.cartService.getByUser(user);
             List<CartDetail> listCartDetails = this.cartDetailService.getByCart(cart);
             model.addAttribute("cart", cart);
             model.addAttribute("listCartDetails", listCartDetails);
+            model.addAttribute("cartModel", new Cart());
             model.addAttribute("product", product);
             session.setAttribute("currentStockNotification", 1);
             return "client/cart/cart";
@@ -72,9 +73,25 @@ public class CartController {
     }
 
     @PostMapping("/add-to-cart-from-product-details/{id}")
-    public String addProductToCartFromPDP(@PathVariable("id") long id) {
-
-        return "client/homepage/homepage";
+    public String addProductToCartFromPDP(@PathVariable("id") long id,
+            @ModelAttribute("cartDetailsModel") CartDetail cartDetailModel,
+            HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        Product product = this.productService.getById(id).get();
+        int var = this.cartService.addToCart(request, product, cartDetailModel.getQuantity());
+        if (var == 1) {
+            User user = this.userService.getById((long) session.getAttribute("user_id")).get();
+            Cart cart = this.cartService.getByUser(user);
+            List<CartDetail> listCartDetails = this.cartDetailService.getByCart(cart);
+            model.addAttribute("cart", cart);
+            model.addAttribute("listCartDetails", listCartDetails);
+            model.addAttribute("cartModel", new Cart());
+            model.addAttribute("product", product);
+            session.setAttribute("currentStockNotification", 1);
+            return "client/cart/cart";
+        } else {
+            return "redirect:/cart";
+        }
     }
 
     @PostMapping("/delete-from-cart/{id}")

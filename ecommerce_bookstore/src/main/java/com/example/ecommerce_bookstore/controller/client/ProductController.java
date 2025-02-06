@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import com.example.ecommerce_bookstore.domain.CartDetail;
 import com.example.ecommerce_bookstore.domain.Category;
 import com.example.ecommerce_bookstore.domain.CategoryDetail;
 import com.example.ecommerce_bookstore.domain.Product;
@@ -34,6 +36,7 @@ public class ProductController {
     public String getProductDetails(@PathVariable("id") long id, Model model) {
         Product product = this.productService.getById(id).get();
         model.addAttribute("product", product);
+        model.addAttribute("cartDetailsModel", new CartDetail());
         return "client/products/details";
     }
 

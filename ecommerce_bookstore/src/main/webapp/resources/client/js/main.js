@@ -230,8 +230,10 @@ Created: Colorib
         }
         $button.parent().find('input').val(newVal);
         const index = $input.attr('cart-details-data-index');
-        const el = $(`.cartDetails${index}Quantity`);
-        el.val(newVal);
+        const el1 = $(`.cartDetails${index}Quantity`);
+        el1.val(newVal);
+        const el2 = $(`.cartDetailsModel_quantity`);
+        el2.val(newVal);
 
     });
 

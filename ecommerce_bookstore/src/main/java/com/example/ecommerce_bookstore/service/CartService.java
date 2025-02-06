@@ -37,7 +37,7 @@ public class CartService {
         this.cartRepository.save(cart);
     }
 
-    public int addToCartFromPLP(HttpServletRequest request, Product product) {
+    public int addToCart(HttpServletRequest request, Product product, int inputQuantity) {
         int var = 0;
         HttpSession session = request.getSession(false);
         User user = this.userService.getById((long) session.getAttribute("user_id")).get();
@@ -55,7 +55,7 @@ public class CartService {
             CartDetail newCartDetail = new CartDetail();
             newCartDetail.setCart(cart);
             newCartDetail.setProduct(product);
-            newCartDetail.setQuantity(1);
+            newCartDetail.setQuantity(inputQuantity);
             newCartDetail.setPrice(newCartDetail.getQuantity() * product.getPrice());
             this.cartDetailService.create(newCartDetail);
             cartDetail = newCartDetail;
@@ -64,8 +64,13 @@ public class CartService {
                 cartDetail.setQuantity(product.getQuantity());
                 cartDetail.setPrice(cartDetail.getQuantity() * product.getPrice());
                 var = 1;
+            } else if (cartDetail.getQuantity() < product.getQuantity()
+                    && inputQuantity > (product.getQuantity() - cartDetail.getQuantity())) {
+                cartDetail.setQuantity(product.getQuantity());
+                cartDetail.setPrice(cartDetail.getQuantity() * product.getPrice());
+                var = 1;
             } else {
-                cartDetail.setQuantity(cartDetail.getQuantity() + 1);
+                cartDetail.setQuantity(cartDetail.getQuantity() + inputQuantity);
                 cartDetail.setPrice(cartDetail.getQuantity() * product.getPrice());
             }
             this.cartDetailService.update(cartDetail);
@@ -145,8 +150,11 @@ public class CartService {
         double price = 0;
         for (CartDetail cartDetails : listCartDetails) {
             price = cartDetails.getProduct().getPrice() * cartDetails.getQuantity();
+            CartDetail cartDetail_db = this.cartDetailService.getById(cartDetails.getId());
+            if (cartDetails.getQuantity() > cartDetail_db.getProduct().getQuantity()) {
+                return false;
+            }
             if (price != cartDetails.getPrice()) {
-                CartDetail cartDetail_db = this.cartDetailService.getById(cartDetails.getId());
                 cartDetail_db.setQuantity(cartDetails.getQuantity());
                 this.cartDetailService.update(cartDetail_db);
                 return false;
