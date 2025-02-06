@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.ecommerce_bookstore.domain.Cart;
 import com.example.ecommerce_bookstore.domain.CartDetail;
+import com.example.ecommerce_bookstore.domain.Order;
 import com.example.ecommerce_bookstore.domain.Product;
 import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.service.CartDetailService;
@@ -109,14 +110,6 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @PostMapping("/confirm-checkout")
-    public String getConfirmCheckoutPage(@ModelAttribute("cartModel") Cart cartModel, HttpServletRequest request) {
-        boolean bool = this.cartService.checkHasAlreadyUpdateCart(cartModel);
-        HttpSession session = request.getSession(false);
-        if (bool == false) {
-            session.setAttribute("alertUpdateCart", 1);
-        }
-        return "redirect:/cart";
-    }
+    
 
 }

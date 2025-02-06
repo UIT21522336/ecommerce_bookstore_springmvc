@@ -8,6 +8,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 @Entity
@@ -26,15 +30,24 @@ public class Order {
 
     private Double totalPrice;
 
+    @NotEmpty(message = "Full name is required")
+    @Size(max = 50, message = "Full name must have at least 1 character")
     private String receiverName;
 
+    @NotEmpty(message = "Address is required")
     private String receiverAddress;
 
+    @NotEmpty(message = "Phone number is required")
+    @Pattern(regexp = "(?:\\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\\d]+|$)", message = "Phone number is not valid")
     private String receiverPhone;
 
     private String paymentMethod;
 
     private String status;
+
+    private String paymentRef;
+
+    private String paymentStatus;
 
     public Long getId() {
         return id;
@@ -106,6 +119,22 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPaymentRef() {
+        return paymentRef;
+    }
+
+    public void setPaymentRef(String paymentRef) {
+        this.paymentRef = paymentRef;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 
 }

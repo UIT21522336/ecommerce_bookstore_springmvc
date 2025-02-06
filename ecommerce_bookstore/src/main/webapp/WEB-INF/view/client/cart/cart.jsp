@@ -184,7 +184,8 @@
                                                         minFractionDigits="2" maxFractionDigits="2" />$
                                                 </span></li>
                                         </ul>
-                                        <form:form action="/confirm-checkout" method="POST" modelAttribute="cartModel">
+                                        <form:form action="/proceed-to-checkout" method="POST"
+                                            modelAttribute="cartModel">
                                             <c:forEach var="cartDetails" items="${listCartDetails}" varStatus="status">
                                                 <div style="display: none;">
                                                     <form:input path="cartDetails[${status.index}].id"
