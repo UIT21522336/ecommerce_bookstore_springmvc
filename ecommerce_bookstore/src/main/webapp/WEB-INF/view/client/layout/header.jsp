@@ -66,7 +66,7 @@
                                 <li><a href="/cart"><span class="icon_bag_alt"></span>
                                         <div class="tip">${sessionScope.cartSum}</div>
                                     </a></li>
-                                <li><i class="bi bi-receipt-cutoff"></i></li>
+                                <li><a href="/order-history"><i class="bi bi-receipt-cutoff"></i></a></li>
                             </ul>
                         </c:if>
                     </div>

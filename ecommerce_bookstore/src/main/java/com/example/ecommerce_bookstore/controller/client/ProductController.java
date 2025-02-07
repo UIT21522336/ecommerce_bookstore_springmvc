@@ -2,6 +2,7 @@ package com.example.ecommerce_bookstore.controller.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
@@ -16,12 +17,15 @@ import com.example.ecommerce_bookstore.domain.CartDetail;
 import com.example.ecommerce_bookstore.domain.Category;
 import com.example.ecommerce_bookstore.domain.CategoryDetail;
 import com.example.ecommerce_bookstore.domain.Order;
+import com.example.ecommerce_bookstore.domain.OrderDetail;
 import com.example.ecommerce_bookstore.domain.Product;
 import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.service.CartDetailService;
 import com.example.ecommerce_bookstore.service.CartService;
 import com.example.ecommerce_bookstore.service.CategoryDetailService;
 import com.example.ecommerce_bookstore.service.CategoryService;
+import com.example.ecommerce_bookstore.service.OrderDetailService;
+import com.example.ecommerce_bookstore.service.OrderService;
 import com.example.ecommerce_bookstore.service.ProductService;
 import com.example.ecommerce_bookstore.service.UserService;
 
@@ -31,6 +35,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProductController {
@@ -40,16 +45,20 @@ public class ProductController {
     private final CartService cartService;
     private final UserService userService;
     private final CartDetailService cartDetailService;
+    private final OrderService orderService;
+    private final OrderDetailService orderDetailService;
 
     public ProductController(ProductService productService, CategoryDetailService categoryDetailService,
             CategoryService categoryService, UserService userService, CartService cartService,
-            CartDetailService cartDetailService) {
+            CartDetailService cartDetailService, OrderService orderService, OrderDetailService orderDetailService) {
         this.productService = productService;
         this.categoryDetailService = categoryDetailService;
         this.categoryService = categoryService;
         this.cartService = cartService;
         this.userService = userService;
         this.cartDetailService = cartDetailService;
+        this.orderService = orderService;
+        this.orderDetailService = orderDetailService;
     }
 
     @GetMapping("/products/{category}/{category-detail}/details/{id}")
@@ -127,15 +136,55 @@ public class ProductController {
     @PostMapping("/place-order")
     public String placeOrder(@ModelAttribute("order") @Valid Order orderModel, BindingResult result,
             HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        User user = this.userService.getById((long) session.getAttribute("user_id")).get();
+        Cart cart = this.cartService.getByUser(user);
+        List<CartDetail> listCartDetails = this.cartDetailService.getByCart(cart);
         if (result.hasErrors()) {
-            HttpSession session = request.getSession(false);
-            User user = this.userService.getById((long) session.getAttribute("user_id")).get();
-            Cart cart = this.cartService.getByUser(user);
-            List<CartDetail> listCartDetails = this.cartDetailService.getByCart(cart);
             model.addAttribute("listCartDetails", listCartDetails);
             model.addAttribute("cart", cart);
             return "client/checkout/checkout";
         }
+
+        Order order = new Order();
+        order.setUser(user);
+        order.setReceiverName(orderModel.getReceiverName());
+        order.setReceiverAddress(orderModel.getReceiverAddress());
+        order.setReceiverPhone(orderModel.getReceiverPhone());
+        order.setPaymentMethod(orderModel.getPaymentMethod());
+        if (order.getPaymentMethod().equals("BANKING")) {
+            final String uuid = UUID.randomUUID().toString().replace("-", "");
+            order.setPaymentRef(uuid);
+        } else {
+            order.setPaymentRef("UNKNOWN");
+        }
+        order.setStatus("PENDING");
+        order.setPaymentStatus("PAYMENT_UNPAID");
+        order.setTotalPrice(cart.getTotalPrice());
+        this.orderService.create(order);
+
+        for (CartDetail cartDetails : listCartDetails) {
+            OrderDetail orderDetail = new OrderDetail();
+            Product product = cartDetails.getProduct();
+
+            orderDetail.setOrder(order);
+            orderDetail.setProduct(cartDetails.getProduct());
+            orderDetail.setPrice(cartDetails.getPrice());
+            orderDetail.setQuantity(cartDetails.getQuantity());
+            this.orderDetailService.create(orderDetail);
+
+            product.setQuantity(product.getQuantity() - cartDetails.getQuantity());
+            this.productService.updateQuantity(product);
+
+            this.cartDetailService.delete(cartDetails);
+        }
+        this.cartService.delete(cart);
+        session.setAttribute("cartSum", 0);
+        return "client/checkout/thankyou";
+    }
+
+    @GetMapping("/thankyou")
+    public String getThankyouPage() {
         return "client/checkout/thankyou";
     }
 

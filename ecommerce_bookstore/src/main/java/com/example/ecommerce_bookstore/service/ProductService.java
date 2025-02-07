@@ -98,6 +98,10 @@ public class ProductService {
         product = this.productRepository.save(product);
     }
 
+    public void updateQuantity(Product product) {
+        this.productRepository.save(product);
+    }
+
     public void delete(Product modelProduct) throws IOException {
         Product product = this.productRepository.findById(modelProduct.getId()).get();
         // delete image from local
