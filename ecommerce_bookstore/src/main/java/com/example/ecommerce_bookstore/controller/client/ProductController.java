@@ -2,8 +2,12 @@ package com.example.ecommerce_bookstore.controller.client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +38,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -71,21 +74,26 @@ public class ProductController {
 
     // Get product listing page by category
     @GetMapping("/products/{category}")
-    public String getProductListingPageByCategory(@PathVariable("category") String categoryName, Model model) {
+    public String getProductListingPageByCategory(@PathVariable("category") String categoryName, Model model,
+            @RequestParam("page") Optional<String> currentPage) {
         Category category = this.categoryService.getByName(categoryName);
-        List<CategoryDetail> categoriesDetails = this.categoryDetailService.getByCategory(category);
-        List<Product> products = new ArrayList<>();
-        for (CategoryDetail categoryDetails : categoriesDetails) {
-            List<Product> productsByCategoryDetails = this.productService.getByCategoryDetail(categoryDetails);
-            for (Product product : productsByCategoryDetails) {
-                products.add(product);
-            }
+        Pageable pageable = PageRequest.of(0, 3);
+        if (currentPage.isPresent()) {
+            pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
+            model.addAttribute("currentPage", Integer.valueOf(currentPage.get()));
+        } else {
+            model.addAttribute("currentPage", 1);
         }
-        model.addAttribute("products", products);
+        Page<Product> pageProducts = this.productService.getByCategoryDisplayName(categoryName, pageable);
+        List<Product> products = pageProducts.getContent();
+        int totalPages = pageProducts.getTotalPages();
 
+        model.addAttribute("products", products);
+        model.addAttribute("categoryName", category.getName());
+
+        model.addAttribute("totalPages", totalPages);
         // breadcrumb
         model.addAttribute("categoryDisplayName", category.getDisplayName());
-
         // sidebar
         List<Category> listCategories = this.categoryService.getAll();
         List<CategoryDetail> listCategoriesDetails = this.categoryDetailService.getAll();
@@ -97,12 +105,24 @@ public class ProductController {
     // Get product listing page by category details
     @GetMapping("/products/{category}/{category_details}")
     public String getProductListingPageByCategoryDetails(@PathVariable("category") String categoryName,
-            @PathVariable("category_details") String categoryDetailsName, Model model) {
+            @PathVariable("category_details") String categoryDetailsName, Model model,
+            @RequestParam("page") Optional<String> currentPage) {
         Category category = this.categoryService.getByName(categoryName);
         CategoryDetail categoryDetail = this.categoryDetailService.getByName(categoryDetailsName);
-        List<Product> products = this.productService.getByCategoryDetail(categoryDetail);
-
+        Pageable pageable = PageRequest.of(0, 3);
+        if (currentPage.isPresent()) {
+            pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
+            model.addAttribute("currentPage", Integer.valueOf(currentPage.get()));
+        } else {
+            model.addAttribute("currentPage", 1);
+        }
+        Page<Product> pageProducts = this.productService.getByCategoryDetail(categoryDetail, pageable);
+        List<Product> products = pageProducts.getContent();
+        int totalPages = pageProducts.getTotalPages();
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("products", products);
+        model.addAttribute("categoryName", category.getName());
+        model.addAttribute("categoryDetailName", categoryDetail.getName());
         // breadcrumb
         model.addAttribute("categoryDisplayName", category.getDisplayName());
         model.addAttribute("categoryDetailsDisplayName", categoryDetail.getDisplayName());

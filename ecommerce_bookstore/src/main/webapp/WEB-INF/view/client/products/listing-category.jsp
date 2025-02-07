@@ -96,10 +96,18 @@
                                 </c:forEach>
                                 <div class="col-lg-12 text-center">
                                     <div class="pagination__option">
-                                        <a href="#">1</a>
-                                        <a href="#">2</a>
-                                        <a href="#">3</a>
-                                        <a href="#"><i class="fa fa-angle-right"></i></a>
+                                        <c:if test="${1 < currentPage}">
+                                            <a href="/products/${categoryName}?page=${currentPage-1}"><i
+                                                    class="fa fa-angle-left"></i></a>
+                                        </c:if>
+                                        <c:forEach begin="1" end="${totalPages}" varStatus="status">
+                                            <a href="/products/${categoryName}?page=${status.index}"
+                                                class="${status.index == currentPage ? 'active' : ''}">${status.index}</a>
+                                        </c:forEach>
+                                        <c:if test="${currentPage < totalPages}">
+                                            <a href="/products/${categoryName}?page=${currentPage+1}"><i
+                                                    class="fa fa-angle-right"></i></a>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
