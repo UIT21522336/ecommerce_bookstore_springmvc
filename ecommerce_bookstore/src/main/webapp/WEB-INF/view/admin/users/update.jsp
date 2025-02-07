@@ -242,10 +242,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- content-wrapper ends -->
-                        <!-- partial:partials/_footer.html -->
-                        <jsp:include page="../layout/footer.jsp" />
-                        <!-- partial -->
                     </div>
                     <!-- main-panel ends -->
                 </div>

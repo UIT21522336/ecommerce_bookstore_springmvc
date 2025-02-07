@@ -10,12 +10,12 @@
             <div class="profile-desc">
                 <div class="profile-pic">
                     <div class="count-indicator">
-                        <img class="img-xs rounded-circle " src="/resources/admin/assets/images/faces/face15.jpg"
+                        <img class="img-xs rounded-circle " src="/resources/admin/images/avatar/${sessionScope.avatar}"
                             alt="">
                         <span class="count bg-success"></span>
                     </div>
                     <div class="profile-name">
-                        <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
+                        <h5 class="mb-0 font-weight-normal">${sessionScope.fullName}</h5>
                         <span>Administrator</span>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-speedometer"></i>
                 </span>
-                <span class="menu-title">Dashboard</span>
+                <span class="menu-title">Orders</span>
             </a>
         </li>
         <li class="nav-item menu-items">
@@ -82,14 +82,6 @@
                     <i class="mdi mdi-speedometer"></i>
                 </span>
                 <span class="menu-title">Products</span>
-            </a>
-        </li>
-        <li class="nav-item menu-items">
-            <a class="nav-link" href="index.html">
-                <span class="menu-icon">
-                    <i class="mdi mdi-speedometer"></i>
-                </span>
-                <span class="menu-title">Orders</span>
             </a>
         </li>
     </ul>

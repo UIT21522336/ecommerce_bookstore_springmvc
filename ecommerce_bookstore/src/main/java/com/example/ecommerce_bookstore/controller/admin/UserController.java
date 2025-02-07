@@ -17,6 +17,8 @@ import com.example.ecommerce_bookstore.domain.dto.RegisterUserDTO;
 import com.example.ecommerce_bookstore.domain.dto.UpdateUserDTO;
 import com.example.ecommerce_bookstore.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller

@@ -10,6 +10,8 @@ import com.example.ecommerce_bookstore.domain.dto.UpdateUserDTO;
 import com.example.ecommerce_bookstore.repository.RoleRepository;
 import com.example.ecommerce_bookstore.repository.UserRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
