@@ -1,11 +1,15 @@
 package com.example.ecommerce_bookstore.controller.client;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.ecommerce_bookstore.domain.Order;
 import com.example.ecommerce_bookstore.domain.OrderDetail;
@@ -59,11 +63,21 @@ public class HomepageController {
     }
 
     @GetMapping("/order-history")
-    public String getOrderHistoryPage(HttpServletRequest request, Model model) {
+    public String getOrderHistoryPage(HttpServletRequest request, Model model,
+            @RequestParam("page") Optional<String> currentPage) {
         HttpSession session = request.getSession(false);
         User user = this.userService.getById((long) session.getAttribute("user_id")).get();
-        List<Order> orders = this.orderService.getByUser(user);
+        Pageable pageable = PageRequest.of(0, 3);
+        if (currentPage.isPresent()) {
+            pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
+            model.addAttribute("currentPage", Integer.valueOf(currentPage.get()));
+        } else {
+            model.addAttribute("currentPage", 1);
+        }
+        Page<Order> pageOrders = this.orderService.getByUser(user, pageable);
+        List<Order> orders = pageOrders.getContent();
         model.addAttribute("orders", orders);
+        model.addAttribute("totalPages", pageOrders.getTotalPages());
         return "client/order/order-history";
     }
 

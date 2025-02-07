@@ -146,7 +146,22 @@
                                     </div>
                                 </c:otherwise>
                             </c:choose>
-
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="pagination__option">
+                            <c:if test="${1 < currentPage}">
+                                <a href="/order-history?page=${currentPage-1}"><i class="fa fa-angle-left"></i></a>
+                            </c:if>
+                            <c:forEach begin="1" end="${totalPages}" varStatus="status">
+                                <a href="/order-history?page=${status.index}"
+                                    class="${status.index == currentPage ? 'active' : ''}">${status.index}</a>
+                            </c:forEach>
+                            <c:if test="${currentPage < totalPages}">
+                                <a href="/order-history?page=${currentPage+1}"><i class="fa fa-angle-right"></i></a>
+                            </c:if>
                         </div>
                     </div>
                 </div>

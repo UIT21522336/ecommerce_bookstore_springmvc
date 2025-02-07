@@ -2,6 +2,8 @@ package com.example.ecommerce_bookstore.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce_bookstore.domain.Order;
@@ -24,8 +26,8 @@ public class OrderService {
         return this.orderRepository.findAll();
     }
 
-    public List<Order> getByUser(User user) {
-        return this.orderRepository.findByUser(user);
+    public Page<Order> getByUser(User user,Pageable pageable) {
+        return this.orderRepository.findByUser(user,pageable);
     }
 
     public Order getById(long id) {
