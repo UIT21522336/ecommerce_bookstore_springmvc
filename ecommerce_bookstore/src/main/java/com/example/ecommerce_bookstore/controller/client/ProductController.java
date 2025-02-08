@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,7 @@ import com.example.ecommerce_bookstore.domain.CategoryDetail;
 import com.example.ecommerce_bookstore.domain.Order;
 import com.example.ecommerce_bookstore.domain.OrderDetail;
 import com.example.ecommerce_bookstore.domain.Product;
+import com.example.ecommerce_bookstore.domain.Product_;
 import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.service.CartDetailService;
 import com.example.ecommerce_bookstore.service.CartService;
@@ -75,23 +77,42 @@ public class ProductController {
     @GetMapping("/products/all-categories")
     public String getAllCategoriesPage(Model model, @RequestParam("page") Optional<String> currentPage,
             @RequestParam("price") Optional<String> priceCriteria,
-            @RequestParam("format") Optional<String> formatCriteria) {
-        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
+            @RequestParam("format") Optional<String> formatCriteria,
+            @RequestParam("sort") Optional<String> sortCriteria, HttpServletRequest request) {
 
         Pageable pageable = PageRequest.of(0, 3);
-        if (currentPage.isPresent()) {
+        if (sortCriteria.isPresent() && sortCriteria.get().equals("low-to-high")) {
+            pageable = PageRequest.of(0, 3, Sort.by(Product_.PRICE).ascending());
+        } else if (sortCriteria.isPresent() && sortCriteria.get().equals("high-to-low")) {
+            pageable = PageRequest.of(0, 3, Sort.by(Product_.PRICE).descending());
+        }
+        model.addAttribute("currentPage", 1);
+
+        if (currentPage.isPresent() && sortCriteria.isPresent()) {
             pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
+            if (sortCriteria.get().equals("low-to-high")) {
+                pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3,
+                        Sort.by(Product_.PRICE).ascending());
+            } else if (sortCriteria.get().equals("high-to-low")) {
+                pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3,
+                        Sort.by(Product_.PRICE).descending());
+            }
             model.addAttribute("currentPage", Integer.valueOf(currentPage.get()));
-        } else {
-            model.addAttribute("currentPage", 1);
         }
 
         Page<Product> pageProducts = this.productService.getAll(pageable, priceCriteria, formatCriteria);
         List<Product> products = pageProducts.getContent();
         model.addAttribute("products", products);
         model.addAttribute("totalPages", pageProducts.getTotalPages());
-
+        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
         model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
+
+        String queryString = request.getQueryString();
+        if (queryString != null && !queryString.isBlank()) {
+            queryString = queryString.replace("page=" + Integer.valueOf(currentPage.get()), "");
+        }
+        model.addAttribute("queryString", queryString);
+
         return "client/products/all-categories";
     }
 
@@ -120,6 +141,8 @@ public class ProductController {
         // sidebar
         List<Category> listCategories = this.categoryService.getAll();
         List<CategoryDetail> listCategoriesDetails = this.categoryDetailService.getAll();
+        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
+        model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("listCategoriesDetails", listCategoriesDetails);
         return "client/products/listing-category";
@@ -129,7 +152,7 @@ public class ProductController {
     @GetMapping("/products/{category}/{category_details}")
     public String getProductListingPageByCategoryDetails(@PathVariable("category") String categoryName,
             @PathVariable("category_details") String categoryDetailsName, Model model,
-            @RequestParam("page") Optional<String> currentPage, @RequestParam("price") Optional<String> priceRange) {
+            @RequestParam("page") Optional<String> currentPage) {
         Category category = this.categoryService.getByName(categoryName);
         CategoryDetail categoryDetail = this.categoryDetailService.getByName(categoryDetailsName);
         Pageable pageable = PageRequest.of(0, 3);

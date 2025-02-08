@@ -299,16 +299,39 @@ Created: Colorib
             });
         }
 
-        const minPrice = prices[0];
-        const maxPrice = prices[1];
+        // Lấy giá trị mặc định từ HTML
+        let minPrice = 0;
+        let maxPrice = parseFloat($(".price-range").attr("data-max"));
 
-        // // Cập nhật giá trị data-min và data-max
-        // $('.price-range').attr('data-min', minPrice);
-        // $('.price-range').attr('data-max', maxPrice);
+        if (params.has('price')) {
+            const prices = params.get('price').split(',');
+            minPrice = parseFloat(prices[0]);
+            maxPrice = parseFloat(prices[1]);
+        }
 
         // Cập nhật giá trị input min/max
         $('#minamount').val('$' + minPrice);
         $('#maxamount').val('$' + maxPrice);
+
+        // Khởi tạo thanh trượt
+        $(".price-range").slider({
+            range: true,
+            min: 0,  // Giá trị nhỏ nhất
+            max: parseFloat($(".price-range").attr("data-max")), // Lấy giá trị lớn nhất từ data-max
+            values: [minPrice, maxPrice],
+            slide: function (event, ui) {
+                $("#minamount").val("$" + ui.values[0]);
+                $("#maxamount").val("$" + ui.values[1]);
+            }
+        });
+
+        // Cập nhật giá trị input khi thay đổi bằng tay
+        $("#minamount, #maxamount").on("change", function () {
+            let min = parseFloat($("#minamount").val().replace("$", "").trim());
+            let max = parseFloat($("#maxamount").val().replace("$", "").trim());
+
+            $(".price-range").slider("values", [min, max]);
+        });
 
         $("#sortFilter .size__list input[type='checkbox']").change(function () {
             $("#sortFilter .size__list input[type='checkbox']").not(this).prop('checked', false);

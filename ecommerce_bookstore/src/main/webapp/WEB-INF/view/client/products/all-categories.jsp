@@ -97,15 +97,15 @@
                                 <div class="col-lg-12 text-center">
                                     <div class="pagination__option">
                                         <c:if test="${1 < currentPage}">
-                                            <a href="/all-categories?page=${currentPage-1}"><i
+                                            <a href="/products/all-categories?page=${currentPage-1}${queryString}"><i
                                                     class="fa fa-angle-left"></i></a>
                                         </c:if>
                                         <c:forEach begin="1" end="${totalPages}" varStatus="status">
-                                            <a href="/all-categories?page=${status.index}"
+                                            <a href="/products/all-categories?page=${status.index}${queryString}"
                                                 class="${status.index == currentPage ? 'active' : ''}">${status.index}</a>
                                         </c:forEach>
                                         <c:if test="${currentPage < totalPages}">
-                                            <a href="/all-categories?page=${currentPage+1}"><i
+                                            <a href="/products/all-categories?page=${currentPage+1}${queryString}"><i
                                                     class="fa fa-angle-right"></i></a>
                                         </c:if>
                                     </div>
