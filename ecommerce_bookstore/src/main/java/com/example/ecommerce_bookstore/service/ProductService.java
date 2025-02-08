@@ -1,11 +1,13 @@
 package com.example.ecommerce_bookstore.service;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +17,7 @@ import com.example.ecommerce_bookstore.domain.CategoryDetail;
 import com.example.ecommerce_bookstore.domain.Product;
 import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.repository.ProductRepository;
+import com.example.ecommerce_bookstore.service.specification.ProductSpecs;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -24,9 +27,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ImageService imageService;
     private final CategoryDetailService categoryDetailService;
-    private final UserService userService;
-    private final CartService cartService;
-    private final CartDetailService cartDetailService;
 
     public ProductService(ProductRepository productRepository, ImageService imageService,
             CategoryDetailService categoryDetailService, UserService userService, CartService cartService,
@@ -34,9 +34,6 @@ public class ProductService {
         this.productRepository = productRepository;
         this.imageService = imageService;
         this.categoryDetailService = categoryDetailService;
-        this.userService = userService;
-        this.cartService = cartService;
-        this.cartDetailService = cartDetailService;
     }
 
     public void createProduct(Product product, MultipartFile fileImage) throws IOException {
@@ -55,13 +52,36 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
-    public Page<Product> getByCategoryDetail(CategoryDetail categoryDetail,Pageable pageable) {
-        return this.productRepository.findByCategoryDetail(categoryDetail,pageable);
+    public Page<Product> getAll(Pageable pageable, Optional<String> priceCriteria,
+            Optional<String> formatCriteria) {
+        Specification combinedSpecs = Specification.where(null);
+        if (priceCriteria.isPresent()) {
+            List<String> priceList = Arrays.asList(priceCriteria.get().split(","));
+            combinedSpecs = combinedSpecs.and(ProductSpecs.matchPriceRange(Double.parseDouble(priceList.get(0)),
+                    Double.parseDouble(priceList.get(1))));
+        }
+        if (formatCriteria.isPresent()) {
+            List<String> formatList = Arrays.asList(formatCriteria.get().split(","));
+            combinedSpecs = combinedSpecs.and(ProductSpecs.matchFormat(formatList));
+
+        }
+
+        if (combinedSpecs.equals(null)) {
+            return this.productRepository.findAll(pageable);
+        } else {
+            return this.productRepository.findAll(combinedSpecs, pageable);
+        }
+
     }
 
-    public Page<Product> getByCategoryDisplayName(String name,Pageable pageable) {
-        return this.productRepository.findByCategoryDetail_Category_DisplayName(name,pageable);
-    } 
+    public Page<Product> getByCategoryDetail(CategoryDetail categoryDetail,
+            Pageable pageable) {
+        return this.productRepository.findByCategoryDetail(categoryDetail, pageable);
+    }
+
+    public Page<Product> getByCategoryDisplayName(String name, Pageable pageable) {
+        return this.productRepository.findByCategoryDetail_Category_DisplayName(name, pageable);
+    }
 
     public List<Product> getTop4ByOrderByIdAsc() {
         return this.productRepository.findTop4ByOrderByIdAsc();
@@ -116,7 +136,7 @@ public class ProductService {
         this.productRepository.delete(product);
     }
 
-    public Optional<Product> getProductWithHigestPrice(){
+    public Optional<Product> getProductWithHigestPrice() {
         return this.productRepository.findTopByOrderByPriceDesc();
     }
 }

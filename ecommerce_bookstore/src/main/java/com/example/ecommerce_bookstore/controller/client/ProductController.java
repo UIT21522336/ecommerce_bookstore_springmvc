@@ -1,6 +1,7 @@
 package com.example.ecommerce_bookstore.controller.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -8,7 +9,6 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -72,6 +72,29 @@ public class ProductController {
         return "client/products/details";
     }
 
+    @GetMapping("/products/all-categories")
+    public String getAllCategoriesPage(Model model, @RequestParam("page") Optional<String> currentPage,
+            @RequestParam("price") Optional<String> priceCriteria,
+            @RequestParam("format") Optional<String> formatCriteria) {
+        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
+
+        Pageable pageable = PageRequest.of(0, 3);
+        if (currentPage.isPresent()) {
+            pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
+            model.addAttribute("currentPage", Integer.valueOf(currentPage.get()));
+        } else {
+            model.addAttribute("currentPage", 1);
+        }
+
+        Page<Product> pageProducts = this.productService.getAll(pageable, priceCriteria, formatCriteria);
+        List<Product> products = pageProducts.getContent();
+        model.addAttribute("products", products);
+        model.addAttribute("totalPages", pageProducts.getTotalPages());
+
+        model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
+        return "client/products/all-categories";
+    }
+
     // Get product listing page by category
     @GetMapping("/products/{category}")
     public String getProductListingPageByCategory(@PathVariable("category") String categoryName, Model model,
@@ -106,7 +129,7 @@ public class ProductController {
     @GetMapping("/products/{category}/{category_details}")
     public String getProductListingPageByCategoryDetails(@PathVariable("category") String categoryName,
             @PathVariable("category_details") String categoryDetailsName, Model model,
-            @RequestParam("page") Optional<String> currentPage,@RequestParam("format") Optional<String>format) {
+            @RequestParam("page") Optional<String> currentPage, @RequestParam("price") Optional<String> priceRange) {
         Category category = this.categoryService.getByName(categoryName);
         CategoryDetail categoryDetail = this.categoryDetailService.getByName(categoryDetailsName);
         Pageable pageable = PageRequest.of(0, 3);
@@ -116,6 +139,7 @@ public class ProductController {
         } else {
             model.addAttribute("currentPage", 1);
         }
+
         Page<Product> pageProducts = this.productService.getByCategoryDetail(categoryDetail, pageable);
         List<Product> products = pageProducts.getContent();
         int totalPages = pageProducts.getTotalPages();

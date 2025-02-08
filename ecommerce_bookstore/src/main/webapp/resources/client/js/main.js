@@ -263,8 +263,8 @@ Created: Colorib
                 sortArr.push($(this).val());
             })
 
-            const currenUrl = new URL(window.location.href);
-            const searchParams = currenUrl.searchParams;
+            const currentUrl = new URL(window.location.href);
+            const searchParams = currentUrl.searchParams;
 
             searchParams.set('page', '1');
             if (formatArr.length > 0) {
@@ -277,10 +277,42 @@ Created: Colorib
                 searchParams.set('sort', sortArr.join(','));
             }
 
-            window.location.href = currenUrl.toString();
+            window.location.href = currentUrl.toString();
 
+        });
+        const params = new URLSearchParams(window.location.search);
 
-        })
+        if (params.has('format')) {
+            const formats = params.get('format').split(',');
+            formats.forEach(formats => {
+                $(`#formatFilter input[value="${formats}"]`).prop('checked', true);
+            });
+        }
+        if (!params.has('sort')) {
+            $('#unsorted').prop('checked', true);
+        } else {
+            const sorts = params.get('sort').split(',');
+            $('#unsorted').prop('checked', false);
+
+            sorts.forEach(sorts => {
+                $(`#sortFilter input[value="${sorts}"]`).prop('checked', true);
+            });
+        }
+
+        const minPrice = prices[0];
+        const maxPrice = prices[1];
+
+        // // Cập nhật giá trị data-min và data-max
+        // $('.price-range').attr('data-min', minPrice);
+        // $('.price-range').attr('data-max', maxPrice);
+
+        // Cập nhật giá trị input min/max
+        $('#minamount').val('$' + minPrice);
+        $('#maxamount').val('$' + maxPrice);
+
+        $("#sortFilter .size__list input[type='checkbox']").change(function () {
+            $("#sortFilter .size__list input[type='checkbox']").not(this).prop('checked', false);
+        });
     });
 
     $(document).ready(function () {

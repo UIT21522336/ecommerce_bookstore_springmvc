@@ -45,7 +45,7 @@
                 <div class="size__list">
                     <label for="unsorted">
                         Unsorted
-                        <input type="checkbox" id="unsorted" value="sorted" checked>
+                        <input type="checkbox" id="unsorted" value="unsorted" checked>
                         <span class="checkmark"></span>
                     </label>
                     <label for="low-to-high">

@@ -13,6 +13,7 @@
                     <nav class="header__menu">
                         <ul>
                             <li><a href="/">Home</a></li>
+                            <li><a href="/products/all-categories">All Categories</a></li>
                             <li><a href="/products/FICTION">Fiction</a>
                                 <ul class="dropdown">
                                     <li><a href="/products/FICTION/ADVENTURE">Adventure</a></li>
