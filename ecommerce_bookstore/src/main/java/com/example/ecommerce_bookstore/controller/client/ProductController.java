@@ -106,7 +106,7 @@ public class ProductController {
     @GetMapping("/products/{category}/{category_details}")
     public String getProductListingPageByCategoryDetails(@PathVariable("category") String categoryName,
             @PathVariable("category_details") String categoryDetailsName, Model model,
-            @RequestParam("page") Optional<String> currentPage) {
+            @RequestParam("page") Optional<String> currentPage,@RequestParam("format") Optional<String>format) {
         Category category = this.categoryService.getByName(categoryName);
         CategoryDetail categoryDetail = this.categoryDetailService.getByName(categoryDetailsName);
         Pageable pageable = PageRequest.of(0, 3);
@@ -132,6 +132,9 @@ public class ProductController {
         List<CategoryDetail> listCategoriesDetails = this.categoryDetailService.getAll();
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("listCategoriesDetails", listCategoriesDetails);
+
+        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
+        model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
         return "client/products/listing-category-details";
     }
 

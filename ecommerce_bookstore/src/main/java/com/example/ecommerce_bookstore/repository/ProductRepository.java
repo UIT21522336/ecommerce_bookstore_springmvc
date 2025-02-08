@@ -24,4 +24,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByCategoryDetail_Category_DisplayName(String name, Pageable pageable);
 
     void delete(Product product);
+
+    Optional<Product> findTopByOrderByPriceDesc();
 }

@@ -115,4 +115,8 @@ public class ProductService {
         this.imageService.deleteImage("src/main/webapp/resources/admin/images/product", product.getImage());
         this.productRepository.delete(product);
     }
+
+    public Optional<Product> getProductWithHigestPrice(){
+        return this.productRepository.findTopByOrderByPriceDesc();
+    }
 }

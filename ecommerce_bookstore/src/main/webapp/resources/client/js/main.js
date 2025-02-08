@@ -182,6 +182,7 @@ Created: Colorib
         range: true,
         min: minPrice,
         max: maxPrice,
+        step: 0.01,
         values: [minPrice, maxPrice],
         slide: function (event, ui) {
             minamount.val('$' + ui.values[0]);
@@ -244,5 +245,49 @@ Created: Colorib
         $(".size__btn label").removeClass('active');
         $(this).addClass('active');
     });
+
+    $(document).ready(function () {
+        $('#btnFilter').click(function () {
+            let formatArr = [];
+            let priceArr = [];
+            let sortArr = [];
+            $("#formatFilter .size__list input:checked").each(function () {
+                formatArr.push($(this).val());
+            })
+
+            let minPrice = $("#minamount").val().replace('$', '').trim();
+            let maxPrice = $("#maxamount").val().replace('$', '').trim();
+            priceArr.push(minPrice, maxPrice);
+
+            $("#sortFilter .size__list input:checked").each(function () {
+                sortArr.push($(this).val());
+            })
+
+            const currenUrl = new URL(window.location.href);
+            const searchParams = currenUrl.searchParams;
+
+            searchParams.set('page', '1');
+            if (formatArr.length > 0) {
+                searchParams.set('format', formatArr.join(','));
+            }
+            if (priceArr.length > 0) {
+                searchParams.set('price', priceArr.join(','));
+            }
+            if (sortArr.length > 0) {
+                searchParams.set('sort', sortArr.join(','));
+            }
+
+            window.location.href = currenUrl.toString();
+
+
+        })
+    });
+
+    $(document).ready(function () {
+        $("#sortFilter .size__list input[type='checkbox']").change(function () {
+            $("#sortFilter .size__list input[type='checkbox']").not(this).prop('checked', false);
+        });
+    });
+
 
 })(jQuery);
