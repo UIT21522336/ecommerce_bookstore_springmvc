@@ -56,6 +56,18 @@ public class UserController {
         return "redirect:/admin/users";
     }
 
+    // Create user
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute("registerUserDTO") @Valid RegisterUserDTO registerUserDTO,
+            BindingResult result,
+            @RequestParam("fileImage") MultipartFile fileImage) throws IOException {
+        if (result.hasErrors()) {
+            return "client/auth/register";
+        }
+        this.userService.createUser(registerUserDTO, fileImage);
+        return "redirect:/";
+    }
+
     // View update user page
     @GetMapping("/admin/users/update/{id}")
     public String getUpdateUserPage(@PathVariable("id") long id, Model model) {

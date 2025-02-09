@@ -20,6 +20,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     Page<Product> findAll(Specification specification, Pageable pageable);
 
+    Page<Product> findByOrderByIdDesc(Pageable pageable);
+
     List<Product> findTop4ByOrderByIdAsc();
 
     Optional<Product> findById(long id);

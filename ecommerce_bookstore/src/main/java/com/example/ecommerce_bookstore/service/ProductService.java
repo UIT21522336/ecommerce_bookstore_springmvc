@@ -100,6 +100,10 @@ public class ProductService {
         return this.productRepository.findTop4ByOrderByIdAsc();
     }
 
+    public Page<Product> getJustAnnounced(Pageable pageable){
+        return this.productRepository.findByOrderByIdDesc(pageable);
+    }
+
     public Optional<Product> getById(long id) {
         return this.productRepository.findById(id);
     }
@@ -178,6 +182,7 @@ public class ProductService {
             this.orderDetailService.create(orderDetail);
 
             product.setQuantity(product.getQuantity() - cartDetails.getQuantity());
+            product.setSold(cartDetails.getQuantity());
             updateQuantity(product);
 
             this.cartDetailService.delete(cartDetails);
