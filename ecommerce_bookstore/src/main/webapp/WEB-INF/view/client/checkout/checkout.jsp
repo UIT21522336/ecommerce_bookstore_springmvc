@@ -103,9 +103,15 @@
                                         </div>
                                         <div class="checkout__order__total">
                                             <ul>
-                                                <li>Subtotal <span>${cart.totalPrice} $</span></li>
+                                                <li>Subtotal <span>
+                                                        <fmt:formatNumber value="${cart.totalPrice}" type="number"
+                                                            minFractionDigits="2" maxFractionDigits="2" /> $
+                                                    </span></li>
                                                 <li>Shipping <span>0 $</span></li>
-                                                <li>Total <span>${cart.totalPrice} $</span></li>
+                                                <li>Total <span>
+                                                        <fmt:formatNumber value="${cart.totalPrice}" type="number"
+                                                            minFractionDigits="2" maxFractionDigits="2" /> $
+                                                    </span></li>
                                             </ul>
                                         </div>
                                         <div class="checkout__order__widget">

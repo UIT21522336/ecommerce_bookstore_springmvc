@@ -1,5 +1,6 @@
 package com.example.ecommerce_bookstore.controller.client;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,7 @@ import com.example.ecommerce_bookstore.domain.OrderDetail;
 import com.example.ecommerce_bookstore.domain.Product;
 import com.example.ecommerce_bookstore.domain.Product_;
 import com.example.ecommerce_bookstore.domain.User;
+import com.example.ecommerce_bookstore.service.BankingService;
 import com.example.ecommerce_bookstore.service.CartDetailService;
 import com.example.ecommerce_bookstore.service.CartService;
 import com.example.ecommerce_bookstore.service.CategoryDetailService;
@@ -52,10 +54,12 @@ public class ProductController {
     private final CartDetailService cartDetailService;
     private final OrderService orderService;
     private final OrderDetailService orderDetailService;
+    private final BankingService bankingService;
 
     public ProductController(ProductService productService, CategoryDetailService categoryDetailService,
             CategoryService categoryService, UserService userService, CartService cartService,
-            CartDetailService cartDetailService, OrderService orderService, OrderDetailService orderDetailService) {
+            CartDetailService cartDetailService, OrderService orderService, OrderDetailService orderDetailService,
+            BankingService bankingService) {
         this.productService = productService;
         this.categoryDetailService = categoryDetailService;
         this.categoryService = categoryService;
@@ -64,6 +68,7 @@ public class ProductController {
         this.cartDetailService = cartDetailService;
         this.orderService = orderService;
         this.orderDetailService = orderDetailService;
+        this.bankingService = bankingService;
     }
 
     @GetMapping("/products/{category}/{category-detail}/details/{id}")
@@ -205,7 +210,7 @@ public class ProductController {
 
     @PostMapping("/place-order")
     public String placeOrder(@ModelAttribute("order") @Valid Order orderModel, BindingResult result,
-            HttpServletRequest request, Model model) {
+            HttpServletRequest request, Model model) throws UnsupportedEncodingException {
         HttpSession session = request.getSession(false);
         User user = this.userService.getById((long) session.getAttribute("user_id")).get();
         Cart cart = this.cartService.getByUser(user);
@@ -216,45 +221,27 @@ public class ProductController {
             return "client/checkout/checkout";
         }
 
-        Order order = new Order();
-        order.setUser(user);
-        order.setReceiverName(orderModel.getReceiverName());
-        order.setReceiverAddress(orderModel.getReceiverAddress());
-        order.setReceiverPhone(orderModel.getReceiverPhone());
-        order.setPaymentMethod(orderModel.getPaymentMethod());
-        if (order.getPaymentMethod().equals("BANKING")) {
-            final String uuid = UUID.randomUUID().toString().replace("-", "");
-            order.setPaymentRef(uuid);
-        } else {
-            order.setPaymentRef("UNKNOWN");
+        final String uuid = UUID.randomUUID().toString().replace("-", "");
+
+        this.productService.placeOrder(user, orderModel, listCartDetails, cart,
+                session, uuid);
+
+        if (orderModel.getPaymentMethod().equals("BANKING")) {
+            String paymentURL = this.bankingService.createPaymentURL(cart.getTotalPrice(), request, uuid);
+            return "redirect:" + paymentURL;
         }
-        order.setStatus("PENDING");
-        order.setPaymentStatus("PAYMENT_UNPAID");
-        order.setTotalPrice(cart.getTotalPrice());
-        this.orderService.create(order);
 
-        for (CartDetail cartDetails : listCartDetails) {
-            OrderDetail orderDetail = new OrderDetail();
-            Product product = cartDetails.getProduct();
-
-            orderDetail.setOrder(order);
-            orderDetail.setProduct(cartDetails.getProduct());
-            orderDetail.setPrice(cartDetails.getPrice());
-            orderDetail.setQuantity(cartDetails.getQuantity());
-            this.orderDetailService.create(orderDetail);
-
-            product.setQuantity(product.getQuantity() - cartDetails.getQuantity());
-            this.productService.updateQuantity(product);
-
-            this.cartDetailService.delete(cartDetails);
-        }
-        this.cartService.delete(cart);
-        session.setAttribute("cartSum", 0);
         return "client/checkout/thankyou";
     }
 
     @GetMapping("/thankyou")
-    public String getThankyouPage() {
+    public String getThankyouPage(@RequestParam("vnp_ResponseCode") Optional<String> vnp_ResponseCode,
+            @RequestParam("vnp_TxnRef") Optional<String> vnp_TxnRef) {
+        if (vnp_ResponseCode.isPresent() && vnp_TxnRef.isPresent()) {
+            Order order = this.orderService.getByPaymentRef(vnp_TxnRef.get());
+            order.setPaymentStatus("PAYMENT_SUCCESS");
+            this.orderService.update(order);
+        }
         return "client/checkout/thankyou";
     }
 

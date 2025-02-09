@@ -37,4 +37,8 @@ public class OrderService {
     public void update(Order order){
         this.orderRepository.save(order);
     }
+
+    public Order getByPaymentRef(String paymentRef){
+        return this.orderRepository.findByPaymentRef(paymentRef);
+    }
 }

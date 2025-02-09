@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.ecommerce_bookstore.domain.Cart;
 import com.example.ecommerce_bookstore.domain.CartDetail;
 import com.example.ecommerce_bookstore.domain.CategoryDetail;
+import com.example.ecommerce_bookstore.domain.Order;
+import com.example.ecommerce_bookstore.domain.OrderDetail;
 import com.example.ecommerce_bookstore.domain.Product;
 import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.repository.ProductRepository;
@@ -27,13 +30,23 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ImageService imageService;
     private final CategoryDetailService categoryDetailService;
+    private final OrderService orderService;
+    private final OrderDetailService orderDetailService;
+    private final CartDetailService cartDetailService;
+    private final CartService cartService;
 
     public ProductService(ProductRepository productRepository, ImageService imageService,
-            CategoryDetailService categoryDetailService, UserService userService, CartService cartService,
+            CategoryDetailService categoryDetailService, OrderService orderService,
+            OrderDetailService orderDetailService,
+            CartService cartService,
             CartDetailService cartDetailService) {
         this.productRepository = productRepository;
         this.imageService = imageService;
         this.categoryDetailService = categoryDetailService;
+        this.orderService = orderService;
+        this.orderDetailService = orderDetailService;
+        this.cartService = cartService;
+        this.cartDetailService = cartDetailService;
     }
 
     public void createProduct(Product product, MultipartFile fileImage) throws IOException {
@@ -134,6 +147,43 @@ public class ProductService {
         // delete image from local
         this.imageService.deleteImage("src/main/webapp/resources/admin/images/product", product.getImage());
         this.productRepository.delete(product);
+    }
+
+    public void placeOrder(User user, Order orderModel, List<CartDetail> listCartDetails, Cart cart,
+            HttpSession session, String uuid) {
+        Order order = new Order();
+        order.setUser(user);
+        order.setReceiverName(orderModel.getReceiverName());
+        order.setReceiverAddress(orderModel.getReceiverAddress());
+        order.setReceiverPhone(orderModel.getReceiverPhone());
+        order.setPaymentMethod(orderModel.getPaymentMethod());
+        if (order.getPaymentMethod().equals("BANKING")) {
+            order.setPaymentRef(uuid);
+        } else {
+            order.setPaymentRef("UNKNOWN");
+        }
+        order.setStatus("PENDING");
+        order.setPaymentStatus("PAYMENT_UNPAID");
+        order.setTotalPrice(cart.getTotalPrice());
+        this.orderService.create(order);
+
+        for (CartDetail cartDetails : listCartDetails) {
+            OrderDetail orderDetail = new OrderDetail();
+            Product product = cartDetails.getProduct();
+
+            orderDetail.setOrder(order);
+            orderDetail.setProduct(cartDetails.getProduct());
+            orderDetail.setPrice(cartDetails.getPrice());
+            orderDetail.setQuantity(cartDetails.getQuantity());
+            this.orderDetailService.create(orderDetail);
+
+            product.setQuantity(product.getQuantity() - cartDetails.getQuantity());
+            updateQuantity(product);
+
+            this.cartDetailService.delete(cartDetails);
+        }
+        this.cartService.delete(cart);
+        session.setAttribute("cartSum", 0);
     }
 
     public Optional<Product> getProductWithHigestPrice() {
