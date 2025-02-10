@@ -73,7 +73,7 @@
                                                 <tbody>
                                                     <c:forEach var="user" items="${users}">
                                                         <tr class="text-center">
-                                                            <td> ${user.id} </td>
+                                                            <td> #${user.id} </td>
                                                             <td>
                                                                 <div style="float:left;padding-left:30%;">
                                                                     <img src="/resources/admin/images/avatar/${user.avatar}"
@@ -97,6 +97,15 @@
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <div class="btn-group " role="group" aria-label="Basic example"
+                                                style="margin-top: 10px">
+                                                <c:forEach begin="1" end="${totalPages}" varStatus="status">
+                                                    <a href="/admin/users?page=${status.index}"
+                                                        class="btn btn-outline-secondary ${status.index == currentPage ? 'active' : ''}">${status.index}</a>
+                                                </c:forEach>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

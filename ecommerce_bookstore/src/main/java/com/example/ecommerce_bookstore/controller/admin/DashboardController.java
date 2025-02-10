@@ -1,5 +1,9 @@
 package com.example.ecommerce_bookstore.controller.admin;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +14,11 @@ import java.util.Optional;
 
 import com.example.ecommerce_bookstore.domain.Order;
 import com.example.ecommerce_bookstore.domain.OrderDetail;
+import com.example.ecommerce_bookstore.domain.Order_;
 import com.example.ecommerce_bookstore.domain.Product;
+import com.example.ecommerce_bookstore.domain.Product_;
 import com.example.ecommerce_bookstore.domain.User;
+import com.example.ecommerce_bookstore.domain.User_;
 import com.example.ecommerce_bookstore.service.OrderDetailService;
 import com.example.ecommerce_bookstore.service.OrderService;
 import com.example.ecommerce_bookstore.service.ProductService;
@@ -35,9 +42,19 @@ public class DashboardController {
     }
 
     @GetMapping("/admin")
-    public String getDashboardPage(Model model) {
-        List<Order> orders = this.orderService.getAll();
+    public String getDashboardPage(Model model, @RequestParam("page") Optional<String> currentPage) {
+        Pageable pageable = null;
+        if (currentPage.isEmpty()) {
+            pageable = PageRequest.of(0, 10, Sort.by(Order_.ID).descending());
+            model.addAttribute("currentPage", 1);
+        } else {
+            pageable = PageRequest.of(Integer.parseInt(currentPage.get()) - 1, 10, Sort.by(Order_.ID).descending());
+            model.addAttribute("currentPage", Integer.parseInt(currentPage.get()));
+        }
+        Page<Order> pageOrders = this.orderService.getAll(pageable);
+        List<Order> orders = pageOrders.getContent();
         model.addAttribute("orders", orders);
+        model.addAttribute("totalPages", pageOrders.getTotalPages());
         return "admin/dashboard/dashboard";
     }
 
@@ -63,16 +80,36 @@ public class DashboardController {
     }
 
     @GetMapping("/admin/users")
-    public String getUsersPage(Model model) {
-        List<User> users = this.userService.getAll();
+    public String getUsersPage(Model model, @RequestParam("page") Optional<String> currentPage) {
+        Pageable pageable = null;
+        if (currentPage.isEmpty()) {
+            pageable = PageRequest.of(0, 10, Sort.by(User_.ID).descending());
+            model.addAttribute("currentPage", 1);
+        } else {
+            pageable = PageRequest.of(Integer.parseInt(currentPage.get()) - 1, 10, Sort.by(User_.ID).descending());
+            model.addAttribute("currentPage", Integer.parseInt(currentPage.get()));
+        }
+        Page<User> pageUsers = this.userService.getAll(pageable);
+        List<User> users = pageUsers.getContent();
         model.addAttribute("users", users);
+        model.addAttribute("totalPages", pageUsers.getTotalPages());
         return "admin/users/table";
     }
 
     @GetMapping("/admin/products")
-    public String getProductsPage(Model model) {
-        List<Product> products = this.productService.getAll();
+    public String getProductsPage(Model model, @RequestParam("page") Optional<String> currentPage) {
+        Pageable pageable = null;
+        if (currentPage.isEmpty()) {
+            pageable = PageRequest.of(0, 10, Sort.by(Product_.ID).descending());
+            model.addAttribute("currentPage", 1);
+        } else {
+            pageable = PageRequest.of(Integer.parseInt(currentPage.get()) - 1, 10, Sort.by(Product_.ID).descending());
+            model.addAttribute("currentPage", Integer.parseInt(currentPage.get()));
+        }
+        Page<Product> pageProducts = this.productService.getAll(pageable);
+        List<Product> products = pageProducts.getContent();
         model.addAttribute("products", products);
+        model.addAttribute("totalPages", pageProducts.getTotalPages());
         return "admin/products/table";
     }
 

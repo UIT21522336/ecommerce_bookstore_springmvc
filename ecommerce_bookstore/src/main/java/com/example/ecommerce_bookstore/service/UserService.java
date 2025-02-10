@@ -1,5 +1,7 @@
 package com.example.ecommerce_bookstore.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,8 +11,6 @@ import com.example.ecommerce_bookstore.domain.dto.RegisterUserDTO;
 import com.example.ecommerce_bookstore.domain.dto.UpdateUserDTO;
 import com.example.ecommerce_bookstore.repository.RoleRepository;
 import com.example.ecommerce_bookstore.repository.UserRepository;
-
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.List;
@@ -148,6 +148,10 @@ public class UserService {
 
     public List<User> getAll() {
         return this.userRepository.findAll();
+    }
+
+    public Page<User> getAll(Pageable pageable) {
+        return this.userRepository.findAll(pageable);
     }
 
     public Optional<User> getById(long id) {

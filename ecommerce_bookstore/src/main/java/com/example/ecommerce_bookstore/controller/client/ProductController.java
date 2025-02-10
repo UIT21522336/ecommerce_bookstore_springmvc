@@ -1,8 +1,6 @@
 package com.example.ecommerce_bookstore.controller.client;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +23,6 @@ import com.example.ecommerce_bookstore.domain.CartDetail;
 import com.example.ecommerce_bookstore.domain.Category;
 import com.example.ecommerce_bookstore.domain.CategoryDetail;
 import com.example.ecommerce_bookstore.domain.Order;
-import com.example.ecommerce_bookstore.domain.OrderDetail;
 import com.example.ecommerce_bookstore.domain.Product;
 import com.example.ecommerce_bookstore.domain.Product_;
 import com.example.ecommerce_bookstore.domain.User;
@@ -55,7 +52,6 @@ public class ProductController {
     private final UserService userService;
     private final CartDetailService cartDetailService;
     private final OrderService orderService;
-    private final OrderDetailService orderDetailService;
     private final BankingService bankingService;
 
     public ProductController(ProductService productService, CategoryDetailService categoryDetailService,
@@ -69,7 +65,6 @@ public class ProductController {
         this.userService = userService;
         this.cartDetailService = cartDetailService;
         this.orderService = orderService;
-        this.orderDetailService = orderDetailService;
         this.bankingService = bankingService;
     }
 
@@ -89,17 +84,17 @@ public class ProductController {
 
         Pageable pageable = null;
         if (currentPage.isEmpty()) {
-            pageable = PageRequest.of(0, 3);
+            pageable = PageRequest.of(0, 9);
             model.addAttribute("currentPage", 1);
         } else {
             if (sortCriteria.isPresent() && sortCriteria.get().equals("low-to-high")) {
-                pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3,
+                pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 9,
                         Sort.by(Product_.PRICE).ascending());
             } else if (sortCriteria.isPresent() && sortCriteria.get().equals("high-to-low")) {
-                pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3,
+                pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 9,
                         Sort.by(Product_.PRICE).descending());
             } else {
-                pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
+                pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 9);
             }
             model.addAttribute("currentPage", Integer.valueOf(currentPage.get()));
         }
@@ -108,7 +103,7 @@ public class ProductController {
         List<Product> products = pageProducts.getContent();
         model.addAttribute("products", products);
         model.addAttribute("totalPages", pageProducts.getTotalPages());
-        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
+        Product productWithHighestPrice = this.productService.getProductWithHighestPrice().get();
         model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
 
         String queryString = request.getQueryString();
@@ -120,14 +115,13 @@ public class ProductController {
         return "client/products/all-categories";
     }
 
-    // Get product listing page by category
     @GetMapping("/products/{category}")
     public String getProductListingPageByCategory(@PathVariable("category") String categoryName, Model model,
             @RequestParam("page") Optional<String> currentPage) {
         Category category = this.categoryService.getByName(categoryName);
-        Pageable pageable = PageRequest.of(0, 3);
+        Pageable pageable = PageRequest.of(0, 9);
         if (currentPage.isPresent()) {
-            pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
+            pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 9);
             model.addAttribute("currentPage", Integer.valueOf(currentPage.get()));
         } else {
             model.addAttribute("currentPage", 1);
@@ -145,23 +139,22 @@ public class ProductController {
         // sidebar
         List<Category> listCategories = this.categoryService.getAll();
         List<CategoryDetail> listCategoriesDetails = this.categoryDetailService.getAll();
-        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
+        Product productWithHighestPrice = this.productService.getProductWithHighestPrice().get();
         model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("listCategoriesDetails", listCategoriesDetails);
         return "client/products/listing-category";
     }
 
-    // Get product listing page by category details
     @GetMapping("/products/{category}/{category_details}")
     public String getProductListingPageByCategoryDetails(@PathVariable("category") String categoryName,
             @PathVariable("category_details") String categoryDetailsName, Model model,
             @RequestParam("page") Optional<String> currentPage) {
         Category category = this.categoryService.getByName(categoryName);
         CategoryDetail categoryDetail = this.categoryDetailService.getByName(categoryDetailsName);
-        Pageable pageable = PageRequest.of(0, 3);
+        Pageable pageable = PageRequest.of(0, 6);
         if (currentPage.isPresent()) {
-            pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
+            pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 6);
             model.addAttribute("currentPage", Integer.valueOf(currentPage.get()));
         } else {
             model.addAttribute("currentPage", 1);
@@ -184,7 +177,7 @@ public class ProductController {
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("listCategoriesDetails", listCategoriesDetails);
 
-        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
+        Product productWithHighestPrice = this.productService.getProductWithHighestPrice().get();
         model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
         return "client/products/listing-category-details";
     }
@@ -196,10 +189,10 @@ public class ProductController {
 
         Pageable pageable = null;
         if (currentPage.isEmpty()) {
-            pageable = PageRequest.of(0, 3);
+            pageable = PageRequest.of(0, 9);
             model.addAttribute("currentPage", 1);
         } else {
-            pageable = PageRequest.of(Integer.parseInt(currentPage.get()) - 1, 3);
+            pageable = PageRequest.of(Integer.parseInt(currentPage.get()) - 1, 9);
             model.addAttribute("currentPage", Integer.parseInt(currentPage.get()));
         }
 
@@ -219,7 +212,7 @@ public class ProductController {
         model.addAttribute("totalPages", pageProducts.getTotalPages());
         model.addAttribute("title", title);
 
-        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
+        Product productWithHighestPrice = this.productService.getProductWithHighestPrice().get();
         model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
         return "client/products/highlighted";
     }

@@ -11,18 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.ecommerce_bookstore.domain.Cart;
 import com.example.ecommerce_bookstore.domain.CartDetail;
-import com.example.ecommerce_bookstore.domain.Order;
 import com.example.ecommerce_bookstore.domain.Product;
 import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.service.CartDetailService;
 import com.example.ecommerce_bookstore.service.CartService;
 import com.example.ecommerce_bookstore.service.ProductService;
 import com.example.ecommerce_bookstore.service.UserService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CartController {
@@ -39,7 +35,6 @@ public class CartController {
         this.productService = productService;
     }
 
-    // Get cart page
     @GetMapping("/cart")
     public String getCartPage(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);

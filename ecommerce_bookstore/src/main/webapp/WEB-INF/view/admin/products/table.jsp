@@ -74,8 +74,8 @@
                                                 <tbody>
                                                     <c:forEach var="product" items="${products}">
                                                         <tr class="text-center">
-                                                            <td> ${product.id} </td>
-                                                            <td style="width: 50px;">
+                                                            <td> #${product.id} </td>
+                                                            <td style="max-width: 150px;">
                                                                 <div
                                                                     style="float:left;padding-left:5%;max-width:100%;overflow:hidden;text-overflow:ellipsis;">
                                                                     <img src="/resources/admin/images/product/${product.image}"
@@ -101,6 +101,15 @@
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <div class="btn-group " role="group" aria-label="Basic example"
+                                                style="margin-top: 10px">
+                                                <c:forEach begin="1" end="${totalPages}" varStatus="status">
+                                                    <a href="/admin/products?page=${status.index}"
+                                                        class="btn btn-outline-secondary ${status.index == currentPage ? 'active' : ''}">${status.index}</a>
+                                                </c:forEach>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

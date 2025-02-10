@@ -108,8 +108,8 @@
 
                                         <div class="row">
                                             <div class="col" style="padding-left: 0px;">
-                                                <span>Category: <b>${product.categoryDetail.displayName} -
-                                                        ${product.categoryDetail.category.displayName}</b></span>
+                                                <span>Category: <b>${product.categoryDetail.category.displayName} -
+                                                        ${product.categoryDetail.displayName}</b></span>
                                             </div>
                                             <c:if test="${product.quantity != 0}">
                                                 <div class="col" style="padding-left: 0px;">

@@ -26,6 +26,10 @@ public class OrderService {
         return this.orderRepository.findAll();
     }
 
+    public Page<Order> getAll(Pageable pageable) {
+        return this.orderRepository.findAll(pageable);
+    }
+
     public Page<Order> getByUser(User user,Pageable pageable) {
         return this.orderRepository.findByUser(user,pageable);
     }

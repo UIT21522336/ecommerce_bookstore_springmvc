@@ -16,9 +16,6 @@ import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.domain.dto.RegisterUserDTO;
 import com.example.ecommerce_bookstore.domain.dto.UpdateUserDTO;
 import com.example.ecommerce_bookstore.service.UserService;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -29,7 +26,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    // View user detail page
     @GetMapping("/admin/users/detail/{id}")
     public String getDetailUserPage(@PathVariable("id") long id, Model model) {
         User user = this.userService.getById(id).get();
@@ -37,14 +33,12 @@ public class UserController {
         return "admin/users/detail";
     }
 
-    // View create user page
     @GetMapping("/admin/users/create")
     public String getCreateUserPage(Model model) {
         model.addAttribute("registerUserDTO", new RegisterUserDTO());
         return "admin/users/create";
     }
 
-    // Create user
     @PostMapping("/admin/users/create")
     public String postCreateUser(@ModelAttribute("registerUserDTO") @Valid RegisterUserDTO registerUserDTO,
             BindingResult result,
@@ -56,7 +50,6 @@ public class UserController {
         return "redirect:/admin/users";
     }
 
-    // Create user
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("registerUserDTO") @Valid RegisterUserDTO registerUserDTO,
             BindingResult result,
@@ -68,7 +61,6 @@ public class UserController {
         return "redirect:/";
     }
 
-    // View update user page
     @GetMapping("/admin/users/update/{id}")
     public String getUpdateUserPage(@PathVariable("id") long id, Model model) {
         User user = this.userService.getById(id).get();
@@ -81,7 +73,6 @@ public class UserController {
         return "admin/users/update";
     }
 
-    // Update user
     @PostMapping("/admin/users/update")
     public String postUpdateUser(@ModelAttribute("updateUserDTO") @Valid UpdateUserDTO updateUserDTO,
             BindingResult result,
@@ -99,7 +90,6 @@ public class UserController {
         return "redirect:/admin/users";
     }
 
-    // View delete user page
     @GetMapping("/admin/users/delete/{id}")
     public String getDeleteUserPage(@PathVariable("id") long id, Model model) {
         User user = this.userService.getById(id).get();
@@ -107,7 +97,6 @@ public class UserController {
         return "admin/users/delete";
     }
 
-    // Delete user
     @PostMapping("/admin/users/delete")
     public String postDeleteUser(@ModelAttribute("modelUser") User modelUser) throws IOException {
         this.userService.deleteUser(modelUser);

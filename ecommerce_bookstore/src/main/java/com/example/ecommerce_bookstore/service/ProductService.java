@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +21,6 @@ import com.example.ecommerce_bookstore.domain.User;
 import com.example.ecommerce_bookstore.repository.ProductRepository;
 import com.example.ecommerce_bookstore.service.specification.ProductSpecs;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Service
@@ -65,6 +63,10 @@ public class ProductService {
         return this.productRepository.findAll();
     }
 
+    public Page<Product> getAll(Pageable pageable) {
+        return this.productRepository.findAll(pageable);
+    }
+
     public Page<Product> getAll(Pageable pageable, Optional<String> priceCriteria,
             Optional<String> formatCriteria) {
         Specification combinedSpecs = Specification.where(null);
@@ -94,10 +96,6 @@ public class ProductService {
 
     public Page<Product> getByCategoryDisplayName(String name, Pageable pageable) {
         return this.productRepository.findByCategoryDetail_Category_DisplayName(name, pageable);
-    }
-
-    public List<Product> getTop4ByOrderByIdAsc() {
-        return this.productRepository.findTop4ByOrderByIdAsc();
     }
 
     public Page<Product> getJustAnnounced(Pageable pageable) {
@@ -199,7 +197,7 @@ public class ProductService {
         session.setAttribute("cartSum", 0);
     }
 
-    public Optional<Product> getProductWithHigestPrice() {
+    public Optional<Product> getProductWithHighestPrice() {
         return this.productRepository.findTopByOrderByPriceDesc();
     }
 }

@@ -91,9 +91,6 @@
                 </div>
             </section>
 
-            <img src="/resources/client/images/categories/31638_SkinnyHero_OnyxStorm_01_29_25.jpg"
-                style="width: 100%;height: auto;" alt="Online Only! 50% Off Hundreds of Hardcover Books.  Shop Now ">
-
             <section class="product spad">
                 <div class="container">
                     <div class="row d-flex justify-content-between">
@@ -131,9 +128,6 @@
                 </div>
             </section>
 
-            <img src="/resources/client/images/categories/31753_SkinnyHero_BlackHistory_02_01_25.jpg"
-                style="width: 100%;height: auto;" alt="Online Only! 50% Off Hundreds of Hardcover Books.  Shop Now ">
-
             <section class="product spad">
                 <div class="container">
                     <div class="row d-flex justify-content-between">
@@ -145,7 +139,7 @@
                         <a href="/home/best-nonfiction">See all</a>
                     </div>
                     <div class="row property__gallery">
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${bestNonFiction_products}">
                             <div class="col-lg-3 col-md-4 col-sm-6 mix">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg"

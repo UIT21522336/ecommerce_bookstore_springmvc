@@ -1,7 +1,6 @@
 package com.example.ecommerce_bookstore.controller.client;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,16 +48,15 @@ public class HomepageController {
         Pageable pageable = PageRequest.of(0, 4);
         Page<Product> pageJustAnnounced_products = this.productService.getJustAnnounced(pageable);
         Page<Product> pageBestFiction_products = this.productService.getBestFiction(pageable);
+        Page<Product> pageBestNonFiction_products = this.productService.getBestNonFiction(pageable);
         List<Product> listJustAnnounced_products = pageJustAnnounced_products.getContent();
         List<Product> listBestFiction_products = pageBestFiction_products.getContent();
-        List<Product> products = this.productService.getTop4ByOrderByIdAsc();
-        model.addAttribute("products", products);
+        List<Product> listBestNonFiction_products = pageBestNonFiction_products.getContent();
         model.addAttribute("justAnnounced_products", listJustAnnounced_products);
         model.addAttribute("bestFiction_products", listBestFiction_products);
-        model.addAttribute("bestNonFiction_products", products);
+        model.addAttribute("bestNonFiction_products", listBestNonFiction_products);
         return "client/homepage/homepage";
     }
-
 
     @GetMapping("/login")
     public String getLoginPage() {
