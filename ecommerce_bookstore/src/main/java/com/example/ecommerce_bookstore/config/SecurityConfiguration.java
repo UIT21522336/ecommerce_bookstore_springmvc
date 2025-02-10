@@ -50,7 +50,8 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.INCLUDE).permitAll()
-                        .requestMatchers("/login", "/register", "/resources/**", "/", "/products/**").permitAll()
+                        .requestMatchers("/login", "/register", "/home/**", "/resources/**", "/", "/products/**")
+                        .permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form

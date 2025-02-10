@@ -3,11 +3,13 @@ package com.example.ecommerce_bookstore.controller.client;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -85,22 +87,19 @@ public class ProductController {
             @RequestParam("format") Optional<String> formatCriteria,
             @RequestParam("sort") Optional<String> sortCriteria, HttpServletRequest request) {
 
-        Pageable pageable = PageRequest.of(0, 3);
-        if (sortCriteria.isPresent() && sortCriteria.get().equals("low-to-high")) {
-            pageable = PageRequest.of(0, 3, Sort.by(Product_.PRICE).ascending());
-        } else if (sortCriteria.isPresent() && sortCriteria.get().equals("high-to-low")) {
-            pageable = PageRequest.of(0, 3, Sort.by(Product_.PRICE).descending());
-        }
-        model.addAttribute("currentPage", 1);
-
-        if (currentPage.isPresent() && sortCriteria.isPresent()) {
-            pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
-            if (sortCriteria.get().equals("low-to-high")) {
+        Pageable pageable = null;
+        if (currentPage.isEmpty()) {
+            pageable = PageRequest.of(0, 3);
+            model.addAttribute("currentPage", 1);
+        } else {
+            if (sortCriteria.isPresent() && sortCriteria.get().equals("low-to-high")) {
                 pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3,
                         Sort.by(Product_.PRICE).ascending());
-            } else if (sortCriteria.get().equals("high-to-low")) {
+            } else if (sortCriteria.isPresent() && sortCriteria.get().equals("high-to-low")) {
                 pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3,
                         Sort.by(Product_.PRICE).descending());
+            } else {
+                pageable = PageRequest.of(Integer.valueOf(currentPage.get()) - 1, 3);
             }
             model.addAttribute("currentPage", Integer.valueOf(currentPage.get()));
         }
@@ -188,6 +187,41 @@ public class ProductController {
         Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
         model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
         return "client/products/listing-category-details";
+    }
+
+    @GetMapping("/home/{title}")
+    public String getJustAnnouncedPage(@PathVariable("title") String title,
+            @RequestParam("page") Optional<String> currentPage,
+            Model model) {
+
+        Pageable pageable = null;
+        if (currentPage.isEmpty()) {
+            pageable = PageRequest.of(0, 3);
+            model.addAttribute("currentPage", 1);
+        } else {
+            pageable = PageRequest.of(Integer.parseInt(currentPage.get()) - 1, 3);
+            model.addAttribute("currentPage", Integer.parseInt(currentPage.get()));
+        }
+
+        Page<Product> pageProducts = new PageImpl<>(Collections.emptyList());
+        if (title.equals("just-announced")) {
+            pageProducts = this.productService.getJustAnnounced(pageable);
+        } else if (title.equals("best-fiction")) {
+            pageProducts = this.productService.getBestFiction(pageable);
+        } else if (title.equals("best-nonfiction")) {
+            pageProducts = this.productService.getBestNonFiction(pageable);
+        } else {
+            return "redirect:/";
+        }
+
+        List<Product> listProducts = pageProducts.getContent();
+        model.addAttribute("products", listProducts);
+        model.addAttribute("totalPages", pageProducts.getTotalPages());
+        model.addAttribute("title", title);
+
+        Product productWithHighestPrice = this.productService.getProductWithHigestPrice().get();
+        model.addAttribute("highestPrice", productWithHighestPrice.getPrice());
+        return "client/products/highlighted";
     }
 
     @PostMapping("/proceed-to-checkout")

@@ -22,6 +22,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     Page<Product> findByOrderByIdDesc(Pageable pageable);
 
+    Page<Product> findByCategoryDetail_Category_DisplayNameOrderBySoldDesc(String name,Pageable pageable);
+
     List<Product> findTop4ByOrderByIdAsc();
 
     Optional<Product> findById(long id);
@@ -33,4 +35,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
     void delete(Product product);
 
     Optional<Product> findTopByOrderByPriceDesc();
+
 }

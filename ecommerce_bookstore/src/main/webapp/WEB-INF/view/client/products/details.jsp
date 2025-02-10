@@ -105,13 +105,19 @@
                                                 <span>Format: <b>${product.format}</b></span>
                                             </div>
                                         </div>
-                                        <c:if test="${product.quantity != 0}">
-                                            <div class="row">
+
+                                        <div class="row">
+                                            <div class="col" style="padding-left: 0px;">
+                                                <span>Category: <b>${product.categoryDetail.displayName} -
+                                                        ${product.categoryDetail.category.displayName}</b></span>
+                                            </div>
+                                            <c:if test="${product.quantity != 0}">
                                                 <div class="col" style="padding-left: 0px;">
                                                     <span>Available: <b>${product.quantity}</b></span>
                                                 </div>
-                                            </div>
-                                        </c:if>
+                                            </c:if>
+                                        </div>
+
                                     </div>
                                 </h3>
                                 <div class="product__details__price">$ ${product.price}</div>

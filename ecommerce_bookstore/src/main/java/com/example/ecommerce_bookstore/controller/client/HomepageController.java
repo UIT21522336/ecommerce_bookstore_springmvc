@@ -47,50 +47,19 @@ public class HomepageController {
 
     @GetMapping("")
     public String getHomepage(Model model) {
-        Pageable pageable_justAnnounced = PageRequest.of(0, 4);
-        Page<Product> pageJustAnnounced_products = this.productService.getJustAnnounced(pageable_justAnnounced);
+        Pageable pageable = PageRequest.of(0, 4);
+        Page<Product> pageJustAnnounced_products = this.productService.getJustAnnounced(pageable);
+        Page<Product> pageBestFiction_products = this.productService.getBestFiction(pageable);
         List<Product> listJustAnnounced_products = pageJustAnnounced_products.getContent();
+        List<Product> listBestFiction_products = pageBestFiction_products.getContent();
         List<Product> products = this.productService.getTop4ByOrderByIdAsc();
         model.addAttribute("products", products);
         model.addAttribute("justAnnounced_products", listJustAnnounced_products);
-        model.addAttribute("bestFiction_products", products);
+        model.addAttribute("bestFiction_products", listBestFiction_products);
         model.addAttribute("bestNonFiction_products", products);
         return "client/homepage/homepage";
     }
 
-    @GetMapping("/home/{title}")
-    public String getJustAnnouncedPage(@PathVariable("title") String title,
-            @RequestParam("page") Optional<String> currentPage,
-            Model model) {
-
-        Pageable pageable = null;
-        if (currentPage.isPresent()) {
-            pageable = PageRequest.of(Integer.parseInt(currentPage.get()) - 1, 4);
-            model.addAttribute("currentPage", currentPage);
-        } else {
-            pageable = PageRequest.of(0, 4);
-            model.addAttribute("currentPage", 1);
-        }
-
-        Page<Product> pageProducts = new PageImpl<>(Collections.emptyList());
-        if (title.equals("just-announced")) {
-            pageProducts = this.productService.getJustAnnounced(pageable);
-        }
-        // else if(title.equals("best-fiction")){
-
-        // }
-        // else if(title.equals("best-non-fiction")){
-
-        // }
-        else {
-            return "redirect:/";
-        }
-        List<Product> listProducts = pageProducts.getContent();
-        model.addAttribute("products", listProducts);
-        model.addAttribute("totalPages", pageProducts.getTotalPages());
-        model.addAttribute("title", title);
-        return "client/products/highlighted";
-    }
 
     @GetMapping("/login")
     public String getLoginPage() {

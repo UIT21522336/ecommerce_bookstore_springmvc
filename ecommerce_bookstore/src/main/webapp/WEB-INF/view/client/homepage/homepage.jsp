@@ -102,10 +102,10 @@
                                 <h4>Our best fiction books</h4>
                             </div>
                         </div>
-                        <a href="#">See all</a>
+                        <a href="/home/best-fiction">See all</a>
                     </div>
                     <div class="row property__gallery">
-                        <c:forEach var="product" items="${products}">
+                        <c:forEach var="product" items="${bestFiction_products}">
                             <div class="col-lg-3 col-md-4 col-sm-6 mix">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg"
@@ -119,7 +119,8 @@
                                     <div class="product__item__text">
                                         <h6
                                             style="max-width:100%;height:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                                            <a href="/products/detail/${product.id}">${product.name}</a>
+                                            <a
+                                                href="/products/${product.categoryDetail.category.name}/${product.categoryDetail.name}/details/${product.id}">${product.name}</a>
                                             <div class="product__price">$ ${product.price}</div>
                                         </h6>
                                     </div>
@@ -141,7 +142,7 @@
                                 <h4>Our best non-fiction books</h4>
                             </div>
                         </div>
-                        <a href="#">See all</a>
+                        <a href="/home/best-nonfiction">See all</a>
                     </div>
                     <div class="row property__gallery">
                         <c:forEach var="product" items="${products}">

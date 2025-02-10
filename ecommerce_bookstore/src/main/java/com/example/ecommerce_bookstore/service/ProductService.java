@@ -100,8 +100,16 @@ public class ProductService {
         return this.productRepository.findTop4ByOrderByIdAsc();
     }
 
-    public Page<Product> getJustAnnounced(Pageable pageable){
+    public Page<Product> getJustAnnounced(Pageable pageable) {
         return this.productRepository.findByOrderByIdDesc(pageable);
+    }
+
+    public Page<Product> getBestFiction(Pageable pageable) {
+        return this.productRepository.findByCategoryDetail_Category_DisplayNameOrderBySoldDesc("Fiction", pageable);
+    }
+
+    public Page<Product> getBestNonFiction(Pageable pageable) {
+        return this.productRepository.findByCategoryDetail_Category_DisplayNameOrderBySoldDesc("Non-Fiction", pageable);
     }
 
     public Optional<Product> getById(long id) {
